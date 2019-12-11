@@ -1,4 +1,4 @@
-# SUPER YOU FRONT END COMPONENTS
+# SUPERYOU Frontend Components
 
 ## Project setup
 
