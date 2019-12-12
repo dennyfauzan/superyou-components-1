@@ -1,16 +1,12 @@
 <template>
   <base-card :header-style="cardStyles.header">
-    <h3 slot="card-header">Card Header</h3>
+    <h3 slot="card-header">{{ title }}</h3>
     <div slot="card-body">
       <InvoiceBody :details="detailPayment">
         <baseChip slot="payment-status">
           <span class="text">{{ detailPayment.status }}</span>
         </baseChip>
-        <baseButton
-          slot="payment-button"
-          btn-text="BAYAR SEKARANG"
-          @onClick="handleClickCTA"
-        />
+        <baseButton slot="payment-button" btn-text="BAYAR SEKARANG" @onClick="handleClickCTA" />
         <div class="payment-list" slot="payment-detail">
           <InvoiceDetail
             v-for="invoice in detailPayment.invoices"
@@ -39,6 +35,10 @@ export default {
     },
     payNowAction: {
       type: Function
+    },
+    title: {
+      type: String,
+      default: ""
     }
   },
   components: {

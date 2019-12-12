@@ -1,7 +1,11 @@
 <template>
   <div id="show-case">
     <div class="card_container">
-      <CardInvoice :detailPayment="paymentDetail" :payNowAction="payButton" />
+      <CardInvoice
+        :detailPayment="paymentDetail"
+        :payNowAction="payButton"
+        title="Invoice xxx xxx xxx"
+      />
 
       <br />
       <br />

@@ -1440,12 +1440,12 @@ if (typeof window !== 'undefined') {
 // EXTERNAL MODULE: ./src/styles/index.scss
 var styles = __webpack_require__("b20f");
 
-// CONCATENATED MODULE: ./node_modules/cache-loader/dist/cjs.js?{"cacheDirectory":"node_modules/.cache/vue-loader","cacheIdentifier":"cc4b0e26-vue-loader-template"}!./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/cache-loader/dist/cjs.js??ref--0-0!./node_modules/vue-loader/lib??vue-loader-options!./src/components/card-invoice/CardInvoice.vue?vue&type=template&id=0610a124&
-var render = function () {var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;return _c('base-card',{attrs:{"header-style":_vm.cardStyles.header}},[_c('h3',{attrs:{"slot":"card-header"},slot:"card-header"},[_vm._v("Card Header")]),_c('div',{attrs:{"slot":"card-body"},slot:"card-body"},[_c('InvoiceBody',{attrs:{"details":_vm.detailPayment}},[_c('baseChip',{attrs:{"slot":"payment-status"},slot:"payment-status"},[_c('span',{staticClass:"text"},[_vm._v(_vm._s(_vm.detailPayment.status))])]),_c('baseButton',{attrs:{"slot":"payment-button","btn-text":"BAYAR SEKARANG"},on:{"onClick":_vm.handleClickCTA},slot:"payment-button"}),_c('div',{staticClass:"payment-list",attrs:{"slot":"payment-detail"},slot:"payment-detail"},_vm._l((_vm.detailPayment.invoices),function(invoice){return _c('InvoiceDetail',{key:invoice.id,attrs:{"datas":invoice}})}),1)],1)],1)])}
+// CONCATENATED MODULE: ./node_modules/cache-loader/dist/cjs.js?{"cacheDirectory":"node_modules/.cache/vue-loader","cacheIdentifier":"cc4b0e26-vue-loader-template"}!./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/cache-loader/dist/cjs.js??ref--0-0!./node_modules/vue-loader/lib??vue-loader-options!./src/components/card-invoice/CardInvoice.vue?vue&type=template&id=b7ed9296&
+var render = function () {var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;return _c('base-card',{attrs:{"header-style":_vm.cardStyles.header}},[_c('h3',{attrs:{"slot":"card-header"},slot:"card-header"},[_vm._v(_vm._s(_vm.title))]),_c('div',{attrs:{"slot":"card-body"},slot:"card-body"},[_c('InvoiceBody',{attrs:{"details":_vm.detailPayment}},[_c('baseChip',{attrs:{"slot":"payment-status"},slot:"payment-status"},[_c('span',{staticClass:"text"},[_vm._v(_vm._s(_vm.detailPayment.status))])]),_c('baseButton',{attrs:{"slot":"payment-button","btn-text":"BAYAR SEKARANG"},on:{"onClick":_vm.handleClickCTA},slot:"payment-button"}),_c('div',{staticClass:"payment-list",attrs:{"slot":"payment-detail"},slot:"payment-detail"},_vm._l((_vm.detailPayment.invoices),function(invoice){return _c('InvoiceDetail',{key:invoice.id,attrs:{"datas":invoice}})}),1)],1)],1)])}
 var staticRenderFns = []
 
 
-// CONCATENATED MODULE: ./src/components/card-invoice/CardInvoice.vue?vue&type=template&id=0610a124&
+// CONCATENATED MODULE: ./src/components/card-invoice/CardInvoice.vue?vue&type=template&id=b7ed9296&
 
 // CONCATENATED MODULE: ./node_modules/cache-loader/dist/cjs.js?{"cacheDirectory":"node_modules/.cache/vue-loader","cacheIdentifier":"cc4b0e26-vue-loader-template"}!./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/cache-loader/dist/cjs.js??ref--0-0!./node_modules/vue-loader/lib??vue-loader-options!./src/atoms/BaseCard.vue?vue&type=template&id=2bfbd4af&scoped=true&
 var BaseCardvue_type_template_id_2bfbd4af_scoped_true_render = function () {var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;return _c('div',{staticClass:"su_card"},[_c('div',{staticClass:"su_card-header",style:([_vm.headerStyle])},[_vm._t("card-header",[_c('h3',[_vm._v("Card Header")])])],2),_c('div',{staticClass:"su_card-body",style:([_vm.bodyStyle])},[_vm._t("card-body",[_vm._v("card body")])],2)])}
@@ -2205,10 +2205,6 @@ var InvoiceDetail_component = normalizeComponent(
 //
 //
 //
-//
-//
-//
-//
 
 
 
@@ -2223,6 +2219,10 @@ var InvoiceDetail_component = normalizeComponent(
     },
     payNowAction: {
       type: Function
+    },
+    title: {
+      type: String,
+      default: ""
     }
   },
   components: {
