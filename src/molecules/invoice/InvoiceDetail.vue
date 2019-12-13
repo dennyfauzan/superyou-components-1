@@ -2,10 +2,7 @@
   <div id="invoice-detail">
     <div class="detail-left">
       <div class="product-icon" style="width:70px;">
-        <BaseIconProductAndPlan
-          :product="getIconProduct"
-          :plan="getBadgeType"
-        />
+        <BaseIconProductAndPlan :product="getIconProduct" :plan="getBadgeType" />
       </div>
       <div class="product-basic-rider-name">
         <ProductCompletedName :details="allProductNameAndPolicyNumber" />
@@ -19,11 +16,7 @@
         <span>{{ datas.price }}</span>
       </span>
       <template v-if="datas.riders && datas.riders.length">
-        <span
-          v-for="riderPrice in datas.riders"
-          :key="riderPrice.price"
-          class="price"
-        >
+        <span v-for="riderPrice in datas.riders" :key="riderPrice.price" class="price">
           <span>Rp</span>
           <span>{{ riderPrice.price }}</span>
         </span>
@@ -103,6 +96,7 @@ export default {
     display: flex;
     flex-wrap: nowrap;
     justify-content: flex-end;
+    color: #313131;
     & > span:first-child {
       margin-right: 4px;
     }
@@ -116,7 +110,10 @@ export default {
       height: 18px;
 
       &:not(:first-child) {
-        margin-top: 5px;
+        margin-top: 8px;
+        @media screen and (max-width: 600px) {
+          margin-top: 9.5px;
+        }
       }
     }
   }

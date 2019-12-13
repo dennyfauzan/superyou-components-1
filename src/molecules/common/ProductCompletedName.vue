@@ -2,15 +2,9 @@
   <div class="product-completed-name">
     <h2 class="basic-product">{{ details.name }} - {{ details.plan }}</h2>
     <template v-if="details.riders">
-      <div
-        class="rider-wrapper"
-        v-for="(rider, i) in details.riders"
-        :key="`rider${i}`"
-      >
+      <div class="rider-wrapper" v-for="(rider, i) in details.riders" :key="`rider${i}`">
         <h2>{{ rider.name }}</h2>
-        <BaseChip :inlineStyles="chipCustomStyle" type="outline"
-          >Add On</BaseChip
-        >
+        <BaseChip :inlineStyles="chipCustomStyle" type="outline">Add On</BaseChip>
       </div>
     </template>
     <p class="policy-number">{{ details.policyNumber }}</p>
@@ -77,6 +71,7 @@ export default {
     color: #708697;
     font-weight: 600;
     font-size: 14px;
+    margin: 14px 0;
 
     @media screen and (max-width: 600px) {
       font-size: 12px;
