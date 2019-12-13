@@ -55,12 +55,12 @@ export default {
 </script>
 
 <style lang="scss">
-* {
+/* * {
   will-change: height;
   transform: translateZ(0);
   backface-visibility: hidden;
   perspective: 1000px;
-}
+} */
 .expand-enter-active,
 .expand-leave-active {
   transition: height 0.3s ease-in-out;
