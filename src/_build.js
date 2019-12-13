@@ -1,5 +1,3 @@
-import "@/styles/index.scss";
-
 // Components
 import _CardInvoice from "@/components/card-invoice/CardInvoice.vue";
 
