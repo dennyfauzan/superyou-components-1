@@ -12,12 +12,12 @@
 
     <div class="detail-right">
       <span class="price">
-        <span>Rp</span>
+        <!-- <span>Rp</span> -->
         <span>{{ datas.price }}</span>
       </span>
       <template v-if="datas.riders && datas.riders.length">
         <span v-for="riderPrice in datas.riders" :key="riderPrice.price" class="price">
-          <span>Rp</span>
+          <!-- <span>Rp</span> -->
           <span>{{ riderPrice.price }}</span>
         </span>
       </template>
