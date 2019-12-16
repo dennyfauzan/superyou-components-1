@@ -64,5 +64,39 @@ export default {
       color: #fff;
     }
   }
+
+  &.register {
+    background-color: #0d294a;
+    color: #fff;
+  }
+  &.in-progress {
+    background-color: #f5a623;
+    color: #fff;
+  }
+  &.investigation {
+    background-color: #e2d100;
+    color: #fff;
+  }
+  &.active {
+    background-color: #06a65e;
+    color: #fff;
+  }
+  &.rejected {
+    background-color: hsl(353, 98%, 41%);
+    color: #fff;
+  }
+  &.failed {
+    background-color: hsl(353, 98%, 41%);
+    color: #fff;
+  }
+  &.success {
+    background-color: #00aaae;
+    color: #fff;
+  }
+  &.waiting,
+  &.init {
+    background-color: #bebebe;
+    color: #fff;
+  }
 }
 </style>

@@ -4,15 +4,13 @@ import { withKnobs, object, button } from "@storybook/addon-knobs";
 import CardInvoice from "./CardInvoice.vue";
 
 const paymentDetail = {
-  lastPayment: "3 Juli 2018",
+  lastPayment: "3 January 2018",
   nextPayment: "3 Agustus 2018",
-  status: "Menunggu Pembayaran",
+  status: "success",
+  status_message: "Menunggu Pembayaran",
   total: "Rp 57.500",
   mode: "Bulanan",
   method: "Debit Card",
-  actions: function() {
-    alert("from datasss");
-  },
   invoices: [
     {
       product: "Super Safe Protection",
@@ -50,6 +48,7 @@ const paymentDetail = {
     }
   ]
 };
+
 const payNowAction = () => alert("from paynows");
 
 storiesOf("CardInvoice", module)
@@ -71,7 +70,7 @@ storiesOf("CardInvoice", module)
         },
         template: `
           <div style="padding:3rem 8rem;">
-            <CardInvoice :detailPayment="detailPayment" :payNowAction="payNowAction"/>
+            <CardInvoice :detailPayment="detailPayment" :payNowAction="payNowAction" title="Invoice xxx xxx xxx"/>
           </div>
         `
       };

@@ -26,7 +26,8 @@ import CardInvoice from "@/components/card-invoice/CardInvoice.vue";
 const paymentDetail = {
   lastPayment: "3 January 2018",
   nextPayment: "3 Agustus 2018",
-  status: "Menunggu Pembayaran",
+  status: "success",
+  status_message: "Menunggu Pembayaran",
   total: "Rp 57.500",
   mode: "Bulanan",
   method: "Debit Card",

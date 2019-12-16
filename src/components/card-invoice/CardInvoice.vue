@@ -3,8 +3,8 @@
     <h3 slot="card-header">{{ title }}</h3>
     <div slot="card-body">
       <InvoiceBody :details="detailPayment">
-        <baseChip slot="payment-status">
-          <span class="text">{{ detailPayment.status }}</span>
+        <baseChip slot="payment-status" :type="detailPayment.status">
+          <span class="text">{{ detailPayment.status_message }}</span>
         </baseChip>
         <baseButton slot="payment-button" btn-text="BAYAR SEKARANG" @onClick="handleClickCTA" />
         <div class="payment-list" slot="payment-detail">
