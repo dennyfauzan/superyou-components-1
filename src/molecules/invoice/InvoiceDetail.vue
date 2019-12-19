@@ -7,7 +7,7 @@
       <div class="product-basic-rider-name">
         <ProductCompletedName :details="allProductNameAndPolicyNumber" />
       </div>
-      <a class="see-product-detail" :href="`/dashboard/e-polis/${datas.productId}`">Detail Produk</a>
+      <a class="see-product-detail" :href="`/dashboard/e-policy/${datas.productId}`">Detail Produk</a>
     </div>
 
     <div class="detail-right">
