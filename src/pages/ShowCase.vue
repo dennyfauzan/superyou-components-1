@@ -26,9 +26,10 @@ import CardInvoice from "@/components/card-invoice/CardInvoice.vue";
 const paymentDetail = {
   lastPayment: "3 January 2018",
   nextPayment: "3 Agustus 2018",
-  status: "success",
-  status_message: "Menunggu Pembayaran",
+  status: "waiting",
+  status_message: "Pembayaran Berhasil",
   total: "Rp 57.500",
+  fee: "Rp 5.000",
   mode: "Bulanan",
   method: "Debit Card",
   invoices: [
@@ -66,7 +67,10 @@ const paymentDetail = {
       price: "22.100",
       riders: null
     }
-  ]
+  ],
+  policy_group_number: "3191783",
+  summary_token: "b6b7a3b0768ed2d2601ac37fcbfbf4560f4b2bcc",
+  payment_method_id: 22
 };
 
 const payNowAction = () => alert("from paynow");

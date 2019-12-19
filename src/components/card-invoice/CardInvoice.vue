@@ -6,7 +6,12 @@
         <baseChip slot="payment-status" :type="detailPayment.status">
           <span class="text">{{ detailPayment.status_message }}</span>
         </baseChip>
-        <baseButton slot="payment-button" btn-text="BAYAR SEKARANG" @onClick="handleClickCTA" />
+        <baseButton
+          slot="payment-button"
+          btn-text="BAYAR SEKARANG"
+          @onClick="handleClickCTA"
+          :isDisabled="isActionDisabled"
+        />
         <div class="payment-list" slot="payment-detail">
           <InvoiceDetail
             v-for="invoice in detailPayment.invoices"
@@ -56,6 +61,12 @@ export default {
           color: "#fff"
         }
       };
+    },
+    isActionDisabled() {
+      if (this.detailPayment) {
+        return this.detailPayment.status === "waiting" ? false : true;
+      }
+      return true;
     }
   },
   methods: {

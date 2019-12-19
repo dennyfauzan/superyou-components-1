@@ -1,5 +1,11 @@
 <template>
-  <button id="su_btn" class="outline arrow" :class="size" @click="handleClick">{{ btnText }}</button>
+  <button
+    id="su_btn"
+    class="outline arrow"
+    :class="{ size: size, 'disabled': isDisabled }"
+    @click="handleClick"
+    :disabled="isDisabled"
+  >{{ btnText }}</button>
 </template>
 
 <script>
@@ -14,6 +20,10 @@ export default {
     },
     onClick: {
       type: Function
+    },
+    isDisabled: {
+      type: Boolean,
+      default: false
     }
   },
   methods: {
@@ -45,6 +55,11 @@ export default {
 
   &:focus {
     outline: 0;
+  }
+
+  &.disabled {
+    opacity: 0.3;
+    cursor: not-allowed;
   }
 
   &:hover {
