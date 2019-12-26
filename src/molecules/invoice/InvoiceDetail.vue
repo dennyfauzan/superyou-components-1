@@ -112,7 +112,7 @@ export default {
       align-items: center;
       @media screen and (max-width: 600px) {
         display: block;
-        margin-top: 12px;
+        margin-top: 8px;
       }
     }
   }

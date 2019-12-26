@@ -25,7 +25,7 @@ export default {
       default: () => ({
         name: "Super Safe Protection",
         plan: "Gold",
-        riders: ["Super Motor", "Super Holiday"],
+        riders: [],
         policyNumber: 12341234
       })
     }
@@ -35,10 +35,10 @@ export default {
       return "width: 62px;align-self: center;margin-left: 7px;height: 18px;padding: 2px 4px;";
     },
     noRiders() {
-      if (this.details) {
-        return !this.details.riders ? "single" : null;
+      if (this.details.riders === null || this.details.riders.length === 0) {
+        return "single";
       }
-      return null;
+      return "";
     }
   }
 };
@@ -51,7 +51,7 @@ export default {
     display: flex;
     flex-direction: column;
     justify-content: center;
-    margin-top: 10px;
+    margin-top: 8px;
   }
 
   h2,
