@@ -38,16 +38,16 @@ const paymentDetail = {
       productId: "1",
       plan: "Gold",
       policyNumber: 1919000112,
-      price: "1.280.900",
+      price: "Rp 1.280.900",
       fee: "5.000",
       riders: [
         {
           name: "Super Motor",
-          price: "9.000"
+          price: "Rp 9.000"
         },
         {
           name: "Super Holiday",
-          price: "12.000"
+          price: "Rp 12.000"
         }
       ]
     },
@@ -56,7 +56,7 @@ const paymentDetail = {
       productId: "2",
       plan: "Silver",
       policyNumber: 1919000113,
-      price: "22.100",
+      price: "Rp 22.100",
       riders: null
     },
     {
@@ -64,7 +64,7 @@ const paymentDetail = {
       productId: "3",
       plan: "Bronze",
       policyNumber: 1919000114,
-      price: "22.100",
+      price: "Rp 22.100",
       riders: null
     }
   ],
