@@ -1,5 +1,5 @@
 <template>
-  <div id="invoice-detail">
+  <div class="invoice-detail">
     <div class="detail-left">
       <div class="product-icon" style="width:70px;">
         <BaseIconProductAndPlan :product="getIconProduct" :plan="getBadgeType" />
@@ -74,7 +74,7 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-#invoice-detail {
+.invoice-detail {
   display: flex;
   justify-content: space-between;
   width: 100%;
