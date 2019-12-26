@@ -11,7 +11,7 @@
     </div>
 
     <div class="detail-right">
-      <span class="price">
+      <span class="price" :class="noRiders">
         <!-- <span>Rp</span> -->
         <span>{{ datas.price }}</span>
       </span>
@@ -68,6 +68,12 @@ export default {
         return this.datas.plan.toLowerCase();
       }
       return "";
+    },
+    noRiders() {
+      if (this.datas) {
+        return !this.datas.riders ? "single" : null;
+      }
+      return null;
     }
   }
 };
@@ -99,6 +105,16 @@ export default {
     color: #313131;
     & > span:first-child {
       margin-right: 4px;
+    }
+
+    &.single {
+      display: flex;
+      height: 100%;
+      align-items: center;
+      @media screen and (max-width: 600px) {
+        display: block;
+        margin-top: 12px;
+      }
     }
   }
 

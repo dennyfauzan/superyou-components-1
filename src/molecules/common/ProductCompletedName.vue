@@ -1,5 +1,5 @@
 <template>
-  <div class="product-completed-name">
+  <div class="product-completed-name" :class="noRiders">
     <h2 class="basic-product">{{ details.name }} - {{ details.plan }}</h2>
     <template v-if="details.riders">
       <div class="rider-wrapper" v-for="(rider, i) in details.riders" :key="`rider${i}`">
@@ -33,6 +33,12 @@ export default {
   computed: {
     chipCustomStyle() {
       return "width: 62px;align-self: center;margin-left: 7px;height: 18px;padding: 2px 4px;";
+    },
+    noRiders() {
+      if (this.details) {
+        return !this.details.riders ? "single" : null;
+      }
+      return null;
     }
   }
 };
@@ -40,6 +46,14 @@ export default {
 
 <style lang="scss" scoped>
 .product-completed-name {
+  &.single {
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    margin-top: 10px;
+  }
+
   h2,
   .basic-product {
     margin: 0;
