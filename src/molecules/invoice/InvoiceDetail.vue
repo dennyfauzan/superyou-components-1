@@ -70,8 +70,8 @@ export default {
       return "";
     },
     noRiders() {
-      if (this.datas) {
-        return !this.datas.riders ? "single" : null;
+      if (this.datas.riders === null || this.datas.riders.length === 0) {
+        return "single";
       }
       return null;
     }

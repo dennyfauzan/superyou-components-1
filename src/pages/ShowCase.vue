@@ -55,7 +55,7 @@ const paymentDetail = {
       product: "Super Life Protection",
       productId: "2",
       plan: "Silver",
-      policyNumber: 1919000113,
+      policyNumber: null,
       price: "Rp 22.100",
       riders: null
     },

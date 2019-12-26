@@ -7,7 +7,7 @@
         <BaseChip :inlineStyles="chipCustomStyle" type="outline">Add On</BaseChip>
       </div>
     </template>
-    <p class="policy-number">{{ details.policyNumber }}</p>
+    <p class="policy-number" :class="noPolicyNumber">{{ details.policyNumber }}</p>
   </div>
 </template>
 
@@ -38,6 +38,10 @@ export default {
       if (this.details.riders === null || this.details.riders.length === 0) {
         return "single";
       }
+      return "";
+    },
+    noPolicyNumber() {
+      if (this.details.policyNumber === null) return "empty";
       return "";
     }
   }
@@ -86,6 +90,10 @@ export default {
     font-weight: 600;
     font-size: 14px;
     margin: 14px 0;
+
+    &.empty {
+      margin-top: 5px;
+    }
 
     @media screen and (max-width: 600px) {
       font-size: 12px;
