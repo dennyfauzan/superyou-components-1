@@ -18,6 +18,12 @@
             :key="invoice.id"
             :datas="invoice"
           />
+          <div class="invoice-summary">
+            <div class="invoice-summary__wrapper">
+              <h2>Payment Fee</h2>
+              <span>{{ detailPayment.fee }}</span>
+            </div>
+          </div>
         </div>
       </InvoiceBody>
     </div>
@@ -77,4 +83,47 @@ export default {
 };
 </script>
 
-<style></style>
+<style lang="scss" scoped>
+.invoice-summary {
+  width: 100%;
+  margin: 0 auto;
+  margin-top: 20px;
+  padding-top: 20px;
+  padding-bottom: 20px;
+  border-top: solid 0.5px #708697;
+
+  &__wrapper {
+    margin-left: auto;
+    display: flex;
+    flex-wrap: nowrap;
+    justify-content: space-between;
+    @media screen and (min-width: 601px) {
+      max-width: 81%;
+      padding-right: 20px;
+    }
+  }
+
+  h2 {
+    margin: 0;
+    font-size: 16px;
+    font-weight: 600;
+    color: #0d294a;
+  }
+
+  span {
+    margin-right: 4px;
+    color: #313131;
+  }
+
+  h2,
+  span {
+    @media screen and (max-width: 600px) {
+      font-size: 14px;
+    }
+
+    @media screen and (max-width: 320px) {
+      font-size: 12px;
+    }
+  }
+}
+</style>
