@@ -86,7 +86,6 @@ export default {
   width: 100%;
 
   margin: 0 auto;
-  margin-top: 20px;
   padding-top: 20px;
   padding-bottom: 20px;
   border-top: solid 0.5px #708697;
