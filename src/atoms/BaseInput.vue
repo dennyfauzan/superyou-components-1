@@ -68,6 +68,7 @@ export default {
       } else {
         e.preventDefault();
         e.stopPropagation();
+        return false;
       }
     }
   }
