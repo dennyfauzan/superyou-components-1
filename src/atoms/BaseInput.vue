@@ -9,7 +9,7 @@
           @keydown="expectedCharacters($event)"
           :value="value"
           class="su-input_text"
-          @focus="isFocused = true"
+          @focus="onFocus"
           @blur="onInputBlur"
           @input="onInputChange($event)"
           :readonly="isReadOnly"
@@ -74,6 +74,10 @@ export default {
         this.isReadOnly = true;
         return false;
       }
+    },
+    onFocus() {
+      this.isReadOnly = false;
+      this.isFocused = true;
     }
   }
 };
