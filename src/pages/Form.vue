@@ -43,7 +43,6 @@ export default {
   },
   methods: {
     handleInputChange(val, name) {
-      console.log("being passed val");
       this[name] = val;
     }
   }

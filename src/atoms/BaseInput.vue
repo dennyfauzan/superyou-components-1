@@ -4,13 +4,13 @@
       <label class="su-input_label">
         {{ label }}
         <input
-          :type="type"
+          :type="inputType"
           :name="name"
-          @keydown="expectedCharacters($event)"
           :value="value"
           class="su-input_text"
-          @focus="onFocus"
+          @focus="onInputFocus"
           @blur="onInputBlur"
+          @keydown="expectedCharacters($event)"
           @input="onInputChange($event)"
         />
       </label>
@@ -34,7 +34,7 @@ export default {
   props: {
     value: String,
     name: String,
-    type: {
+    inputType: {
       type: String,
       default: "text"
     },
@@ -55,25 +55,20 @@ export default {
     onInputBlur() {
       this.isFocused = false;
     },
+    onInputFocus() {
+      this.isFocused = true;
+    },
     onInputChange(e) {
-      console.log("pass true", e.target.value);
       this.$emit("handleChange", e.target.value, e.target.getAttribute("name"));
     },
     expectedCharacters(e) {
-      if (!this.char) return true;
-      const val = e.key;
       const rgx = new RegExp(this.char);
-      if (rgx.test(val) || val === "Backspace") {
-        return true;
-      } else {
-        console.log("false me");
-        e.target.value = this.value;
+      console.log(rgx.test(e.key), "result");
+      if (!rgx.test(e.key)) {
         e.preventDefault();
         return false;
       }
-    },
-    onFocus() {
-      this.isFocused = true;
+      return true;
     }
   }
 };
