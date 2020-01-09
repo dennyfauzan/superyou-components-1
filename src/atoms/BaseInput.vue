@@ -56,11 +56,18 @@ export default {
       this.$emit("handleChange", e.target.value, e.target.getAttribute("name"));
     },
     expectedCharacters(e) {
-      const val = e.key;
-      const rgx = new RegExp(this.char);
-      if (rgx.test(val)) {
-        return true;
-      } else {
+      // console.log(typeof e.which == "number");
+      // const val = e.key;
+      // const rgx = new RegExp(this.char);
+      // if (rgx.test(val)) {
+      //   return true;
+      // } else {
+      //   e.preventDefault();
+      // }
+      e = e || window.event;
+      var charCode = typeof e.which == "number" ? e.which : e.keyCode;
+      if (/[^\d]/.test(String.fromCharCode(charCode))) {
+        //return false;
         e.preventDefault();
       }
     }
