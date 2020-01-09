@@ -62,7 +62,7 @@ export default {
       this.$emit("handleChange", e.target.value, e.target.getAttribute("name"));
     },
     expectedCharacters(e) {
-      console.log(e);
+      if (!this.char) return true;
       const val = e.key;
       const rgx = new RegExp(this.char);
       if (rgx.test(val) || val === "Backspace") {
