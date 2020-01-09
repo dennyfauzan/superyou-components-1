@@ -50,6 +50,14 @@ export default {
 </script>
 
 <style lang="scss">
+input[type="number"] {
+  -moz-appearance: textfield;
+}
+input[type="number"]::-webkit-inner-spin-button,
+input[type="number"]::-webkit-outer-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
 #form-container {
   padding-left: 25px;
   padding-right: 25px;
