@@ -15,9 +15,7 @@
         />
       </label>
 
-      <span v-if="isError" class="su-input_error message"
-        >Nama tidak valid</span
-      >
+      <span v-if="isError" class="su-input_error message">Nama tidak valid</span>
       <span v-else class="su-input_note message">{{ note }}</span>
     </div>
   </div>
@@ -30,8 +28,7 @@ export default {
     return {
       isFocused: false,
       isError: false,
-      isReadOnly: false,
-      isValidChar: false
+      isReadOnly: false
     };
   },
   props: {
@@ -59,8 +56,7 @@ export default {
       this.isFocused = false;
     },
     onInputChange(e) {
-      if (!this.isValidChar) return false;
-      console.log("pass true");
+      console.log("pass true", e.target.value);
       this.$emit("handleChange", e.target.value, e.target.getAttribute("name"));
     },
     expectedCharacters(e) {
@@ -68,13 +64,11 @@ export default {
       const val = e.key;
       const rgx = new RegExp(this.char);
       if (rgx.test(val) || val === "Backspace") {
-        this.isValidChar = true;
         return true;
       } else {
         console.log("false me");
-        this.isValidChar = false;
+        e.target.value = "";
         e.preventDefault();
-        e.stopImmediatePropagation();
         return false;
       }
     },
