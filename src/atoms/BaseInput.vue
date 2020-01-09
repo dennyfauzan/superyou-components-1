@@ -4,7 +4,7 @@
       <label class="su-input_label">
         {{ label }}
         <input
-          type="text"
+          :type="type"
           :name="name"
           @keypress="expectedCharacters($event)"
           :value="value"
@@ -35,6 +35,10 @@ export default {
   props: {
     value: String,
     name: String,
+    type: {
+      type: String,
+      default: "text"
+    },
     label: {
       type: String,
       default: null
@@ -56,19 +60,14 @@ export default {
       this.$emit("handleChange", e.target.value, e.target.getAttribute("name"));
     },
     expectedCharacters(e) {
-      // console.log(typeof e.which == "number");
-      // const val = e.key;
-      // const rgx = new RegExp(this.char);
-      // if (rgx.test(val)) {
-      //   return true;
-      // } else {
-      //   e.preventDefault();
-      // }
-      e = e || window.event;
-      var charCode = typeof e.which == "number" ? e.which : e.keyCode;
-      if (/[^\d]/.test(String.fromCharCode(charCode))) {
-        //return false;
+      console.log(typeof e.which == "number");
+      const val = e.key;
+      const rgx = new RegExp(this.char);
+      if (rgx.test(val)) {
+        return true;
+      } else {
         e.preventDefault();
+        e.stopPropagation();
       }
     }
   }
