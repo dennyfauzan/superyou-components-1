@@ -12,7 +12,6 @@
           @focus="onFocus"
           @blur="onInputBlur"
           @input="onInputChange($event)"
-          :readonly="isReadOnly"
         />
       </label>
 
@@ -31,7 +30,8 @@ export default {
     return {
       isFocused: false,
       isError: false,
-      isReadOnly: false
+      isReadOnly: false,
+      isValidChar: false
     };
   },
   props: {
@@ -59,6 +59,8 @@ export default {
       this.isFocused = false;
     },
     onInputChange(e) {
+      if (!this.isValidChar) return false;
+      console.log("pass true");
       this.$emit("handleChange", e.target.value, e.target.getAttribute("name"));
     },
     expectedCharacters(e) {
@@ -66,17 +68,17 @@ export default {
       const val = e.key;
       const rgx = new RegExp(this.char);
       if (rgx.test(val) || val === "Backspace") {
-        this.isReadOnly = false;
+        this.isValidChar = true;
         return true;
       } else {
-        // e.preventDefault();
-        // e.stopPropagation();
-        this.isReadOnly = true;
+        console.log("false me");
+        this.isValidChar = false;
+        e.preventDefault();
+        e.stopImmediatePropagation();
         return false;
       }
     },
     onFocus() {
-      this.isReadOnly = false;
       this.isFocused = true;
     }
   }
