@@ -67,7 +67,7 @@ export default {
         return true;
       } else {
         console.log("false me");
-        e.target.value = "";
+        e.target.value = this.value;
         e.preventDefault();
         return false;
       }
