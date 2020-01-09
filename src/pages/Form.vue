@@ -15,6 +15,7 @@
         label="Nomor Kartu Indentitas"
         @handleChange="handleInputChange"
         name="citizenId"
+        inputType="text"
         char="^[0-9]*$"
       ></base-input>
       <base-input

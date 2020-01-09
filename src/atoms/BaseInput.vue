@@ -10,7 +10,7 @@
           class="su-input_text"
           @focus="onInputFocus"
           @blur="onInputBlur"
-          @keydown="expectedCharacters($event)"
+          @beforeinput="expectedCharacters($event)"
           @input="onInputChange($event)"
         />
       </label>
@@ -63,11 +63,12 @@ export default {
     },
     expectedCharacters(e) {
       const rgx = new RegExp(this.char);
-      console.log(rgx.test(e.key), "result");
-      if (!rgx.test(e.key)) {
-        e.preventDefault();
-        return false;
+      console.log(e);
+      console.log(rgx.test(e.data), "result");
+      if (rgx.test(e.data) || e.inputType === "deleteContentBackward") {
+        return true;
       }
+      e.preventDefault();
       return true;
     }
   }
