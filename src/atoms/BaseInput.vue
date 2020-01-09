@@ -6,12 +6,13 @@
         <input
           :type="type"
           :name="name"
-          @keypress="expectedCharacters($event)"
+          @keydown="expectedCharacters($event)"
           :value="value"
           class="su-input_text"
           @focus="isFocused = true"
           @blur="onInputBlur"
           @input="onInputChange($event)"
+          :readonly="isReadOnly"
         />
       </label>
 
@@ -29,7 +30,8 @@ export default {
   data() {
     return {
       isFocused: false,
-      isError: false
+      isError: false,
+      isReadOnly: false
     };
   },
   props: {
@@ -60,14 +62,16 @@ export default {
       this.$emit("handleChange", e.target.value, e.target.getAttribute("name"));
     },
     expectedCharacters(e) {
-      console.log(typeof e.which == "number");
+      console.log(e);
       const val = e.key;
       const rgx = new RegExp(this.char);
-      if (rgx.test(val)) {
+      if (rgx.test(val) || val === "Backspace") {
+        this.isReadOnly = false;
         return true;
       } else {
-        e.preventDefault();
-        e.stopPropagation();
+        // e.preventDefault();
+        // e.stopPropagation();
+        this.isReadOnly = true;
         return false;
       }
     }
