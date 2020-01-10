@@ -7,6 +7,7 @@
           :type="inputType"
           :name="name"
           :value="value"
+          autocomplete="off"
           class="su-input_text"
           @focus="onInputFocus"
           @blur="onInputBlur"
@@ -15,20 +16,21 @@
         />
       </label>
 
-      <span v-if="isError" class="su-input_error message">Nama tidak valid</span>
+      <span v-if="isError" class="su-input_error message">{{ errorMessage }}</span>
       <span v-else class="su-input_note message">{{ note }}</span>
     </div>
   </div>
 </template>
 
-<script>
+<script scoped>
 export default {
   name: "BaseInput",
   data() {
     return {
       isFocused: false,
       isError: false,
-      isReadOnly: false
+      isReadOnly: false,
+      errorMessage: null
     };
   },
   props: {
@@ -49,11 +51,26 @@ export default {
     char: {
       type: String,
       default: null
+    },
+    maxLength: {
+      type: Number,
+      default: null
+    },
+    minLength: {
+      type: Number,
+      default: 0
     }
   },
   methods: {
     onInputBlur() {
       this.isFocused = false;
+      if (this.checkMinLength()) {
+        this.errorMessage = `Minimal ${this.minLength} karakter`;
+        this.isError = true;
+      } else {
+        this.errorMessage = "";
+        this.isError = false;
+      }
     },
     onInputFocus() {
       this.isFocused = true;
@@ -62,20 +79,47 @@ export default {
       this.$emit("handleChange", e.target.value, e.target.getAttribute("name"));
     },
     expectedCharacters(e) {
+      this.checkMaxLength(e);
+      this.checkCharRegexMatch(e);
+      return true;
+    },
+    checkMaxLength(e) {
+      if (
+        this.maxLength &&
+        e.target.value.length >= this.maxLength &&
+        e.inputType !== "deleteContentBackward"
+      ) {
+        e.preventDefault();
+        return false;
+      }
+    },
+    checkMinLength() {
+      let length = this.value ? this.value.length : 0;
+      return this.minLength > length;
+    },
+    checkCharRegexMatch(e) {
+      if (!this.char) return;
+
       const rgx = new RegExp(this.char);
-      console.log(e);
-      console.log(rgx.test(e.data), "result");
       if (rgx.test(e.data) || e.inputType === "deleteContentBackward") {
         return true;
       }
       e.preventDefault();
-      return true;
+      return false;
     }
   }
 };
 </script>
 
 <style lang="scss">
+input[type="number"] {
+  -moz-appearance: textfield;
+}
+input[type="number"]::-webkit-inner-spin-button,
+input[type="number"]::-webkit-outer-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
 .su-input {
   position: relative;
   margin-bottom: 25px;
