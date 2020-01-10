@@ -9,6 +9,7 @@
         name="userName"
         note="Note: Nama Lengkap"
         char="^[A-Za-z ]+$"
+        :min-length="3"
       ></base-input>
       <base-input
         :value="citizenId"
@@ -17,12 +18,14 @@
         name="citizenId"
         inputType="text"
         char="^[0-9]*$"
+        :max-length="16"
       ></base-input>
       <base-input
         :value="insuredName"
         label="Nama Tertanggung"
         @handleChange="handleInputChange"
         name="insuredName"
+        inputType="email"
       ></base-input>
     </form>
   </div>
@@ -36,7 +39,13 @@ export default {
     return {
       userName: null,
       citizenId: null,
-      insuredName: null
+      insuredName: null,
+      email: {
+        val: null,
+        isError: false,
+        errorMsg: null,
+        min: 4
+      }
     };
   },
   components: {
@@ -50,15 +59,7 @@ export default {
 };
 </script>
 
-<style lang="scss">
-input[type="number"] {
-  -moz-appearance: textfield;
-}
-input[type="number"]::-webkit-inner-spin-button,
-input[type="number"]::-webkit-outer-spin-button {
-  -webkit-appearance: none;
-  margin: 0;
-}
+<style lang="scss" scoped>
 #form-container {
   padding-left: 25px;
   padding-right: 25px;
