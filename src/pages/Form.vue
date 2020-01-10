@@ -9,7 +9,7 @@
         name="userName"
         note="Note: Nama Lengkap"
         char="^[A-Za-z ]+$"
-        :min-length="3"
+        :min-length="6"
       ></base-input>
       <base-input
         :value="citizenId"

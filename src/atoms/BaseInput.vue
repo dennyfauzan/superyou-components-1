@@ -71,6 +71,10 @@ export default {
         this.errorMessage = "";
         this.isError = false;
       }
+
+      if (this.inputType === "email") {
+        this.validateEmail(this.value);
+      }
     },
     onInputFocus() {
       this.isFocused = true;
@@ -106,6 +110,18 @@ export default {
       }
       e.preventDefault();
       return false;
+    },
+    validateEmail(mail) {
+      let mail_regex = /^(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/; // eslint-disable-line
+
+      console.log(mail_regex.test(mail));
+      if (mail_regex.test(mail)) {
+        this.isError = false;
+        this.errorMessage = "";
+        return true;
+      }
+      this.isError = true;
+      this.errorMessage = "Format email tidak valid";
     }
   }
 };
