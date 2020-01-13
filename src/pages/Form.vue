@@ -1,5 +1,6 @@
 <template>
   <div id="form-container">
+    <BaseStepper :dataSteps="dataSteps" />
     <h1>Form</h1>
     <form>
       <base-input
@@ -22,17 +23,22 @@
       ></base-input>
       <base-input
         :value="insuredName"
-        label="Nama Tertanggung"
+        label="Email"
         @handleChange="handleInputChange"
         name="insuredName"
         inputType="email"
       ></base-input>
+      <br />
+      <base-select></base-select>
     </form>
   </div>
 </template>
 
 <script>
 import BaseInput from "../atoms/BaseInput";
+import BaseStepper from "../atoms/BaseStepper";
+import BaseSelect from "../atoms/BaseSelect";
+
 export default {
   name: "FormComponets",
   data() {
@@ -45,11 +51,31 @@ export default {
         isError: false,
         errorMsg: null,
         min: 4
-      }
+      },
+      dataSteps: [
+        {
+          title: "1",
+          info: "Pilih Produk"
+        },
+        {
+          title: "2",
+          info: "Isi Data"
+        },
+        {
+          title: "3",
+          info: "Ringkasan Pembelian"
+        },
+        {
+          title: "4",
+          info: "Pembayaran"
+        }
+      ]
     };
   },
   components: {
-    BaseInput
+    BaseInput,
+    BaseStepper,
+    BaseSelect
   },
   methods: {
     handleInputChange(val, name) {
@@ -61,6 +87,7 @@ export default {
 
 <style lang="scss" scoped>
 #form-container {
+  padding-top: 40px;
   padding-left: 25px;
   padding-right: 25px;
 
@@ -69,7 +96,6 @@ export default {
   display: flex;
   flex-direction: column;
   background: #fff;
-  padding: 0 10px;
   min-height: 100vh;
 
   box-shadow: 0 4px 5px 0 rgba(0, 0, 0, 0.14), 0 1px 10px 0 rgba(0, 0, 0, 0.12),
