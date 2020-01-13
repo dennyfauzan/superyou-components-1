@@ -29,7 +29,7 @@
         inputType="email"
       ></base-input>
       <br />
-      <base-select></base-select>
+      <base-select label="Hubungan" :options="dataSelectOpt"></base-select>
     </form>
   </div>
 </template>
@@ -69,6 +69,12 @@ export default {
           title: "4",
           info: "Pembayaran"
         }
+      ],
+      dataSelectOpt: [
+        { label: "Saya Sendiri", val: "self" },
+        { label: "Ayah Kandung", val: "father" },
+        { label: "Ibu Kandung", val: "mother" },
+        { label: "Saudara Kandung", val: "brother" }
       ]
     };
   },
