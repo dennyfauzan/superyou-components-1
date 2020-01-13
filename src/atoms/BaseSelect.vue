@@ -72,7 +72,19 @@ export default {
     .vs__dropdown-toggle {
       border: none;
       border-radius: 0;
-      border-bottom: 1px solid rgba(0, 0, 0, 0.3);
+      
+      &::before {
+        bottom: -1px;
+        content: "";
+        left: 0;
+        position: absolute;
+        transition: 0.3s cubic-bezier(0.25, 0.8, 0.5, 1);
+        width: 100%;
+
+        border-style: solid;
+        border-width: thin 0 0 0;
+        border-color: rgba(0, 0, 0, 0.3);
+      }
 
       &::after {
         bottom: -1px;
@@ -81,7 +93,6 @@ export default {
         position: absolute;
         transition: 0.3s cubic-bezier(0.25, 0.8, 0.5, 1);
         width: 100%;
-
         border-style: solid;
         border-width: thin 0 thin 0;
         border-color: #00aaae;
