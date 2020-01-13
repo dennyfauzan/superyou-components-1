@@ -59,7 +59,7 @@ export default {
 #su-base-select {
   label {
     color: #708697;
-    font-size: 12px;
+    font-size: 14px;
     &.active {
       color: #00aaae;
     }
@@ -75,10 +75,10 @@ export default {
         .vs__selected {
           padding-left: 0;
           margin: 10px 2px 4px 0;
-          font-size: 14px;
+          font-size: 16px;
         }
         .vs__search {
-          font-size: 14px;
+          font-size: 16px;
           color: #0d294a;
           padding-bottom: 4px;
         }
@@ -93,13 +93,13 @@ export default {
     }
     .vs__dropdown-menu {
       .vs__dropdown-option {
-        font-size: 14px;
+        font-size: 16px;
         &--highlight {
           background-color: #00aaae;
         }
       }
       .vs__no-options {
-        font-size: 14px;
+        font-size: 16px;
         color: #708697;
       }
     }

@@ -16,7 +16,9 @@
         />
       </label>
 
-      <span v-if="isError" class="su-input_error message">{{ errorMessage }}</span>
+      <span v-if="isError" class="su-input_error message">{{
+        errorMessage
+      }}</span>
       <span v-else class="su-input_note message">{{ note }}</span>
     </div>
   </div>
@@ -181,7 +183,7 @@ input[type="number"]::-webkit-outer-spin-button {
 
     .su-input_label {
       color: #708697;
-      font-size: 12px;
+      font-size: 14px;
     }
 
     .su-input_text {
@@ -195,7 +197,7 @@ input[type="number"]::-webkit-outer-spin-button {
       border-style: none;
 
       color: #0d294a;
-      font-size: 14px;
+      font-size: 16px;
 
       &:focus {
         outline: none;
@@ -207,7 +209,7 @@ input[type="number"]::-webkit-outer-spin-button {
       width: 100%;
       left: 0;
       bottom: -20px;
-      font-size: 9px;
+      font-size: 10px;
       &.su-input_error {
         color: red;
       }
