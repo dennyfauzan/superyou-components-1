@@ -100,16 +100,6 @@ export default {
       transition: width 0.4s ease;
       max-width: 100%;
     }
-    /* &::before {
-      content: "";
-      height: 5px;
-      clear: both;
-      display: block;
-      width: 40%;
-      background-color: #00aaae;
-      transition: width 0.4s ease;
-      max-width: 100%;
-    } */
   }
 
   .su-step {
@@ -146,6 +136,9 @@ export default {
       max-width: 75px;
       min-width: 50px;
       line-height: 1.3;
+      @media screen and (max-width: 320px) {
+        font-size: 10px;
+      }
     }
   }
 }
