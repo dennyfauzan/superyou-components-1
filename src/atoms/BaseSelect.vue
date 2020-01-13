@@ -4,6 +4,7 @@
     <v-select
       class="base-select"
       :options="options"
+      :searchable="false"
       :selectable="option => option.val !== 'INA'"
       @input="onSelectOption"
     ></v-select>
