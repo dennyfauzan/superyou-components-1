@@ -131,7 +131,7 @@ export default {
       .vs__open-indicator {
         transform: rotate(180deg) scale(0.85) !important;
       }
-      .vs__dropdown-toggle.is-focused {
+      .vs__dropdown-toggle {
         &::after {
           transform: scaleX(1);
         }
