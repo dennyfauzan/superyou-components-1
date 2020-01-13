@@ -1,12 +1,14 @@
 <template>
   <div id="su-base-select">
-    <label>Select Option</label>
+    <label :class="{ active: isFocused }">Status Tertanggung</label>
     <v-select
       class="base-select"
       :options="options"
       :searchable="false"
       :selectable="option => option.val !== 'INA'"
       @input="onSelectOption"
+      @search:focus="onFocus"
+      @search:blur="onBlur"
     ></v-select>
   </div>
 </template>
@@ -18,7 +20,8 @@ export default {
   name: "BaseSelect",
   data() {
     return {
-      selectedData: null
+      selectedData: null,
+      isFocused: false
     };
   },
   components: {
@@ -38,8 +41,15 @@ export default {
   },
   methods: {
     onSelectOption(selectedData) {
-      console.log(selectedData);
-      this.selectedData = selectedData.val;
+      if (selectedData) {
+        this.selectedData = selectedData;
+      }
+    },
+    onFocus() {
+      this.isFocused = true;
+    },
+    onBlur() {
+      this.isFocused = false;
     }
   }
 };
@@ -50,6 +60,9 @@ export default {
   label {
     color: #708697;
     font-size: 12px;
+    &.active {
+      color: #00aaae;
+    }
   }
   .base-select {
     .vs__dropdown-toggle {
