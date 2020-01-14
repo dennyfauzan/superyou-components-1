@@ -11,6 +11,7 @@
         note="Note: Nama Lengkap"
         char="^[A-Za-z ]+$"
         :min-length="6"
+        required
       ></base-input>
       <base-input
         :value="citizenId"
@@ -20,6 +21,7 @@
         inputType="text"
         char="^[0-9]*$"
         :max-length="16"
+        required
       ></base-input>
       <base-input
         :value="insuredName"
@@ -27,9 +29,17 @@
         @handleChange="handleInputChange"
         name="insuredName"
         inputType="email"
+        required
       ></base-input>
       <br />
-      <base-select label="Hubungan" :options="dataSelectOpt"></base-select>
+      <base-select
+        name="relations"
+        label="Hubungan"
+        :options="dataSelectOpt"
+        @handleChange="handleInputChange"
+      ></base-select>
+      <br />
+      <base-checkbox name="gender" @handleChange="handleInputChange" axis="row"></base-checkbox>
     </form>
   </div>
 </template>
@@ -38,6 +48,7 @@
 import BaseInput from "../atoms/BaseInput";
 import BaseStepper from "../atoms/BaseStepper";
 import BaseSelect from "../atoms/BaseSelect";
+import BaseCheckbox from "../atoms/BaseCheckbox";
 
 export default {
   name: "FormComponets",
@@ -46,6 +57,8 @@ export default {
       userName: null,
       citizenId: null,
       insuredName: null,
+      relations: null,
+      gender: null,
       email: {
         val: null,
         isError: false,
@@ -81,7 +94,8 @@ export default {
   components: {
     BaseInput,
     BaseStepper,
-    BaseSelect
+    BaseSelect,
+    BaseCheckbox
   },
   methods: {
     handleInputChange(val, name) {

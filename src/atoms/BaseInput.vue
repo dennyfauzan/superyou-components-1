@@ -1,5 +1,5 @@
 <template>
-  <div class="su-input" :class="{ 'with-note': note }">
+  <div class="su-input" :class="{ 'with-note': note, 'input-error': isError }">
     <div class="su-input_control" :class="{ 'is-focused': isFocused }">
       <label class="su-input_label">
         {{ label }}
@@ -16,9 +16,7 @@
         />
       </label>
 
-      <span v-if="isError" class="su-input_error message">{{
-        errorMessage
-      }}</span>
+      <span v-if="isError" class="su-input_error message">{{ errorMessage }}</span>
       <span v-else class="su-input_note message">{{ note }}</span>
     </div>
   </div>
@@ -36,7 +34,9 @@ export default {
     };
   },
   props: {
-    value: String,
+    value: {
+      type: String
+    },
     name: String,
     inputType: {
       type: String,
@@ -61,11 +61,20 @@ export default {
     minLength: {
       type: Number,
       default: 0
+    },
+    required: {
+      type: Boolean,
+      default: false
     }
   },
   methods: {
     onInputBlur() {
       this.isFocused = false;
+      if (this.required && (this.value === null || this.value.length === 0)) {
+        this.errorMessage = `${this.label} wajib di isi`;
+        this.isError = true;
+        return this.isError;
+      }
       if (this.checkMinLength()) {
         this.errorMessage = `Minimal ${this.minLength} karakter`;
         this.isError = true;
@@ -211,10 +220,20 @@ input[type="number"]::-webkit-outer-spin-button {
       bottom: -20px;
       font-size: 10px;
       &.su-input_error {
-        color: red;
+        color: #e02020;
       }
       &.su-input_note {
         color: #0d294a;
+      }
+    }
+  }
+  &.input-error {
+    .su-input_control {
+      .su-input_label {
+        color: #e02020;
+      }
+      &::before {
+        border-color: #e02020;
       }
     }
   }

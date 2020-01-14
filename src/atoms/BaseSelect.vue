@@ -1,5 +1,5 @@
 <template>
-  <div id="su-base-select">
+  <div id="su-base-select" :class="{'input-error': isError}">
     <label :class="{ active: isFocused }">{{ label }}</label>
     <v-select
       class="base-select"
@@ -9,7 +9,9 @@
       @input="onSelectOption"
       @search:focus="onFocus"
       @search:blur="onBlur"
+      :select-on-key-codes="[8]"
     ></v-select>
+    <span v-if="isError" class="su-input_error message">{{errorMessage}}</span>
   </div>
 </template>
 
@@ -21,7 +23,9 @@ export default {
   data() {
     return {
       selectedData: null,
-      isFocused: false
+      isFocused: false,
+      isError: false,
+      errorMessage: ""
     };
   },
   components: {
@@ -41,6 +45,10 @@ export default {
     label: {
       type: String,
       default: "Label"
+    },
+    name: {
+      type: String,
+      default: null
     }
   },
   methods: {
@@ -54,6 +62,19 @@ export default {
     },
     onBlur() {
       this.isFocused = false;
+      if (this.selectedData === null) {
+        this.isError = true;
+        this.errorMessage = "Wajib di isi";
+        return this.isError;
+      }
+      this.isError = false;
+      this.errorMessage = "";
+      return this.isError;
+    }
+  },
+  watch: {
+    selectedData(newData) {
+      this.$emit("handleChange", newData, this.name);
     }
   }
 };
@@ -72,7 +93,7 @@ export default {
     .vs__dropdown-toggle {
       border: none;
       border-radius: 0;
-      
+
       &::before {
         bottom: -1px;
         content: "";
@@ -101,7 +122,9 @@ export default {
 
       .vs__selected-options {
         padding-left: 0;
+        min-height: 38px;
         .vs__selected {
+          color: #0d294a;
           padding-left: 0;
           margin: 10px 2px 4px 0;
           font-size: 16px;
@@ -114,6 +137,9 @@ export default {
       }
 
       .vs__actions {
+        .vs__clear {
+          display: none;
+        }
         .vs__open-indicator {
           fill: #0d294a;
           transform: scale(0.85) rotate(0deg);
@@ -125,6 +151,8 @@ export default {
       border-radius: 8px;
       box-shadow: 0 2px 10px 0 rgba(109, 131, 172, 0.25);
       border: none;
+      padding-top: 0;
+      padding-bottom: 0;
       .vs__dropdown-option {
         font-size: 16px;
         padding: 6px 20px;
@@ -148,6 +176,29 @@ export default {
         }
       }
     }
+  }
+  &.input-error {
+    label {
+      color: #e02020;
+    }
+    .vs__dropdown-toggle {
+      &::before {
+        border-color: #e02020;
+      }
+    }
+  }
+}
+
+.message {
+  margin-top: 8px;
+  width: 100%;
+  display: inline-block;
+  font-size: 10px;
+  &.su-input_error {
+    color: #e02020;
+  }
+  &.su-input_note {
+    color: #0d294a;
   }
 }
 </style>
