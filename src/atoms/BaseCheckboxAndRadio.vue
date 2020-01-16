@@ -3,11 +3,11 @@
     <label class="main">Jenis Kelamin</label>
     <div class="checkbox-wrapper" v-for="option in options" :key="option.val">
       <input
-        type="checkbox"
+        :type="inputType"
         v-model="checkedData"
         :value="option.val"
         :id="option.name"
-        :name="option.name"
+        :name="name"
       />
       <label :for="option.name">{{ option.name }}</label>
     </div>
@@ -17,7 +17,7 @@
 
 <script>
 export default {
-  name: "BaseCheckbox",
+  name: "BaseCheckboxAndRadio",
   data() {
     return {
       checkedData: [],
@@ -48,6 +48,10 @@ export default {
     name: {
       type: String,
       default: null
+    },
+    inputType: {
+      type: String,
+      default: "checkbox"
     }
   },
   watch: {
@@ -111,7 +115,8 @@ export default {
       }
     }
 
-    input[type="checkbox"]:checked + label:before {
+    input[type="checkbox"]:checked + label:before,
+    input[type="radio"]:checked + label:before {
       content: url(https://superyou.co.id/img/icons/check-darkblue.svg);
     }
   }

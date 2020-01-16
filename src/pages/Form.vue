@@ -13,6 +13,7 @@
         :min-length="6"
         required
       ></base-input>
+      <br />
       <base-input
         :value="citizenId"
         label="Nomor Kartu Indentitas"
@@ -23,6 +24,7 @@
         :max-length="16"
         required
       ></base-input>
+      <br />
       <base-input
         :value="insuredName"
         label="Email"
@@ -39,7 +41,14 @@
         @handleChange="handleInputChange"
       ></base-select>
       <br />
-      <base-checkbox name="gender" @handleChange="handleInputChange" axis="row"></base-checkbox>
+      <base-checkbox-and-radio
+        name="gender"
+        @handleChange="handleInputChange"
+        axis="row"
+        inputType="checkbox"
+      ></base-checkbox-and-radio>
+      <br />
+      <base-input-date :value="dob"></base-input-date>
     </form>
   </div>
 </template>
@@ -48,7 +57,8 @@
 import BaseInput from "../atoms/BaseInput";
 import BaseStepper from "../atoms/BaseStepper";
 import BaseSelect from "../atoms/BaseSelect";
-import BaseCheckbox from "../atoms/BaseCheckbox";
+import BaseCheckboxAndRadio from "../atoms/BaseCheckboxAndRadio";
+import BaseInputDate from "../atoms/BaseInputDate";
 
 export default {
   name: "FormComponets",
@@ -59,6 +69,7 @@ export default {
       insuredName: null,
       relations: null,
       gender: null,
+      dob: "",
       email: {
         val: null,
         isError: false,
@@ -95,7 +106,8 @@ export default {
     BaseInput,
     BaseStepper,
     BaseSelect,
-    BaseCheckbox
+    BaseCheckboxAndRadio,
+    BaseInputDate
   },
   methods: {
     handleInputChange(val, name) {

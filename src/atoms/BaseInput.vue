@@ -14,15 +14,20 @@
           @beforeinput="expectedCharacters($event)"
           @input="onInputChange($event)"
         />
+        <span class="su-input_icon" v-if="icon">
+          <img :src="icon" alt="input icon" />
+        </span>
       </label>
 
-      <span v-if="isError" class="su-input_error message">{{ errorMessage }}</span>
+      <span v-if="isError" class="su-input_error message">{{
+        errorMessage
+      }}</span>
       <span v-else class="su-input_note message">{{ note }}</span>
     </div>
   </div>
 </template>
 
-<script scoped>
+<script>
 export default {
   name: "BaseInput",
   data() {
@@ -65,6 +70,10 @@ export default {
     required: {
       type: Boolean,
       default: false
+    },
+    icon: {
+      type: String,
+      default: null
     }
   },
   methods: {
@@ -138,7 +147,7 @@ export default {
 };
 </script>
 
-<style lang="scss">
+<style lang="scss" scoped>
 input[type="number"] {
   -moz-appearance: textfield;
 }
@@ -149,10 +158,7 @@ input[type="number"]::-webkit-outer-spin-button {
 }
 .su-input {
   position: relative;
-  margin-bottom: 25px;
-  &.with-note {
-    margin-bottom: 40px;
-  }
+  margin-bottom: 20px;
   &_control {
     &::before {
       bottom: -1px;
@@ -161,7 +167,6 @@ input[type="number"]::-webkit-outer-spin-button {
       position: absolute;
       transition: 0.3s cubic-bezier(0.25, 0.8, 0.5, 1);
       width: 100%;
-
       border-style: solid;
       border-width: thin 0 0 0;
       border-color: rgba(0, 0, 0, 0.3);
@@ -191,8 +196,18 @@ input[type="number"]::-webkit-outer-spin-button {
     }
 
     .su-input_label {
+      position: relative;
       color: #708697;
       font-size: 14px;
+
+      .su-input_icon {
+        position: absolute;
+        bottom: -2px;
+        right: 2px;
+        img {
+          max-width: 22px;
+        }
+      }
     }
 
     .su-input_text {

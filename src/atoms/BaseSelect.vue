@@ -82,6 +82,7 @@ export default {
 
 <style lang="scss">
 #su-base-select {
+  margin-bottom: 20px;
   label {
     color: #708697;
     font-size: 14px;
@@ -90,6 +91,7 @@ export default {
     }
   }
   .base-select {
+    height: 38px;
     .vs__dropdown-toggle {
       border: none;
       border-radius: 0;
@@ -122,11 +124,10 @@ export default {
 
       .vs__selected-options {
         padding-left: 0;
-        min-height: 38px;
         .vs__selected {
           color: #0d294a;
           padding-left: 0;
-          margin: 10px 2px 4px 0;
+          margin: 8px 2px 4px 0;
           font-size: 16px;
         }
         .vs__search {
@@ -147,7 +148,7 @@ export default {
       }
     }
     .vs__dropdown-menu {
-      top: 105%;
+      top: 130%;
       border-radius: 8px;
       box-shadow: 0 2px 10px 0 rgba(109, 131, 172, 0.25);
       border: none;
