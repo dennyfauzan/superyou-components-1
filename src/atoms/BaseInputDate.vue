@@ -91,7 +91,12 @@ export default {
       year: `${this.value ? new Date(this.value).getFullYear() : ``}`,
       isFocused: false,
       isError: false,
-      errorMessage: ""
+      errorMessage: "",
+      dateFlag: {
+        day: 0,
+        month: 0,
+        year: 0
+      }
     };
   },
   watch: {
@@ -164,8 +169,7 @@ export default {
     eachBlur(type, howMany) {
       if (this[type].length) {
         this[type] = this[type].padStart(howMany, 0);
-      } else {
-        this[type] = "";
+        this.dateFlag[type] += 1;
       }
     },
     eachFocus(type) {
@@ -176,6 +180,8 @@ export default {
       } else if (type === "month") {
         if (this.day.length === 0 && this.month.length === 0) {
           this.$refs.day.select();
+          this.errorMessage = "";
+          this.isError = false;
         }
       }
     },
@@ -187,20 +193,22 @@ export default {
       this.errorMessage = "";
       this.isFocused = false;
 
-      if (!this.checkValidDate()) {
-        this.isError = true;
-        this.errorMessage = "Tanggal lahir tidak valid";
-        return false;
-      }
+      if (this.dateFlag.day && this.dateFlag.month && this.dateFlag.year) {
+        if (!this.checkValidDate()) {
+          this.isError = true;
+          this.errorMessage = "Tanggal lahir tidak valid";
+          return false;
+        }
 
-      if (this.minAge && !this.validateMinMaxYear(this.minAge)) {
-        this.isError = true;
-        this.errorMessage = `Umur harus ${17} tahun ke atas`;
-      }
+        if (this.minAge && !this.validateMinMaxYear(this.minAge)) {
+          this.isError = true;
+          this.errorMessage = `Umur harus ${17} tahun ke atas`;
+        }
 
-      if (this.maxAge && this.validateMinMaxYear(this.maxAge)) {
-        this.isError = true;
-        this.errorMessage = `Umur harus dibawah ${this.maxAge} tahun ke atas`;
+        if (this.maxAge && this.validateMinMaxYear(this.maxAge)) {
+          this.isError = true;
+          this.errorMessage = `Umur harus dibawah ${this.maxAge} tahun ke atas`;
+        }
       }
     }
   },
@@ -220,6 +228,7 @@ export default {
     display: block;
     color: #708697;
     font-size: 14px;
+    margin-bottom: 2px;
     &.active {
       color: #00aaae;
     }
