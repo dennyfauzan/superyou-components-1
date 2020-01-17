@@ -19,7 +19,7 @@
         label="Nomor Kartu Indentitas"
         @handleChange="handleInputChange"
         name="citizenId"
-        inputType="text"
+        inputType="tel"
         char="^[0-9]*$"
         :max-length="16"
         required
