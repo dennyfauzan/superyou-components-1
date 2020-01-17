@@ -48,7 +48,11 @@
         inputType="checkbox"
       ></base-checkbox-and-radio>
       <br />
-      <base-input-date :value="dob"></base-input-date>
+      <base-input-date
+        :value="dob"
+        :min-age="17"
+        :max-age="40"
+      ></base-input-date>
     </form>
   </div>
 </template>
@@ -87,7 +91,7 @@ export default {
         },
         {
           title: "3",
-          info: "Ringkasan Pembelian"
+          info: "Review"
         },
         {
           title: "4",
