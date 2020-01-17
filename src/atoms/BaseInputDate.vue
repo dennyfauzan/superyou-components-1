@@ -15,7 +15,7 @@
         ref="day"
         v-model="day"
         class="su-date__input su-date__input--day"
-        type="number"
+        type="tel"
         placeholder="dd"
         @input="updateDay"
         @blur="eachBlur('day', 2)"
@@ -26,7 +26,7 @@
         ref="month"
         v-model="month"
         class="su-date__input su-date__input--month"
-        type="number"
+        type="tel"
         placeholder="mm"
         @input="updateMonth"
         @blur="eachBlur('month', 2)"
@@ -40,7 +40,7 @@
         ref="year"
         v-model="year"
         class="su-date__input su-date__input--year"
-        type="number"
+        type="tel"
         placeholder="yyyy"
         @input="updateYear"
         @blur="eachBlur('year', 4)"
@@ -128,10 +128,11 @@ export default {
     },
     updateYear() {
       // check first digit in year must be start with "1" or "2"
-      if (!["1", "2"].includes(this.year[0])) {
+      if (!["1", "2"].includes(this.year[0]) && this.year.length < 2) {
         this.year = "";
       }
       if (this.year.length > 4) {
+        console.log(this.year, "more than 4");
         this.year = this.year;
       }
     },
