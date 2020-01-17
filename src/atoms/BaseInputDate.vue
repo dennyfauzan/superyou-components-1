@@ -295,7 +295,7 @@ export default {
       text-align: center;
     }
     &--year {
-      width: 4em;
+      width: 100%;
       padding-left: 10px;
     }
   }
