@@ -1,5 +1,5 @@
 <template>
-  <div id="su-base-select" :class="{'input-error': isError}">
+  <div id="su-base-select" :class="{ 'input-error': isError }">
     <label :class="{ active: isFocused }">{{ label }}</label>
     <v-select
       class="base-select"
@@ -11,7 +11,9 @@
       @search:blur="onBlur"
       :select-on-key-codes="[8]"
     ></v-select>
-    <span v-if="isError" class="su-input_error message">{{errorMessage}}</span>
+    <span v-if="isError" class="su-input_error message">{{
+      errorMessage
+    }}</span>
   </div>
 </template>
 
@@ -148,7 +150,7 @@ export default {
       }
     }
     .vs__dropdown-menu {
-      top: 130%;
+      top: 110%;
       border-radius: 8px;
       box-shadow: 0 2px 10px 0 rgba(109, 131, 172, 0.25);
       border: none;
