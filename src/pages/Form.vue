@@ -49,9 +49,12 @@
       ></base-checkbox-and-radio>
       <br />
       <base-input-date
+        label="Tanggal Lahir"
+        name="dob"
         :value="dob"
         :min-age="17"
         :max-age="40"
+        @input="handleInputChange"
       ></base-input-date>
     </form>
   </div>
@@ -116,6 +119,9 @@ export default {
   methods: {
     handleInputChange(val, name) {
       this[name] = val;
+    },
+    testaja(val, name) {
+      console.log("test aja", val, name);
     }
   }
 };

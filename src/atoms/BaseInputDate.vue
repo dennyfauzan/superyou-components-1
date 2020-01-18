@@ -1,8 +1,8 @@
 <template>
   <div class="su-date-wrapper">
-    <label :class="{ 'date-focused': isFocused, 'is-error': isError }"
-      >Tanggal Lahir</label
-    >
+    <label :class="{ 'date-focused': isFocused, 'is-error': isError }">{{
+      label
+    }}</label>
     <div
       class="su-date"
       :class="{ 'date-focused': isFocused, 'is-error': isError }"
@@ -45,6 +45,7 @@
         @input="updateYear"
         @blur="eachBlur('year', 4)"
         @focus="eachFocus('year')"
+        @beforeinput="beforeInputYear"
       />
     </div>
     <span v-if="isError" class="su-input_error message">{{
@@ -82,6 +83,12 @@ export default {
     },
     maxAge: {
       type: Number
+    },
+    label: {
+      type: String
+    },
+    name: {
+      type: String
     }
   },
   data() {
@@ -102,6 +109,29 @@ export default {
   watch: {
     year(current, prev) {
       if (current > 9999) this.year = prev;
+    },
+    submittedDate() {
+      console.log("data change");
+      this.isError = false;
+      this.errorMessage = "";
+
+      if (this.dateFlag.day && this.dateFlag.month && this.dateFlag.year) {
+        if (!this.checkValidDate()) {
+          this.isError = true;
+          this.errorMessage = "Tanggal lahir tidak valid";
+          return false;
+        }
+
+        if (this.minAge && !this.validateMinMaxYear(this.minAge)) {
+          this.isError = true;
+          this.errorMessage = `Umur harus ${17} tahun ke atas`;
+        }
+
+        if (this.maxAge && this.validateMinMaxYear(this.maxAge)) {
+          this.isError = true;
+          this.errorMessage = `Umur harus dibawah ${this.maxAge} tahun ke atas`;
+        }
+      }
     }
   },
   methods: {
@@ -131,18 +161,17 @@ export default {
       if (!["1", "2"].includes(this.year[0]) && this.year.length < 2) {
         this.year = "";
       }
-      if (this.year.length > 4) {
-        console.log(this.year, "more than 4");
-        this.year = this.year;
-      }
+      // if (this.year.length > 4) {
+      //   console.log(this.year, "more than 4");
+      //   this.year = this.year;
+      // }
     },
     updateValue() {
       const timestamp = Date.parse(
         `${this.year.padStart(4, 0)}-${this.month}-${this.day}`
       );
-      console.log(timestamp);
       if (Number.isNaN(timestamp)) return;
-      this.$emit(`input`, timestamp);
+      this.$emit(`input`, timestamp, this.name);
     },
     checkValidDate() {
       const timestamp = Date.parse(
@@ -190,26 +219,11 @@ export default {
       this.isFocused = true;
     },
     onBlured() {
-      this.isError = false;
-      this.errorMessage = "";
       this.isFocused = false;
-
-      if (this.dateFlag.day && this.dateFlag.month && this.dateFlag.year) {
-        if (!this.checkValidDate()) {
-          this.isError = true;
-          this.errorMessage = "Tanggal lahir tidak valid";
-          return false;
-        }
-
-        if (this.minAge && !this.validateMinMaxYear(this.minAge)) {
-          this.isError = true;
-          this.errorMessage = `Umur harus ${17} tahun ke atas`;
-        }
-
-        if (this.maxAge && this.validateMinMaxYear(this.maxAge)) {
-          this.isError = true;
-          this.errorMessage = `Umur harus dibawah ${this.maxAge} tahun ke atas`;
-        }
+    },
+    beforeInputYear(e) {
+      if (this.year.length >= 4 && e.inputType !== "deleteContentBackward") {
+        e.preventDefault();
       }
     }
   },
