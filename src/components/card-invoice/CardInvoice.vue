@@ -1,6 +1,9 @@
 <template>
   <base-card :header-style="cardStyles.header">
-    <h3 slot="card-header">{{ title }}</h3>
+    <div class="card-header-wrapper" slot="card-header">
+      <h3>{{ title }}</h3>
+      <h5 class="card-header-wrapper__see-products">Lihat Produk</h5>
+    </div>
     <div slot="card-body">
       <InvoiceBody :details="detailPayment">
         <baseChip slot="payment-status" :type="detailPayment.status">
@@ -84,6 +87,16 @@ export default {
 </script>
 
 <style lang="scss" scoped>
+.card-header-wrapper {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  height: 30px;
+
+  &__see-products {
+    cursor: pointer;
+  }
+}
 .invoice-summary {
   width: 100%;
   margin: 0 auto;
