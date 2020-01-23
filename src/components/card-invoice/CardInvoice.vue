@@ -2,10 +2,14 @@
   <base-card :header-style="cardStyles.header">
     <div class="card-header-wrapper" slot="card-header">
       <h3>{{ title }}</h3>
-      <h5 class="card-header-wrapper__see-products">Lihat Produk</h5>
+      <h5 class="card-header-wrapper__see-products" @click="onShowProductDetail">Lihat Produk</h5>
     </div>
     <div slot="card-body">
-      <InvoiceBody :details="detailPayment">
+      <InvoiceBody
+        :details="detailPayment"
+        @handleModalDetail="contentToShow"
+        :showModal="isModalShow"
+      >
         <baseChip slot="payment-status" :type="detailPayment.status">
           <span class="text">{{ detailPayment.status_message }}</span>
         </baseChip>
@@ -16,15 +20,24 @@
           :isDisabled="isActionDisabled"
         />
         <div class="payment-list" slot="payment-detail">
-          <InvoiceDetail
-            v-for="invoice in detailPayment.invoices"
-            :key="invoice.id"
-            :datas="invoice"
+          <BaseAccordion
+            id="base-accordion"
+            class="history-payment-detail"
+            :content="accordionContent"
+            multiple
+            v-if="showHistoryPayment"
           />
-          <div class="invoice-summary">
-            <div class="invoice-summary__wrapper">
-              <h2>Payment Fee</h2>
-              <span>{{ detailPayment.fee }}</span>
+          <div class="invoice-detail" v-else>
+            <InvoiceDetail
+              v-for="invoice in detailPayment.invoices"
+              :key="invoice.id"
+              :datas="invoice"
+            />
+            <div class="invoice-summary">
+              <div class="invoice-summary__wrapper">
+                <h2>Payment Fee</h2>
+                <span>{{ detailPayment.fee }}</span>
+              </div>
             </div>
           </div>
         </div>
@@ -39,9 +52,51 @@ import BaseButton from "../../atoms/BaseButton.vue";
 import BaseChip from "../../atoms/BaseChip.vue";
 import InvoiceBody from "../../molecules/invoice/InvoiceBody.vue";
 import InvoiceDetail from "../../molecules/invoice/InvoiceDetail.vue";
+import BaseAccordion from "../../atoms/BaseAccordion/BaseAccordion";
+
+// inject data
+const exampleData1 = [
+  {
+    id: 1,
+    active: true,
+    title: "Pembayaran ke 3",
+    details: `
+      <p>You can crush me but you can't crush my spirit! Are you crazy? I can't swallow that. Who's brave enough to fly into something we all keep calling a death sphere? It doesn't look so shiny to me.</p>
+      <ul>
+        <li>I just want to talk.</li>
+        <li>It has nothing to do with mating.</li>
+        <li>Fry, that doesn't make sense.</li>
+      </ul>
+    `
+  },
+  {
+    id: 2,
+    active: false,
+    title: "Pembayaran ke 2",
+    details: `
+      <p>Ah, the 'Breakfast Club' soundtrack! I can't wait til I'm old enough to feel ways about stuff!</p>
+    `
+  },
+  {
+    id: 3,
+    active: false,
+    title: `Pembayaran ke 1`,
+    details: `
+      <p>And then the battle's not so bad? You'll have all the Slurm you can drink when you're partying with Slurms McKenzie! Say it in Russian!</p>
+      <p>Morbo can't understand his teleprompter because he forgot how you say that letter that's shaped like a man wearing a hat.</p>
+    `
+  }
+];
 
 export default {
   name: "CardInvoice",
+  data() {
+    return {
+      accordionContent: null,
+      showHistoryPayment: false,
+      isModalShow: false
+    };
+  },
   props: {
     detailPayment: {
       type: Object,
@@ -60,7 +115,8 @@ export default {
     BaseButton,
     BaseChip,
     InvoiceBody,
-    InvoiceDetail
+    InvoiceDetail,
+    BaseAccordion
   },
   computed: {
     cardStyles() {
@@ -81,7 +137,24 @@ export default {
   methods: {
     handleClickCTA() {
       this.payNowAction();
+    },
+    contentToShow(val) {
+      if (val === "history_payment") {
+        // open showHistoryPayment modal from children
+        this.showHistoryPayment = true;
+        this.isModalShow = true;
+      } else {
+        // close modal from children
+        this.showHistoryPayment = false;
+        this.isModalShow = false;
+      }
+    },
+    onShowProductDetail() {
+      this.isModalShow = true;
     }
+  },
+  mounted() {
+    this.accordionContent = exampleData1;
   }
 };
 </script>
@@ -93,6 +166,13 @@ export default {
   align-items: center;
   height: 30px;
 
+  h3,
+  h5 {
+    @media screen and (max-width: 500px) {
+      font-size: 12px;
+    }
+  }
+
   &__see-products {
     cursor: pointer;
   }
@@ -102,7 +182,6 @@ export default {
   margin: 0 auto;
   padding-top: 20px;
   padding-bottom: 20px;
-  border-top: solid 0.5px #708697;
 
   &__wrapper {
     margin-left: auto;
