@@ -21,11 +21,11 @@
         />
         <div class="payment-list" slot="payment-detail">
           <BaseAccordion
+            v-if="showHistoryPayment"
             id="base-accordion"
             class="history-payment-detail"
             :content="accordionContent"
             multiple
-            v-if="showHistoryPayment"
           />
           <div class="invoice-detail" v-else>
             <InvoiceDetail
@@ -61,12 +61,7 @@ const exampleData1 = [
     active: true,
     title: "Pembayaran ke 3",
     details: `
-      <p>You can crush me but you can't crush my spirit! Are you crazy? I can't swallow that. Who's brave enough to fly into something we all keep calling a death sphere? It doesn't look so shiny to me.</p>
-      <ul>
-        <li>I just want to talk.</li>
-        <li>It has nothing to do with mating.</li>
-        <li>Fry, that doesn't make sense.</li>
-      </ul>
+      <p>Pembayaran Terakhir</p>
     `
   },
   {
@@ -74,7 +69,7 @@ const exampleData1 = [
     active: false,
     title: "Pembayaran ke 2",
     details: `
-      <p>Ah, the 'Breakfast Club' soundtrack! I can't wait til I'm old enough to feel ways about stuff!</p>
+      <p>Pembayaran Ke Dua</p>
     `
   },
   {
@@ -82,8 +77,7 @@ const exampleData1 = [
     active: false,
     title: `Pembayaran ke 1`,
     details: `
-      <p>And then the battle's not so bad? You'll have all the Slurm you can drink when you're partying with Slurms McKenzie! Say it in Russian!</p>
-      <p>Morbo can't understand his teleprompter because he forgot how you say that letter that's shaped like a man wearing a hat.</p>
+      <p>Pembayaran Ke Pertama</p>
     `
   }
 ];
