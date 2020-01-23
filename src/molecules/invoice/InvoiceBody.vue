@@ -46,6 +46,7 @@
         :modalShow="showModal"
         width="70%"
         max-height="80%"
+        :padding="paddingModal"
       >
         <slot name="payment-detail"></slot>
       </BaseModal>
@@ -84,6 +85,12 @@ export default {
     onCloseModalDetail() {
       this.showInvoiceDetail = false;
       this.$emit("handleModalDetail");
+    }
+  },
+  computed: {
+    paddingModal() {
+      const paddingModal = this.showInvoiceDetail ? "5px 10px" : "15px";
+      return paddingModal;
     }
   }
 };
