@@ -60,25 +60,19 @@ const exampleData1 = [
     id: 1,
     active: true,
     title: "Pembayaran ke 3",
-    details: `
-      <p>Pembayaran Terakhir</p>
-    `
+    details: `<p>Pembayaran Terakhir</p>`
   },
   {
     id: 2,
     active: false,
     title: "Pembayaran ke 2",
-    details: `
-      <p>Pembayaran Ke Dua</p>
-    `
+    details: `<p>Pembayaran Ke Dua</p>`
   },
   {
     id: 3,
     active: false,
     title: `Pembayaran ke 1`,
-    details: `
-      <p>Pembayaran Ke Pertama</p>
-    `
+    details: `<p>Pembayaran Ke Pertama</p>`
   }
 ];
 
