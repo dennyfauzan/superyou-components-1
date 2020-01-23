@@ -1,11 +1,7 @@
 <template>
   <div id="show-case">
     <div class="card_container">
-      <CardInvoice
-        :detailPayment="paymentDetail"
-        :payNowAction="payButton"
-        title="Invoice xxx xxx xxx"
-      />
+      <CardInvoice :detailPayment="paymentDetail" :payNowAction="payButton" title="XXXX XXXX" />
 
       <br />
       <br />
@@ -16,19 +12,12 @@
         <BaseIconProductAndPlan product="strong" plan="silver" />
       </div>
     </div>
-
-    <button @click="handleModal">Show Modal</button>
-
-    <BaseModal @modalClose="showModal = false" :modalShow="showModal" width="400px" height="450px">
-      <h3>Hollaa....</h3>
-    </BaseModal>
   </div>
 </template>
 
 <script>
 import BaseIconProductAndPlan from "@/atoms/BaseIconProductAndPlan.vue";
 import CardInvoice from "@/components/card-invoice/CardInvoice.vue";
-import BaseModal from "@/atoms/BaseModal.vue";
 
 const paymentDetail = {
   lastPayment: "3 January 2018",
@@ -87,14 +76,12 @@ export default {
   data() {
     return {
       paymentDetail: null,
-      payButton: null,
-      showModal: false
+      payButton: null
     };
   },
   components: {
     BaseIconProductAndPlan,
-    CardInvoice,
-    BaseModal
+    CardInvoice
   },
   methods: {
     handleModal() {
