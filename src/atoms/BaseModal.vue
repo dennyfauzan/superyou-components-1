@@ -3,7 +3,7 @@
     <div class="su_modal" v-if="modalShow">
       <span href="#" class="close" @click="onCloseModal"></span>
       <div class="su_modal__overlay" @click="onCloseModal"></div>
-      <div class="su_modal__container-content" :style="modalStyle">
+      <div class="su_modal__container-content" :style="modalContentCss">
         <slot></slot>
       </div>
     </div>
@@ -23,6 +23,12 @@ export default {
     },
     height: {
       type: [String]
+    },
+    maxHeight: {
+      type: [String]
+    },
+    padding: {
+      type: [String]
     }
   },
   methods: {
@@ -31,10 +37,12 @@ export default {
     }
   },
   computed: {
-    modalStyle() {
+    modalContentCss() {
       return {
-        width: this.width ? this.width : "100%",
-        height: this.height ? this.height : "100%"
+        width: this.width ? this.width : "70%",
+        height: this.height ? this.height : "auto",
+        padding: this.padding ? this.padding : "15px",
+        maxHeight: this.maxHeight ? this.maxHeight : "100%"
       };
     }
   }
@@ -67,15 +75,17 @@ export default {
   &__container-content {
     background-color: #fff;
     border-radius: 12px;
-    min-width: 400px;
-    max-width: 960px;
-    min-height: 300px;
-    max-height: 680px;
     overflow: hidden;
     position: absolute;
+    width: auto;
+    height: auto;
     top: 50%;
     left: 50%;
     transform: translate(-50%, -50%);
+    overflow-y: auto;
+    @media screen and (max-width: 768px) {
+      width: 90% !important;
+    }
   }
 
   // close icon
@@ -87,6 +97,7 @@ export default {
     height: 28px;
     opacity: 1;
     z-index: 1;
+    cursor: pointer;
   }
   .close:hover {
     opacity: 1;
