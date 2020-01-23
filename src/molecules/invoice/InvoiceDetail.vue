@@ -88,7 +88,7 @@ export default {
   margin: 0 auto;
   padding-top: 20px;
   padding-bottom: 20px;
-  border-top: solid 0.5px #708697;
+  border-bottom: solid 0.5px rgba(112, 134, 151, 0.7);
 
   .see-product-detail {
     font-size: 14px;
