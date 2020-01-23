@@ -11,6 +11,11 @@
         <BaseIconProductAndPlan product="safe" plan="gold" size="medium" />
         <BaseIconProductAndPlan product="strong" plan="silver" />
       </div>
+
+      <br />
+      <br />
+
+      <BaseTable />
     </div>
   </div>
 </template>
@@ -18,6 +23,7 @@
 <script>
 import BaseIconProductAndPlan from "@/atoms/BaseIconProductAndPlan.vue";
 import CardInvoice from "@/components/card-invoice/CardInvoice.vue";
+import BaseTable from "@/atoms/BaseTable.vue";
 
 const paymentDetail = {
   lastPayment: "3 January 2018",
@@ -81,7 +87,8 @@ export default {
   },
   components: {
     BaseIconProductAndPlan,
-    CardInvoice
+    CardInvoice,
+    BaseTable
   },
   methods: {
     handleModal() {
