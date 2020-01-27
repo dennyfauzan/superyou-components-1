@@ -160,6 +160,9 @@ export default {
       font-size: 12px;
     }
   }
+  h5 {
+    font-weight: normal;
+  }
 
   &__see-products {
     cursor: pointer;
