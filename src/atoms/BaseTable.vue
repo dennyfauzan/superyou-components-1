@@ -33,10 +33,6 @@ export default {
             field: "invoice_number"
           },
           {
-            label: "Pembayaran",
-            field: "payment_term"
-          },
-          {
             label: "Jatuh Tempo",
             field: "due_date"
           },
@@ -65,7 +61,6 @@ export default {
         return [
           {
             invoice_number: "1234-06",
-            payment_term: 6,
             due_date: "dd/mm/yy",
             paid_date: "dd/mm/yy",
             payment_method: "Visa Card",
@@ -74,7 +69,6 @@ export default {
           },
           {
             invoice_number: "1234-05",
-            payment_term: 5,
             due_date: "dd/mm/yy",
             paid_date: "dd/mm/yy",
             payment_method: "Visa Card",
@@ -83,7 +77,6 @@ export default {
           },
           {
             invoice_number: "1234-04",
-            payment_term: 4,
             due_date: "dd/mm/yy",
             paid_date: "dd/mm/yy",
             payment_method: "Visa Card",
@@ -92,7 +85,6 @@ export default {
           },
           {
             invoice_number: "1234-03",
-            payment_term: 3,
             due_date: "dd/mm/yy",
             paid_date: "dd/mm/yy",
             payment_method: "Visa Card",
@@ -101,7 +93,6 @@ export default {
           },
           {
             invoice_number: "1234-02",
-            payment_term: 2,
             due_date: "dd/mm/yy",
             paid_date: "dd/mm/yy",
             payment_method: "Visa Card",
@@ -110,7 +101,6 @@ export default {
           },
           {
             invoice_number: "1234-01",
-            payment_term: 1,
             due_date: "dd/mm/yy",
             paid_date: "dd/mm/yy",
             payment_method: "Visa Card",
