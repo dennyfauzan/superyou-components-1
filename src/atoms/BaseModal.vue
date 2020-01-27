@@ -45,6 +45,16 @@ export default {
         maxHeight: this.maxHeight ? this.maxHeight : "100%"
       };
     }
+  },
+  watch: {
+    modalShow(show) {
+      let body = document.getElementsByTagName("body")[0];
+      if (show) {
+        body.style.overflow = "hidden";
+      } else {
+        body.style.overflow = "visible";
+      }
+    }
   }
 };
 </script>
