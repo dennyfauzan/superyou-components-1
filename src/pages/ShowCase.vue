@@ -19,8 +19,7 @@
           />
         </template>
         <template v-else>
-          <BaseRuler :range="12" />
-          <br />
+          <p style="color:#708697; font-size:14px;">Timeline Pembayaran :</p>
           <br />
           <BaseTable />
         </template>
@@ -45,60 +44,9 @@
 import BaseIconProductAndPlan from "@/atoms/BaseIconProductAndPlan.vue";
 import CardInvoice from "@/components/card-invoice/CardInvoice.vue";
 import BaseTable from "@/atoms/BaseTable.vue";
-import BaseRuler from "@/atoms/BaseRuler.vue";
 import BaseModal from "@/atoms/BaseModal.vue";
 import InvoiceDetails from "@/molecules/invoice/InvoiceDetails.vue";
 import invoicesData from "@/data/payment-invoices.json";
-
-const paymentDetail = {
-  lastPayment: "3 January 2018",
-  nextPayment: "3 Agustus 2018",
-  status: "waiting",
-  status_message: "Pembayaran Berhasil",
-  total: "Rp 57.500",
-  fee: "Rp 5.000",
-  mode: "Bulanan",
-  method: "Debit Card",
-  invoices: [
-    {
-      product: "Super Safe Protection",
-      productId: "1",
-      plan: "Gold",
-      policyNumber: 1919000112,
-      price: "Rp 1.280.900",
-      fee: "5.000",
-      riders: [
-        {
-          name: "Super Motor",
-          price: "Rp 9.000"
-        },
-        {
-          name: "Super Holiday",
-          price: "Rp 12.000"
-        }
-      ]
-    },
-    {
-      product: "Super Life Protection",
-      productId: "2",
-      plan: "Silver",
-      policyNumber: null,
-      price: "Rp 22.100",
-      riders: null
-    },
-    {
-      product: "Super Strong Protection",
-      productId: "3",
-      plan: "Bronze",
-      policyNumber: 1919000114,
-      price: "Rp 22.100",
-      riders: null
-    }
-  ],
-  policy_group_number: "3191783",
-  summary_token: "b6b7a3b0768ed2d2601ac37fcbfbf4560f4b2bcc",
-  payment_method_id: 22
-};
 
 const payNowAction = () => alert("from paynow");
 
@@ -122,7 +70,6 @@ export default {
     BaseIconProductAndPlan,
     CardInvoice,
     BaseTable,
-    BaseRuler,
     BaseModal,
     InvoiceDetails
   },
@@ -160,7 +107,6 @@ export default {
     }
   },
   created() {
-    this.paymentDetail = paymentDetail;
     this.payButton = payNowAction;
     this.allInvoices = invoicesData;
   }
