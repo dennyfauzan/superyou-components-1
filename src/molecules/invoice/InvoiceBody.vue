@@ -40,7 +40,7 @@
         <button>Bayar Sekarang</button>
       </slot>
     </div>
-    <div class="payment-detail-invoice">
+    <!-- <div class="payment-detail-invoice">
       <BaseModal
         @modalClose="onCloseModalDetail"
         :modalShow="showModal"
@@ -50,18 +50,13 @@
       >
         <slot name="payment-detail"></slot>
       </BaseModal>
-    </div>
+    </div>-->
   </div>
 </template>
 
 <script>
-import BaseModal from "../../atoms/BaseModal";
-
 export default {
   name: "invoiceBody",
-  components: {
-    BaseModal
-  },
   props: {
     details: {
       type: Object,
@@ -80,11 +75,7 @@ export default {
   methods: {
     onClickInvoiceDetail() {
       this.showInvoiceDetail = true;
-      this.$emit("handleModalDetail", "history_payment");
-    },
-    onCloseModalDetail() {
-      this.showInvoiceDetail = false;
-      this.$emit("handleModalDetail");
+      this.$emit("handleInvoiceDetail", "history_payment");
     }
   },
   computed: {

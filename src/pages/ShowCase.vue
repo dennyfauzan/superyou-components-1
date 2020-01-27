@@ -1,7 +1,30 @@
 <template>
   <div id="show-case">
     <div class="card_container">
-      <CardInvoice :detailPayment="paymentDetail" :payNowAction="payButton" title="XXXX XXXX" />
+      <CardInvoice
+        v-for="invoice in allInvoices"
+        :key="invoice.policy_group_number"
+        :detailPayment="invoice"
+        :payNowAction="payButton"
+        title="XXXX XXXX"
+        @onShowInvoiceProduct="showDetailSelectedProduct"
+        @onShowPaymentHistory="showPaymentHistory"
+      />
+
+      <BaseModal :modalShow="showModal" @modalClose="hideModal">
+        <template v-if="showModalType === `DETAIL_PRODUCT` && productsDetails.list">
+          <InvoiceDetails
+            :productsDetails="productsDetails.list"
+            :paymentFee="productsDetails.paymentFee"
+          />
+        </template>
+        <template v-else>
+          <BaseRuler :range="12" />
+          <br />
+          <br />
+          <BaseTable />
+        </template>
+      </BaseModal>
 
       <br />
       <br />
@@ -14,11 +37,6 @@
 
       <br />
       <br />
-
-      <BaseRuler :range="12" />
-      <br />
-      <br />
-      <BaseTable />
     </div>
   </div>
 </template>
@@ -28,6 +46,9 @@ import BaseIconProductAndPlan from "@/atoms/BaseIconProductAndPlan.vue";
 import CardInvoice from "@/components/card-invoice/CardInvoice.vue";
 import BaseTable from "@/atoms/BaseTable.vue";
 import BaseRuler from "@/atoms/BaseRuler.vue";
+import BaseModal from "@/atoms/BaseModal.vue";
+import InvoiceDetails from "@/molecules/invoice/InvoiceDetails.vue";
+import invoicesData from "@/data/payment-invoices.json";
 
 const paymentDetail = {
   lastPayment: "3 January 2018",
@@ -86,14 +107,24 @@ export default {
   data() {
     return {
       paymentDetail: null,
-      payButton: null
+      payButton: null,
+      showModal: false,
+      showModalType: "",
+      allInvoices: null,
+      selectedInvoiceProduct: null,
+      productsDetails: {
+        list: null,
+        paymentFee: null
+      }
     };
   },
   components: {
     BaseIconProductAndPlan,
     CardInvoice,
     BaseTable,
-    BaseRuler
+    BaseRuler,
+    BaseModal,
+    InvoiceDetails
   },
   methods: {
     handleModal() {
@@ -101,6 +132,21 @@ export default {
     },
     abcdtest() {
       console.log("asdasd");
+    },
+    showDetailSelectedProduct(invoiceProductsDetail, paymentFee) {
+      this.productsDetails.list = invoiceProductsDetail;
+      this.productsDetails.paymentFee = paymentFee;
+      this.showModalType = "DETAIL_PRODUCT";
+      this.showModal = true;
+    },
+    showPaymentHistory(historyData) {
+      if (historyData) {
+        this.showModalType = "PAYMENT_HISTORY";
+        this.showModal = true;
+      }
+    },
+    hideModal() {
+      this.showModal = false;
     }
   },
   computed: {
@@ -116,11 +162,15 @@ export default {
   created() {
     this.paymentDetail = paymentDetail;
     this.payButton = payNowAction;
+    this.allInvoices = invoicesData;
   }
 };
 </script>
 
 <style lang="scss">
+.su_card {
+  margin-bottom: 30px;
+}
 #show-case {
   max-width: 1280px;
   margin: 30px auto 0;

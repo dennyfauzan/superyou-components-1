@@ -5,11 +5,7 @@
       <h5 class="card-header-wrapper__see-products" @click="onShowProductDetail">Lihat Produk</h5>
     </div>
     <div slot="card-body">
-      <InvoiceBody
-        :details="detailPayment"
-        @handleModalDetail="contentToShow"
-        :showModal="isModalShow"
-      >
+      <InvoiceBody :details="detailPayment" @handleInvoiceDetail="onShowInvoiceDetail">
         <baseChip slot="payment-status" :type="detailPayment.status">
           <span class="text">{{ detailPayment.status_message }}</span>
         </baseChip>
@@ -19,7 +15,7 @@
           @onClick="handleClickCTA"
           :isDisabled="isActionDisabled"
         />
-        <div class="payment-list" slot="payment-detail">
+        <!-- <div class="payment-list" slot="payment-detail">
           <BaseAccordion
             v-if="showHistoryPayment"
             id="base-accordion"
@@ -40,7 +36,7 @@
               </div>
             </div>
           </div>
-        </div>
+        </div>-->
       </InvoiceBody>
     </div>
   </base-card>
@@ -51,8 +47,8 @@ import BaseCard from "../../atoms/BaseCard";
 import BaseButton from "../../atoms/BaseButton.vue";
 import BaseChip from "../../atoms/BaseChip.vue";
 import InvoiceBody from "../../molecules/invoice/InvoiceBody.vue";
-import InvoiceDetail from "../../molecules/invoice/InvoiceDetail.vue";
-import BaseAccordion from "../../atoms/BaseAccordion/BaseAccordion";
+// import InvoiceDetail from "../../molecules/invoice/InvoiceDetail.vue";
+// import BaseAccordion from "../../atoms/BaseAccordion/BaseAccordion";
 
 // inject data
 const exampleData1 = [
@@ -78,13 +74,6 @@ const exampleData1 = [
 
 export default {
   name: "CardInvoice",
-  data() {
-    return {
-      accordionContent: null,
-      showHistoryPayment: false,
-      isModalShow: false
-    };
-  },
   props: {
     detailPayment: {
       type: Object,
@@ -102,9 +91,9 @@ export default {
     BaseCard,
     BaseButton,
     BaseChip,
-    InvoiceBody,
-    InvoiceDetail,
-    BaseAccordion
+    InvoiceBody
+    // InvoiceDetail,
+    // BaseAccordion
   },
   computed: {
     cardStyles() {
@@ -126,19 +115,16 @@ export default {
     handleClickCTA() {
       this.payNowAction();
     },
-    contentToShow(val) {
-      if (val === "history_payment") {
-        // open showHistoryPayment modal from children
-        this.showHistoryPayment = true;
-        this.isModalShow = true;
-      } else {
-        // close modal from children
-        this.showHistoryPayment = false;
-        this.isModalShow = false;
-      }
+    onShowInvoiceDetail() {
+      // this feature not ready yet, CardInvoice will not showing if the data payment history null;
+      this.$emit("onShowPaymentHistory", "hola");
     },
     onShowProductDetail() {
-      this.isModalShow = true;
+      this.$emit(
+        "onShowInvoiceProduct",
+        this.detailPayment.invoices,
+        this.detailPayment.fee
+      );
     }
   },
   mounted() {

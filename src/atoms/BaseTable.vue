@@ -8,7 +8,12 @@
       </thead>
       <tbody>
         <tr v-for="(field, index) in tdata" :key="`${index}${field.due_date}`">
-          <td class="border px-4 py-4" v-for="key in tdataKey" :key="key">{{ field[key] }}</td>
+          <td
+            class="border px-4 py-4"
+            v-for="key in tdataKey"
+            :key="key"
+            :class="key"
+          >{{ field[key] }}</td>
         </tr>
       </tbody>
     </table>
@@ -23,6 +28,10 @@ export default {
       type: Array,
       default: function() {
         return [
+          {
+            label: "No. Invoice",
+            field: "invoice_number"
+          },
           {
             label: "Pembayaran",
             field: "payment_term"
@@ -55,7 +64,8 @@ export default {
       default: function() {
         return [
           {
-            payment_term: 1,
+            invoice_number: "1234-06",
+            payment_term: 6,
             due_date: "dd/mm/yy",
             paid_date: "dd/mm/yy",
             payment_method: "Visa Card",
@@ -63,7 +73,44 @@ export default {
             status: "Berhasil"
           },
           {
+            invoice_number: "1234-05",
+            payment_term: 5,
+            due_date: "dd/mm/yy",
+            paid_date: "dd/mm/yy",
+            payment_method: "Visa Card",
+            total: "Rp 80.000",
+            status: "Menunggu Pembayaran"
+          },
+          {
+            invoice_number: "1234-04",
+            payment_term: 4,
+            due_date: "dd/mm/yy",
+            paid_date: "dd/mm/yy",
+            payment_method: "Visa Card",
+            total: "Rp 80.000",
+            status: "Menunggu Pembayaran"
+          },
+          {
+            invoice_number: "1234-03",
+            payment_term: 3,
+            due_date: "dd/mm/yy",
+            paid_date: "dd/mm/yy",
+            payment_method: "Visa Card",
+            total: "Rp 80.000",
+            status: "Menunggu Pembayaran"
+          },
+          {
+            invoice_number: "1234-02",
             payment_term: 2,
+            due_date: "dd/mm/yy",
+            paid_date: "dd/mm/yy",
+            payment_method: "Visa Card",
+            total: "Rp 80.000",
+            status: "Menunggu Pembayaran"
+          },
+          {
+            invoice_number: "1234-01",
+            payment_term: 1,
             due_date: "dd/mm/yy",
             paid_date: "dd/mm/yy",
             payment_method: "Visa Card",
@@ -89,10 +136,18 @@ export default {
 .px-4 {
   padding-left: 1rem !important;
   padding-right: 1rem !important;
+  @media screen and (max-width: 640px) {
+    padding-left: 0.25rem !important;
+    padding-right: 0.25rem !important;
+  }
 }
 .py-4 {
   padding-top: 1rem !important;
   padding-bottom: 1rem !important;
+  @media screen and (max-width: 640px) {
+    padding-top: 0.65rem !important;
+    padding-bottom: 0.65rem !important;
+  }
 }
 .su_table {
   overflow-x: auto;
@@ -134,6 +189,12 @@ export default {
     text-align: center;
     color: #0d294a;
     font-size: 14px;
+    @media screen and (max-width: 640px) {
+      font-size: 12px;
+    }
+    td.total {
+      white-space: nowrap;
+    }
   }
 }
 
