@@ -8,12 +8,7 @@
       </thead>
       <tbody>
         <tr v-for="(field, index) in tdata" :key="`${index}${field.due_date}`">
-          <td class="border px-4 py-4">{{ field.payment_term }}</td>
-          <td class="border px-4 py-4">{{ field.due_date }}</td>
-          <td class="border px-4 py-4">{{ field.paid_date }}</td>
-          <td class="border px-4 py-4">{{ field.payment_method }}</td>
-          <td class="border px-4 py-4" style="white-space: nowrap;">{{ field.total }}</td>
-          <td class="border px-4 py-4">{{ field.status }}</td>
+          <td class="border px-4 py-4" v-for="key in tdataKey" :key="key">{{ field[key] }}</td>
         </tr>
       </tbody>
     </table>
@@ -30,23 +25,23 @@ export default {
         return [
           {
             label: "Pembayaran",
-            field: "pembayaran"
+            field: "payment_term"
           },
           {
             label: "Jatuh Tempo",
-            field: "jatuh_tempo"
+            field: "due_date"
           },
           {
             label: "Tanggal Bayar",
-            field: "tanggal_bayar"
+            field: "paid_date"
           },
           {
             label: "Metode Bayar",
-            field: "Metode Bayar"
+            field: "payment_method"
           },
           {
             label: "Total",
-            field: "total_amount"
+            field: "total"
           },
           {
             label: "Status",
@@ -77,6 +72,14 @@ export default {
           }
         ];
       }
+    }
+  },
+  computed: {
+    tdataKey() {
+      if (this.tdata) {
+        return Object.keys(this.tdata[0]);
+      }
+      return [];
     }
   }
 };
