@@ -179,6 +179,9 @@ export default {
     text-align: center;
     color: #0d294a;
     font-size: 14px;
+    &:nth-child(even) {
+      background: rgba(0, 170, 174, 0.08);
+    }
     @media screen and (max-width: 640px) {
       font-size: 12px;
     }
