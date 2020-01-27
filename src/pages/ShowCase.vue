@@ -15,6 +15,9 @@
       <br />
       <br />
 
+      <BaseRuler :range="12" />
+      <br />
+      <br />
       <BaseTable />
     </div>
   </div>
@@ -24,6 +27,7 @@
 import BaseIconProductAndPlan from "@/atoms/BaseIconProductAndPlan.vue";
 import CardInvoice from "@/components/card-invoice/CardInvoice.vue";
 import BaseTable from "@/atoms/BaseTable.vue";
+import BaseRuler from "@/atoms/BaseRuler.vue";
 
 const paymentDetail = {
   lastPayment: "3 January 2018",
@@ -88,7 +92,8 @@ export default {
   components: {
     BaseIconProductAndPlan,
     CardInvoice,
-    BaseTable
+    BaseTable,
+    BaseRuler
   },
   methods: {
     handleModal() {
