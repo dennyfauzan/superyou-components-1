@@ -4,6 +4,8 @@ import Router from "vue-router";
 import ShowCase from "@/pages/ShowCase.vue";
 import Form from "@/pages/Form.vue";
 
+import ProductCard from "@/pages/ProductCard.vue";
+
 Vue.use(Router);
 
 const router = new Router({
@@ -18,6 +20,11 @@ const router = new Router({
       path: "/form-components",
       name: "formComponents",
       component: Form
+    },
+    {
+      path: "/form-product-card",
+      name: "Card",
+      component: ProductCard
     }
   ]
 });
