@@ -6,6 +6,9 @@ import _BaseInputDate from "@/atoms/BaseInputDate.vue";
 import _BaseSelect from "@/atoms/BaseSelect.vue";
 import _BaseStepper from "@/atoms/BaseStepper.vue";
 
+// Style
+import "vue-select/src/scss/vue-select.scss";
+
 export const CardInvoice = _CardInvoice;
 export const BaseInput = _BaseInput;
 export const BaseCheckboxAndRadio = _BaseCheckboxAndRadio;
