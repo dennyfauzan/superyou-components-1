@@ -1,6 +1,6 @@
 <template>
   <div class="su-input_checkboxes" :class="axis">
-    <label class="main">Jenis Kelamin</label>
+    <label class="main">{{ label }}</label>
     <div class="checkbox-wrapper" v-for="option in options" :key="option.val">
       <input
         :type="inputType"
@@ -11,7 +11,9 @@
       />
       <label :for="option.name">{{ option.name }}</label>
     </div>
-    <span v-if="isError" class="su-input_error message">{{ errorMessage }}</span>
+    <span v-if="isError" class="su-input_error message">{{
+      errorMessage
+    }}</span>
   </div>
 </template>
 
@@ -52,6 +54,10 @@ export default {
     inputType: {
       type: String,
       default: "checkbox"
+    },
+    label: {
+      type: String,
+      default: "Gender"
     }
   },
   watch: {
