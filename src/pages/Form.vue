@@ -6,7 +6,7 @@
       <base-input
         :value="userName"
         label="Nama Lengkap"
-        @handleChange="handleInputChange"
+        v-on:handle-change="handleInputChange"
         name="userName"
         note="Note: Nama Lengkap"
         char="^[A-Za-z ]+$"
@@ -17,7 +17,7 @@
       <base-input
         :value="citizenId"
         label="Nomor Kartu Indentitas"
-        @handleChange="handleInputChange"
+        v-on:handle-change="handleInputChange"
         name="citizenId"
         inputType="tel"
         char="^[0-9]*$"
@@ -28,7 +28,7 @@
       <base-input
         :value="insuredName"
         label="Email"
-        @handleChange="handleInputChange"
+        v-on:handle-change="handleInputChange"
         name="insuredName"
         inputType="email"
         required
@@ -38,12 +38,12 @@
         name="relations"
         label="Hubungan"
         :options="dataSelectOpt"
-        @handleChange="handleInputChange"
+        v-on:handle-change="handleInputChange"
       ></base-select>
       <br />
       <base-checkbox-and-radio
         name="gender"
-        @handleChange="handleInputChange"
+        v-on:handle-change="handleInputChange"
         axis="row"
         inputType="checkbox"
       ></base-checkbox-and-radio>

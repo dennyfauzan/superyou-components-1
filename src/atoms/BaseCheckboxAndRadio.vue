@@ -62,7 +62,7 @@ export default {
   },
   watch: {
     checkedData(newData) {
-      this.$emit("handleChange", newData, this.name);
+      this.$emit("handle-change", newData, this.name);
     }
   }
 };

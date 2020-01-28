@@ -100,7 +100,11 @@ export default {
       this.isFocused = true;
     },
     onInputChange(e) {
-      this.$emit("handleChange", e.target.value, e.target.getAttribute("name"));
+      this.$emit(
+        "handle-change",
+        e.target.value,
+        e.target.getAttribute("name")
+      );
     },
     expectedCharacters(e) {
       this.checkMaxLength(e);
