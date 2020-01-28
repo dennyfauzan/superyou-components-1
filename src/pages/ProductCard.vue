@@ -2,25 +2,39 @@
 	<div id="product-card">
 		<div class="card_container">
 			<!-- PASS DATA AS PROPS TO THIS COMPONENT -->
-			<ResultCard 
-				title="Informasi produk"
-			/>
+			<template v-if="products">
+				<ResultCard 
+					:basicProducts="products"
+				/>
+			</template>
 		</div>
 	</div>
 </template>
 
 <script>
+import axios from "axios";
 import ResultCard from "@/components/product-card/ResultCard.vue";
 
 export default {
 	name: "Card",
 	data() {
-		return {};
+		return {
+			products: null
+		};
 	},
 	components: {
 		ResultCard
 	},
-	methods: {}
+	methods: {
+		async getProduct(){
+			this.products = await axios
+        .get('https://api.superyou.co.id/api/v1/products?dob=25')
+        .then(response => response.data.data)
+    }
+	},
+	mounted() {
+		this.getProduct();
+	}
 };
 </script>
 

@@ -3,19 +3,11 @@
     <ul>
       <li class="bbottom">
         <p>Uang pertanggungan</p>
-        <h3>500 Juta</h3>
+        <h3>{{ middle.sum_assured | billion }}</h3>
       </li>
-      <!-- <li>Manfaat</li> -->
-      <li>
-        <p>Perlindungan biaya medis karena kecelakaan</p>
-        <h3>25 Juta</h3>
-      </li>
-      <li>
-        <p>
-          Pertanggungan tutup usia/ perlindungan cacat total dan tetap karena
-          kecelakaan
-        </p>
-        <h3>500 Juta</h3>
+      <li v-for="benefit in middle.benefits" :key="benefit.id">
+        <p>{{ benefit.benefit }}</p>
+        <h3>{{ benefit.value | billion }}</h3>
       </li>
     </ul>
   </div>
@@ -24,7 +16,45 @@
 <script>
 export default {
   name: "MiddlePortion",
-  props: {}
+	props: ["middle"],
+	filters: {
+		billion: function(value) {
+			var divided = 0;
+			let langUrl = `${window.location.pathname}/`;
+			let getLang = langUrl.includes("/en/") ? "en" : "id";
+			let moneyWording = {
+					id: {
+							thousand: "Ribu",
+							million: "Juta",
+							billion: "Miliar"
+					},
+					en: {
+							thousand: "Thousand",
+							million: "Mio",
+							billion: "Bio"
+					}
+			};
+
+			// var moneyFormatdivided = "";
+			divided = Math.round(value / 1000);
+			if (divided > 0 && divided < 1000) {
+					// value = divided;
+					value = `${divided} ${moneyWording[getLang].thousand}`;
+			} else if (divided >= 1000 && divided < 1000000) {
+					// value = Math.round(divided / 1000);
+					let perThousand = Math.round(divided / 1000);
+					value = `${perThousand} ${moneyWording[getLang].million}`;
+			} else if (divided >= 1000000 && divided < 100000000) {
+					// value = Math.round(divided / 1000000);
+					let perMio = Math.round(divided / 1000000);
+					value = `${perMio} ${moneyWording[getLang].billion}`;
+			}
+
+			value = "" + value;
+
+			return value;
+		}
+	}
 };
 </script>
 
@@ -34,10 +64,11 @@ export default {
   padding: 0 1.5rem 1.5rem;
   display: table;
   color: #708697;
-  line-height: 1.5;
-	@include mobile {
-		padding: 0 1.5rem;
-	}
+	line-height: 1.5;
+	width: 100%;
+  @include mobile {
+    padding: 0 1.5rem;
+  }
 
   .bbottom {
     border-bottom: 1px solid #cfd8e1;
@@ -54,7 +85,7 @@ export default {
     }
 
     li {
-      padding-top: .8rem;
+      padding-top: 0.8rem;
       display: table;
       width: 100%;
       @include mobile {
@@ -63,7 +94,7 @@ export default {
 
       p {
         display: table-cell;
-				vertical-align: middle;
+        vertical-align: middle;
         padding-right: 0.5rem;
         font-size: 1.2rem;
         @include mobile {
