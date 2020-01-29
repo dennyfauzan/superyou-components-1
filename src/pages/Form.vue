@@ -12,6 +12,8 @@
         char="^[A-Za-z ]+$"
         :min-length="6"
         required
+        :error="errValidation.status"
+        :err-msg="errValidation.message"
       ></base-input>
       <br />
       <base-input
@@ -55,6 +57,8 @@
         :min-age="17"
         :max-age="40"
         @input="handleInputChange"
+        :error="errValidation.status"
+        :err-msg="errValidation.message"
       ></base-input-date>
     </form>
   </div>
@@ -106,7 +110,11 @@ export default {
         { label: "Ayah Kandung", val: "father" },
         { label: "Ibu Kandung", val: "mother" },
         { label: "Saudara Kandung", val: "brother" }
-      ]
+      ],
+      errValidation: {
+        status: false,
+        message: "test error"
+      }
     };
   },
   components: {
@@ -119,9 +127,6 @@ export default {
   methods: {
     handleInputChange(val, name) {
       this[name] = val;
-    },
-    testaja(val, name) {
-      console.log("test aja", val, name);
     }
   }
 };
