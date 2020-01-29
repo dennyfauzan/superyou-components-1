@@ -57,7 +57,7 @@
 
 <script>
 export default {
-  name: `su-date`,
+  name: `BaseInputDate`,
   props: {
     value: {
       type: [Number, String],
@@ -89,6 +89,12 @@ export default {
     },
     name: {
       type: String
+    },
+    error: {
+      type: Boolean
+    },
+    errMsg: {
+      type: String
     }
   },
   data() {
@@ -118,20 +124,25 @@ export default {
       if (this.dateFlag.day && this.dateFlag.month && this.dateFlag.year) {
         if (!this.checkValidDate()) {
           this.isError = true;
-          this.errorMessage = "Tanggal lahir tidak valid";
+          this.errorMessage = "Tanggal tidak valid";
           return false;
         }
 
         if (this.minAge && !this.validateMinMaxYear(this.minAge)) {
           this.isError = true;
-          this.errorMessage = `Umur harus ${17} tahun ke atas`;
+          this.errorMessage = `Minimal ${this.minAge} tahun ke atas`;
         }
 
         if (this.maxAge && this.validateMinMaxYear(this.maxAge)) {
           this.isError = true;
-          this.errorMessage = `Umur harus dibawah ${this.maxAge} tahun ke atas`;
+          this.errorMessage = `Maksimal ${this.maxAge} tahun ke atas`;
         }
       }
+    },
+    error(status) {
+      console.log("changed error");
+      this.isError = status;
+      this.errorMessage = this.errMsg;
     }
   },
   methods: {
@@ -161,10 +172,6 @@ export default {
       if (!["1", "2"].includes(this.year[0]) && this.year.length < 2) {
         this.year = "";
       }
-      // if (this.year.length > 4) {
-      //   console.log(this.year, "more than 4");
-      //   this.year = this.year;
-      // }
     },
     updateValue() {
       const timestamp = Date.parse(
@@ -219,7 +226,13 @@ export default {
       this.isFocused = true;
     },
     onBlured() {
-      this.isFocused = false;
+      console.log(this.day.length && this.month.length && this.year.length);
+      if (this.day.length && this.month.length && this.year.length) {
+        this.isFocused = false;
+      } else {
+        this.isError = true;
+        this.errorMessage = "Tanggal tidak valid";
+      }
     },
     beforeInputYear(e) {
       if (this.year.length >= 4 && e.inputType !== "deleteContentBackward") {

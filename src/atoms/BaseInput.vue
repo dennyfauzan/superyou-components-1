@@ -74,6 +74,12 @@ export default {
     icon: {
       type: String,
       default: null
+    },
+    error: {
+      type: Boolean
+    },
+    errMsg: {
+      type: String
     }
   },
   methods: {
@@ -146,6 +152,12 @@ export default {
       }
       this.isError = true;
       this.errorMessage = "Format email tidak valid";
+    }
+  },
+  watch: {
+    error(status) {
+      this.isError = status;
+      this.errorMessage = this.errMsg;
     }
   }
 };
