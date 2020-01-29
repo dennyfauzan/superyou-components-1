@@ -214,7 +214,7 @@ input[type="number"]::-webkit-outer-spin-button {
     .su-input_label {
       position: relative;
       color: #708697;
-      font-size: 14px;
+      font-size: 12px;
 
       .su-input_icon {
         position: absolute;

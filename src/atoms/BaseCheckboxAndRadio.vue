@@ -72,7 +72,7 @@ export default {
 .su-input_checkboxes {
   label.main {
     color: #708697;
-    font-size: 14px;
+    font-size: 12px;
     margin-bottom: 20px;
     display: block;
   }

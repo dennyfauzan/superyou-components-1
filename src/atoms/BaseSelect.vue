@@ -87,7 +87,7 @@ export default {
   margin-bottom: 20px;
   label {
     color: #708697;
-    font-size: 14px;
+    font-size: 12px;
     &.active {
       color: #00aaae;
     }

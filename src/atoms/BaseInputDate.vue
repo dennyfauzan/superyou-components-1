@@ -255,7 +255,7 @@ export default {
   label {
     display: block;
     color: #708697;
-    font-size: 14px;
+    font-size: 12px;
     margin-bottom: 2px;
     &.active {
       color: #00aaae;
