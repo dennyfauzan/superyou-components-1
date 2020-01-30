@@ -19,9 +19,7 @@
         </span>
       </label>
 
-      <span v-if="error" class="su-input_error message">{{
-        errorMessage
-      }}</span>
+      <span v-if="error" class="su-input_error message">{{ errMsg }}</span>
       <span v-else class="su-input_note message">{{ note }}</span>
     </div>
   </div>
