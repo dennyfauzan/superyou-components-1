@@ -13,8 +13,8 @@
         char="^[A-Za-z ]+$"
         :min-length="6"
         :error="errValidation.status"
-        :err-msg="errValidation.message"
         required
+        :err-msg="errValidation.message"
       ></base-input>
       <br />
       <base-input
@@ -56,9 +56,12 @@
       <base-input-date
         label="Tanggal Lahir"
         name="dob"
-        :value="dob"
+        :value="dob.val"
         :min-age="17"
         :max-age="40"
+        v-on:error-handler="handleErrorDob"
+        :error="dob.err"
+        :err-msg="dob.errMsg"
         @input="handleInputChange"
       ></base-input-date>
     </form>
@@ -81,7 +84,14 @@ export default {
       insuredName: null,
       relations: null,
       gender: null,
-      dob: "",
+      dob: {
+        val: "",
+        err: false,
+        errMsg: "",
+        min: 4,
+        minAge: 17,
+        maxAge: 40
+      },
       email: {
         val: null,
         isError: false,
@@ -131,7 +141,11 @@ export default {
   },
   methods: {
     handleInputChange(val, name) {
-      this[name] = val;
+      if (name === "dob") {
+        this[name].val = val;
+      } else {
+        this[name] = val;
+      }
     },
     handleErrorInput(isError, type) {
       if (type === "required") {
@@ -140,6 +154,9 @@ export default {
       } else if (type === "ok") {
         this.errValidation.status = isError;
         this.errValidation.message = "";
+      } else if (type === "min-length") {
+        this.errValidation.status = isError;
+        this.errValidation.message = "min length";
       }
     },
     handleErrorSelect(isError, type) {
@@ -150,6 +167,22 @@ export default {
       } else if (type === "ok") {
         this.errSelectValidate.status = isError;
         this.errSelectValidate.message = "";
+      }
+    },
+    handleErrorDob(isError, type, name) {
+      console.log(isError, type, name);
+      if (type === "invalid") {
+        this.dob.err = isError;
+        this.dob.errMsg = "Invalid Date";
+      } else if (type === "min-age") {
+        this.dob.err = isError;
+        this.dob.errMsg = "min age";
+      } else if (type === "max-age") {
+        this.dob.err = isError;
+        this.dob.errMsg = "max age";
+      } else if (type === "ok") {
+        this.dob.err = isError;
+        this.dob.errMsg = "";
       }
     }
   }
