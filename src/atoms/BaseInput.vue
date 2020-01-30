@@ -1,5 +1,5 @@
 <template>
-  <div class="su-input" :class="{ 'with-note': note, 'input-error': isError }">
+  <div class="su-input" :class="{ 'with-note': note, 'input-error': error }">
     <div class="su-input_control" :class="{ 'is-focused': isFocused }">
       <label class="su-input_label">
         {{ label }}
@@ -19,7 +19,7 @@
         </span>
       </label>
 
-      <span v-if="isError" class="su-input_error message">{{
+      <span v-if="error" class="su-input_error message">{{
         errorMessage
       }}</span>
       <span v-else class="su-input_note message">{{ note }}</span>
@@ -86,16 +86,19 @@ export default {
     onInputBlur() {
       this.isFocused = false;
       if (this.required && (this.value === null || this.value.length === 0)) {
-        this.errorMessage = `${this.label} wajib di isi`;
-        this.isError = true;
+        // this.errorMessage = `${this.label} wajib di isi`;
+        // this.isError = true;
+        this.$emit("error-handler", true, "required", this.name);
         return this.isError;
       }
       if (this.checkMinLength()) {
-        this.errorMessage = `Minimal ${this.minLength} karakter`;
-        this.isError = true;
+        // this.errorMessage = `Minimal ${this.minLength} karakter`;
+        // this.isError = true;
+        this.$emit("error-handler", true, "min-length", this.name);
       } else {
-        this.errorMessage = "";
-        this.isError = false;
+        // this.errorMessage = "";
+        // this.isError = false;
+        this.$emit("error-handler", false, "ok", this.name);
       }
 
       if (this.inputType === "email") {
@@ -150,8 +153,9 @@ export default {
         this.errorMessage = "";
         return true;
       }
-      this.isError = true;
-      this.errorMessage = "Format email tidak valid";
+      // this.isError = true;
+      // this.errorMessage = "Format email tidak valid";
+      this.$emit("error-handler", true, "email", this.name);
     }
   },
   watch: {

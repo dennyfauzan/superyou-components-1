@@ -1,5 +1,5 @@
 <template>
-  <div id="su-base-select" :class="{ 'input-error': isError }">
+  <div id="su-base-select" :class="{ 'input-error': error }">
     <label :class="{ active: isFocused }">{{ label }}</label>
     <v-select
       class="base-select"
@@ -11,9 +11,7 @@
       @search:blur="onBlur"
       :select-on-key-codes="[8]"
     ></v-select>
-    <span v-if="isError" class="su-input_error message">{{
-      errorMessage
-    }}</span>
+    <span v-if="error" class="su-input_error message">{{ errMsg }}</span>
   </div>
 </template>
 
@@ -51,6 +49,12 @@ export default {
     name: {
       type: String,
       default: null
+    },
+    error: {
+      type: Boolean
+    },
+    errMsg: {
+      type: String
     }
   },
   methods: {
@@ -65,12 +69,14 @@ export default {
     onBlur() {
       this.isFocused = false;
       if (this.selectedData === null) {
-        this.isError = true;
-        this.errorMessage = "Wajib di isi";
+        // this.isError = true;
+        // this.errorMessage = "Wajib di isi";
+        this.$emit("error-handler", true, "required", this.name);
         return this.isError;
       }
-      this.isError = false;
-      this.errorMessage = "";
+      // this.isError = false;
+      // this.errorMessage = "";
+      this.$emit("error-handler", false, "ok", this.name);
       return this.isError;
     }
   },

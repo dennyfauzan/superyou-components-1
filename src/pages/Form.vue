@@ -7,13 +7,14 @@
         :value="userName"
         label="Nama Lengkap"
         v-on:handle-change="handleInputChange"
+        v-on:error-handler="handleErrorInput"
         name="userName"
         note="Note: Nama Lengkap"
         char="^[A-Za-z ]+$"
         :min-length="6"
-        required
         :error="errValidation.status"
         :err-msg="errValidation.message"
+        required
       ></base-input>
       <br />
       <base-input
@@ -39,8 +40,10 @@
       <base-select
         name="relations"
         label="Hubungan"
+        v-on:error-handler="handleErrorSelect"
         :options="dataSelectOpt"
-        v-on:handle-change="handleInputChange"
+        :error="errSelectValidate.status"
+        :err-msg="errSelectValidate.message"
       ></base-select>
       <br />
       <base-checkbox-and-radio
@@ -57,8 +60,6 @@
         :min-age="17"
         :max-age="40"
         @input="handleInputChange"
-        :error="errValidation.status"
-        :err-msg="errValidation.message"
       ></base-input-date>
     </form>
   </div>
@@ -114,6 +115,10 @@ export default {
       errValidation: {
         status: false,
         message: "test error"
+      },
+      errSelectValidate: {
+        status: false,
+        message: "test error"
       }
     };
   },
@@ -127,6 +132,25 @@ export default {
   methods: {
     handleInputChange(val, name) {
       this[name] = val;
+    },
+    handleErrorInput(isError, type) {
+      if (type === "required") {
+        this.errValidation.status = isError;
+        this.errValidation.message = "This field required";
+      } else if (type === "ok") {
+        this.errValidation.status = isError;
+        this.errValidation.message = "";
+      }
+    },
+    handleErrorSelect(isError, type) {
+      console.log(isError, type);
+      if (type === "required") {
+        this.errSelectValidate.status = isError;
+        this.errSelectValidate.message = "Relations is required";
+      } else if (type === "ok") {
+        this.errSelectValidate.status = isError;
+        this.errSelectValidate.message = "";
+      }
     }
   }
 };

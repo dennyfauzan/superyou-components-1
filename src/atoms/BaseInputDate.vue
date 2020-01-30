@@ -117,30 +117,31 @@ export default {
       if (current > 9999) this.year = prev;
     },
     submittedDate() {
-      console.log("data change");
       this.isError = false;
       this.errorMessage = "";
 
       if (this.dateFlag.day && this.dateFlag.month && this.dateFlag.year) {
         if (!this.checkValidDate()) {
-          this.isError = true;
-          this.errorMessage = "Tanggal tidak valid";
+          // this.isError = true;
+          // this.errorMessage = "Tanggal tidak valid";
+          this.$emit("error-handler", true, "invalid", this.name);
           return false;
         }
 
         if (this.minAge && !this.validateMinMaxYear(this.minAge)) {
-          this.isError = true;
-          this.errorMessage = `Minimal ${this.minAge} tahun ke atas`;
+          // this.isError = true;
+          // this.errorMessage = `Minimal ${this.minAge} tahun ke atas`;
+          this.$emit("error-handler", true, "max-age", this.name);
         }
 
         if (this.maxAge && this.validateMinMaxYear(this.maxAge)) {
-          this.isError = true;
-          this.errorMessage = `Maksimal ${this.maxAge} tahun ke atas`;
+          // this.isError = true;
+          // this.errorMessage = `Maksimal ${this.maxAge} tahun ke atas`;
+          this.$emit("error-handler", true, "min-age", this.name);
         }
       }
     },
     error(status) {
-      console.log("changed error");
       this.isError = status;
       this.errorMessage = this.errMsg;
     }
@@ -229,9 +230,11 @@ export default {
       console.log(this.day.length && this.month.length && this.year.length);
       if (this.day.length && this.month.length && this.year.length) {
         this.isFocused = false;
+        this.$emit("error-handler", false, "ok", this.name);
       } else {
-        this.isError = true;
-        this.errorMessage = "Tanggal tidak valid";
+        // this.isError = true;
+        // this.errorMessage = "Tanggal tidak valid";
+        this.$emit("error-handler", true, "invalid", this.name);
       }
     },
     beforeInputYear(e) {
