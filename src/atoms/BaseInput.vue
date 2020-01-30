@@ -155,12 +155,6 @@ export default {
       // this.errorMessage = "Format email tidak valid";
       this.$emit("error-handler", true, "email", this.name);
     }
-  },
-  watch: {
-    error(status) {
-      this.isError = status;
-      this.errorMessage = this.errMsg;
-    }
   }
 };
 </script>
