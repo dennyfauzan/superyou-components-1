@@ -1,11 +1,11 @@
 <template>
   <div class="su-date-wrapper">
-    <label :class="{ 'date-focused': isFocused, 'is-error': isError }">{{
+    <label :class="{ 'date-focused': isFocused, 'is-error': error }">{{
       label
     }}</label>
     <div
       class="su-date"
-      :class="{ 'date-focused': isFocused, 'is-error': isError }"
+      :class="{ 'date-focused': isFocused, 'is-error': error }"
       @keyup.capture="updateValue"
       @focus.capture="onFocused"
       @blur.capture="onBlured"
@@ -48,9 +48,7 @@
         @beforeinput="beforeInputYear"
       />
     </div>
-    <span v-if="isError" class="su-input_error message">{{
-      errorMessage
-    }}</span>
+    <span v-if="error" class="su-input_error message">{{ errMsg }}</span>
     <span v-else class="su-input_note message">{{ note }}</span>
   </div>
 </template>
@@ -103,8 +101,6 @@ export default {
       month: `${this.value ? new Date(this.value).getMonth() + 1 : ``}`,
       year: `${this.value ? new Date(this.value).getFullYear() : ``}`,
       isFocused: false,
-      isError: false,
-      errorMessage: "",
       dateFlag: {
         day: 0,
         month: 0,
@@ -117,33 +113,10 @@ export default {
       if (current > 9999) this.year = prev;
     },
     submittedDate() {
-      this.isError = false;
-      this.errorMessage = "";
-
+      if (this.year.length === 4) this.dateFlag.year += 1;
       if (this.dateFlag.day && this.dateFlag.month && this.dateFlag.year) {
-        if (!this.checkValidDate()) {
-          // this.isError = true;
-          // this.errorMessage = "Tanggal tidak valid";
-          this.$emit("error-handler", true, "invalid", this.name);
-          return false;
-        }
-
-        if (this.minAge && !this.validateMinMaxYear(this.minAge)) {
-          // this.isError = true;
-          // this.errorMessage = `Minimal ${this.minAge} tahun ke atas`;
-          this.$emit("error-handler", true, "max-age", this.name);
-        }
-
-        if (this.maxAge && this.validateMinMaxYear(this.maxAge)) {
-          // this.isError = true;
-          // this.errorMessage = `Maksimal ${this.maxAge} tahun ke atas`;
-          this.$emit("error-handler", true, "min-age", this.name);
-        }
+        this.errorChecker();
       }
-    },
-    error(status) {
-      this.isError = status;
-      this.errorMessage = this.errMsg;
     }
   },
   methods: {
@@ -201,8 +174,30 @@ export default {
       const day = new Date().getDate();
       const completeDate = `${month}/${day}/${year}`;
       const dateToTime = new Date(completeDate).getTime();
-      console.log(dateToTime);
       return dateToTime > this.submittedDate;
+    },
+    errorChecker() {
+      if (!this.checkValidDate()) {
+        // this.isError = true;
+        // this.errorMessage = "Tanggal tidak valid";
+        this.$emit("error-handler", true, "invalid", this.name);
+        return false;
+      }
+
+      if (this.minAge && !this.validateMinMaxYear(this.minAge)) {
+        // this.isError = true;
+        // this.errorMessage = `Minimal ${this.minAge} tahun ke atas`;
+        this.$emit("error-handler", true, "min-age", this.name);
+        return false;
+      }
+
+      if (this.maxAge && this.validateMinMaxYear(this.maxAge)) {
+        // this.isError = true;
+        // this.errorMessage = `Maksimal ${this.maxAge} tahun ke atas`;
+        this.$emit("error-handler", true, "max-age", this.name);
+        return false;
+      }
+      this.$emit("error-handler", false, "ok", this.name);
     },
     eachBlur(type, howMany) {
       if (this[type].length) {
@@ -227,15 +222,7 @@ export default {
       this.isFocused = true;
     },
     onBlured() {
-      console.log(this.day.length && this.month.length && this.year.length);
-      if (this.day.length && this.month.length && this.year.length) {
-        this.isFocused = false;
-        this.$emit("error-handler", false, "ok", this.name);
-      } else {
-        // this.isError = true;
-        // this.errorMessage = "Tanggal tidak valid";
-        this.$emit("error-handler", true, "invalid", this.name);
-      }
+      this.isFocused = false;
     },
     beforeInputYear(e) {
       if (this.year.length >= 4 && e.inputType !== "deleteContentBackward") {
