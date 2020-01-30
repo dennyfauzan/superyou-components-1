@@ -29,10 +29,13 @@
       ></base-input>
       <br />
       <base-input
-        :value="insuredName"
+        :value="email.val"
         label="Email"
         v-on:handle-change="handleInputChange"
-        name="insuredName"
+        v-on:error-handler="handleErrorEmail"
+        :error="email.err"
+        :err-msg="email.errMsg"
+        name="email"
         inputType="email"
         required
       ></base-input>
@@ -94,8 +97,8 @@ export default {
       },
       email: {
         val: null,
-        isError: false,
-        errorMsg: null,
+        err: false,
+        errMsg: "",
         min: 4
       },
       dataSteps: [
@@ -141,7 +144,7 @@ export default {
   },
   methods: {
     handleInputChange(val, name) {
-      if (name === "dob") {
+      if (name === "dob" || name === "email") {
         this[name].val = val;
       } else {
         this[name] = val;
@@ -183,6 +186,19 @@ export default {
       } else if (type === "ok") {
         this.dob.err = isError;
         this.dob.errMsg = "";
+      }
+    },
+    handleErrorEmail(isError, type) {
+      console.log(isError, type);
+      if (type === "required") {
+        this.email.err = isError;
+        this.email.errMsg = "Relations is required";
+      } else if (type === "ok") {
+        this.email.err = isError;
+        this.email.errMsg = "";
+      } else if (type === "email") {
+        this.email.err = isError;
+        this.email.errMsg = "Invalid Email";
       }
     }
   }
