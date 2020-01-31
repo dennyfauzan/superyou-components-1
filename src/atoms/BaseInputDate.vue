@@ -255,6 +255,22 @@ export default {
     dateString() {
       return new Date(this.submittedDate).toLocaleDateString();
     }
+  },
+  created() {
+    this.day = `${
+      this.value
+        ? new Date(this.value)
+            .getDate()
+            .toString()
+            .padStart(2, 0)
+        : ``
+    }`;
+    this.month = `${
+      this.value
+        ? (new Date(this.value).getMonth() + 1).toString().padStart(2, 0)
+        : ``
+    }`;
+    this.year = `${this.value ? new Date(this.value).getFullYear() : ``}`;
   }
 };
 </script>
