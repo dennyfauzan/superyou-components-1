@@ -246,7 +246,6 @@ export default {
     }
   },
   created() {
-    console.log("created");
     this.day = `${
       this.value
         ? new Date(this.value)
@@ -261,12 +260,15 @@ export default {
         : ``
     }`;
     this.year = `${this.value ? new Date(this.value).getFullYear() : ``}`;
-    // if (this.value.length === 10) {
-    //   let arr = this.value.split("/");
-    //   this.day = arr[1];
-    //   this.month = arr[0];
-    //   this.year = arr[2];
-    // }
+
+    if (this.value.length === 10) {
+      // let arr = this.value.split("/");
+      // this.day = arr[1];
+      // this.month = arr[0];
+      // this.year = arr[2];
+      console.log("created length 10");
+      this.updateValue();
+    }
   }
 };
 </script>
