@@ -1,8 +1,10 @@
 <template>
   <div class="su-date-wrapper">
-    <label :class="{ 'date-focused': isFocused, 'is-error': error }">{{
+    <label :class="{ 'date-focused': isFocused, 'is-error': error }">
+      {{
       label
-    }}</label>
+      }}
+    </label>
     <div
       class="su-date"
       :class="{ 'date-focused': isFocused, 'is-error': error }"
@@ -32,9 +34,7 @@
         @blur="eachBlur('month', 2)"
         @focus="eachFocus('month')"
       />
-      <span v-if="showYear && (showDay || showMonth)" class="su-date__divider"
-        >/</span
-      >
+      <span v-if="showYear && (showDay || showMonth)" class="su-date__divider">/</span>
       <input
         v-if="showYear"
         ref="year"
@@ -97,8 +97,19 @@ export default {
   },
   data() {
     return {
-      day: `${this.value ? new Date(this.value).getDate() : ``}`,
-      month: `${this.value ? new Date(this.value).getMonth() + 1 : ``}`,
+      day: `${
+        this.value
+          ? new Date(this.value)
+              .getDate()
+              .toString()
+              .padStart(2, 0)
+          : ``
+      }`,
+      month: `${
+        this.value
+          ? (new Date(this.value).getMonth() + 1).toString().padStart(2, 0)
+          : ``
+      }`,
       year: `${this.value ? new Date(this.value).getFullYear() : ``}`,
       isFocused: false,
       dateFlag: {
@@ -152,6 +163,10 @@ export default {
         `${this.year.padStart(4, 0)}-${this.month}-${this.day}`
       );
       if (Number.isNaN(timestamp)) return;
+      if (timestamp <= 0 && this.dateFlag.year > 0) {
+        this.$emit("error-handler", true, "invalid", this.name);
+        return;
+      }
       this.$emit(`input`, timestamp, this.name);
     },
     checkValidDate() {
@@ -235,6 +250,9 @@ export default {
       return Date.parse(
         `${this.year.padStart(4, 0)}-${this.month}-${this.day}`
       );
+    },
+    dateString() {
+      return new Date(this.submittedDate).toLocaleDateString();
     }
   }
 };
