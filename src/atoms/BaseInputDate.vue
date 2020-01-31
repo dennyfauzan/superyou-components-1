@@ -97,20 +97,9 @@ export default {
   },
   data() {
     return {
-      day: `${
-        this.value
-          ? new Date(this.value)
-              .getDate()
-              .toString()
-              .padStart(2, 0)
-          : ``
-      }`,
-      month: `${
-        this.value
-          ? (new Date(this.value).getMonth() + 1).toString().padStart(2, 0)
-          : ``
-      }`,
-      year: `${this.value ? new Date(this.value).getFullYear() : ``}`,
+      day: "",
+      month: "",
+      year: "",
       isFocused: false,
       dateFlag: {
         day: 0,
@@ -159,6 +148,7 @@ export default {
       }
     },
     updateValue() {
+      console.log("trigger from created");
       const timestamp = Date.parse(
         `${this.year.padStart(4, 0)}-${this.month}-${this.day}`
       );
@@ -254,6 +244,29 @@ export default {
     dateString() {
       return new Date(this.submittedDate).toLocaleDateString();
     }
+  },
+  created() {
+    console.log("created");
+    this.day = `${
+      this.value
+        ? new Date(this.value)
+            .getDate()
+            .toString()
+            .padStart(2, 0)
+        : ``
+    }`;
+    this.month = `${
+      this.value
+        ? (new Date(this.value).getMonth() + 1).toString().padStart(2, 0)
+        : ``
+    }`;
+    this.year = `${this.value ? new Date(this.value).getFullYear() : ``}`;
+    // if (this.value.length === 10) {
+    //   let arr = this.value.split("/");
+    //   this.day = arr[1];
+    //   this.month = arr[0];
+    //   this.year = arr[2];
+    // }
   }
 };
 </script>
