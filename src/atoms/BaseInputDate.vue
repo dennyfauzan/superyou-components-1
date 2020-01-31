@@ -148,7 +148,6 @@ export default {
       }
     },
     updateValue() {
-      console.log("trigger from created");
       const timestamp = Date.parse(
         `${this.year.padStart(4, 0)}-${this.month}-${this.day}`
       );
@@ -262,11 +261,6 @@ export default {
     this.year = `${this.value ? new Date(this.value).getFullYear() : ``}`;
 
     if (this.value.length === 10) {
-      // let arr = this.value.split("/");
-      // this.day = arr[1];
-      // this.month = arr[0];
-      // this.year = arr[2];
-      console.log("created length 10");
       this.updateValue();
     }
   }
