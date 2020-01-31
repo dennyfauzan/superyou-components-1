@@ -91,7 +91,7 @@ export default {
       relations: null,
       gender: null,
       dob: {
-        val: "",
+        val: "01/09/1992",
         err: false,
         errMsg: "",
         min: 4,
