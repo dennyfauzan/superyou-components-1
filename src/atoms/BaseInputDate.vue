@@ -167,8 +167,7 @@ export default {
         this.$emit("error-handler", true, "invalid", this.name);
         return;
       }
-      let dateToString = new Date(timestamp).toLocaleDateString();
-      this.$emit(`input`, dateToString, this.name);
+      this.$emit(`input`, timestamp, this.name);
     },
     checkValidDate() {
       const timestamp = Date.parse(
