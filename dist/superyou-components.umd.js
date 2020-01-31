@@ -96,6 +96,21 @@ return /******/ (function(modules) { // webpackBootstrap
 /************************************************************************/
 /******/ ({
 
+/***/ "00ee":
+/***/ (function(module, exports, __webpack_require__) {
+
+var wellKnownSymbol = __webpack_require__("b622");
+
+var TO_STRING_TAG = wellKnownSymbol('toStringTag');
+var test = {};
+
+test[TO_STRING_TAG] = 'z';
+
+module.exports = String(test) === '[object z]';
+
+
+/***/ }),
+
 /***/ "06cf":
 /***/ (function(module, exports, __webpack_require__) {
 
@@ -1708,6 +1723,23 @@ module.exports = function () {
 
 /***/ }),
 
+/***/ "b041":
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+var TO_STRING_TAG_SUPPORT = __webpack_require__("00ee");
+var classof = __webpack_require__("f5df");
+
+// `Object.prototype.toString` method implementation
+// https://tc39.github.io/ecma262/#sec-object.prototype.tostring
+module.exports = TO_STRING_TAG_SUPPORT ? {}.toString : function toString() {
+  return '[object ' + classof(this) + ']';
+};
+
+
+/***/ }),
+
 /***/ "b0c0":
 /***/ (function(module, exports, __webpack_require__) {
 
@@ -2040,6 +2072,22 @@ module.exports = Object.setPrototypeOf || ('__proto__' in {} ? function () {
 
 /***/ }),
 
+/***/ "d3b7":
+/***/ (function(module, exports, __webpack_require__) {
+
+var TO_STRING_TAG_SUPPORT = __webpack_require__("00ee");
+var redefine = __webpack_require__("6eeb");
+var toString = __webpack_require__("b041");
+
+// `Object.prototype.toString` method
+// https://tc39.github.io/ecma262/#sec-object.prototype.tostring
+if (!TO_STRING_TAG_SUPPORT) {
+  redefine(Object.prototype, 'toString', toString, { unsafe: true });
+}
+
+
+/***/ }),
+
 /***/ "da84":
 /***/ (function(module, exports, __webpack_require__) {
 
@@ -2169,6 +2217,39 @@ module.exports = Array.isArray || function isArray(arg) {
 /***/ (function(module, exports, __webpack_require__) {
 
 // extracted by mini-css-extract-plugin
+
+/***/ }),
+
+/***/ "f5df":
+/***/ (function(module, exports, __webpack_require__) {
+
+var TO_STRING_TAG_SUPPORT = __webpack_require__("00ee");
+var classofRaw = __webpack_require__("c6b6");
+var wellKnownSymbol = __webpack_require__("b622");
+
+var TO_STRING_TAG = wellKnownSymbol('toStringTag');
+// ES3 wrong here
+var CORRECT_ARGUMENTS = classofRaw(function () { return arguments; }()) == 'Arguments';
+
+// fallback for IE11 Script Access Denied error
+var tryGet = function (it, key) {
+  try {
+    return it[key];
+  } catch (error) { /* empty */ }
+};
+
+// getting tag from ES6+ `Object.prototype.toString`
+module.exports = TO_STRING_TAG_SUPPORT ? classofRaw : function (it) {
+  var O, tag, result;
+  return it === undefined ? 'Undefined' : it === null ? 'Null'
+    // @@toStringTag case
+    : typeof (tag = tryGet(O = Object(it), TO_STRING_TAG)) == 'string' ? tag
+    // builtinTag case
+    : CORRECT_ARGUMENTS ? classofRaw(O)
+    // ES3 arguments fallback
+    : (result = classofRaw(O)) == 'Object' && typeof O.callee == 'function' ? 'Arguments' : result;
+};
+
 
 /***/ }),
 
@@ -3131,12 +3212,12 @@ var BaseCheckboxAndRadio_component = normalizeComponent(
 )
 
 /* harmony default export */ var BaseCheckboxAndRadio = (BaseCheckboxAndRadio_component.exports);
-// CONCATENATED MODULE: ./node_modules/cache-loader/dist/cjs.js?{"cacheDirectory":"node_modules/.cache/vue-loader","cacheIdentifier":"4c501bbd-vue-loader-template"}!./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/cache-loader/dist/cjs.js??ref--0-0!./node_modules/vue-loader/lib??vue-loader-options!./src/atoms/BaseInputDate.vue?vue&type=template&id=15f4d3f6&
-var BaseInputDatevue_type_template_id_15f4d3f6_render = function () {var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;return _c('div',{staticClass:"su-date-wrapper"},[_c('label',{class:{ 'date-focused': _vm.isFocused, 'is-error': _vm.error }},[_vm._v(_vm._s(_vm.label))]),_c('div',{staticClass:"su-date",class:{ 'date-focused': _vm.isFocused, 'is-error': _vm.error },on:{"!keyup":function($event){return _vm.updateValue($event)},"!focus":function($event){return _vm.onFocused($event)},"!blur":function($event){return _vm.onBlured($event)}}},[(_vm.showDay)?_c('input',{directives:[{name:"model",rawName:"v-model",value:(_vm.day),expression:"day"}],ref:"day",staticClass:"su-date__input su-date__input--day",attrs:{"type":"tel","placeholder":"dd"},domProps:{"value":(_vm.day)},on:{"input":[function($event){if($event.target.composing){ return; }_vm.day=$event.target.value},_vm.updateDay],"blur":function($event){return _vm.eachBlur('day', 2)}}}):_vm._e(),(_vm.showDay && _vm.showMonth)?_c('span',{staticClass:"su-date__divider"},[_vm._v("/")]):_vm._e(),(_vm.showMonth)?_c('input',{directives:[{name:"model",rawName:"v-model",value:(_vm.month),expression:"month"}],ref:"month",staticClass:"su-date__input su-date__input--month",attrs:{"type":"tel","placeholder":"mm"},domProps:{"value":(_vm.month)},on:{"input":[function($event){if($event.target.composing){ return; }_vm.month=$event.target.value},_vm.updateMonth],"blur":function($event){return _vm.eachBlur('month', 2)},"focus":function($event){return _vm.eachFocus('month')}}}):_vm._e(),(_vm.showYear && (_vm.showDay || _vm.showMonth))?_c('span',{staticClass:"su-date__divider"},[_vm._v("/")]):_vm._e(),(_vm.showYear)?_c('input',{directives:[{name:"model",rawName:"v-model",value:(_vm.year),expression:"year"}],ref:"year",staticClass:"su-date__input su-date__input--year",attrs:{"type":"tel","placeholder":"yyyy"},domProps:{"value":(_vm.year)},on:{"input":[function($event){if($event.target.composing){ return; }_vm.year=$event.target.value},_vm.updateYear],"blur":function($event){return _vm.eachBlur('year', 4)},"focus":function($event){return _vm.eachFocus('year')},"beforeinput":_vm.beforeInputYear}}):_vm._e()]),(_vm.error)?_c('span',{staticClass:"su-input_error message"},[_vm._v(_vm._s(_vm.errMsg))]):_c('span',{staticClass:"su-input_note message"},[_vm._v(_vm._s(_vm.note))])])}
-var BaseInputDatevue_type_template_id_15f4d3f6_staticRenderFns = []
+// CONCATENATED MODULE: ./node_modules/cache-loader/dist/cjs.js?{"cacheDirectory":"node_modules/.cache/vue-loader","cacheIdentifier":"4c501bbd-vue-loader-template"}!./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/cache-loader/dist/cjs.js??ref--0-0!./node_modules/vue-loader/lib??vue-loader-options!./src/atoms/BaseInputDate.vue?vue&type=template&id=5fd5aee3&
+var BaseInputDatevue_type_template_id_5fd5aee3_render = function () {var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;return _c('div',{staticClass:"su-date-wrapper"},[_c('label',{class:{ 'date-focused': _vm.isFocused, 'is-error': _vm.error }},[_vm._v(" "+_vm._s(_vm.label)+" ")]),_c('div',{staticClass:"su-date",class:{ 'date-focused': _vm.isFocused, 'is-error': _vm.error },on:{"!keyup":function($event){return _vm.updateValue($event)},"!focus":function($event){return _vm.onFocused($event)},"!blur":function($event){return _vm.onBlured($event)}}},[(_vm.showDay)?_c('input',{directives:[{name:"model",rawName:"v-model",value:(_vm.day),expression:"day"}],ref:"day",staticClass:"su-date__input su-date__input--day",attrs:{"type":"tel","placeholder":"dd"},domProps:{"value":(_vm.day)},on:{"input":[function($event){if($event.target.composing){ return; }_vm.day=$event.target.value},_vm.updateDay],"blur":function($event){return _vm.eachBlur('day', 2)}}}):_vm._e(),(_vm.showDay && _vm.showMonth)?_c('span',{staticClass:"su-date__divider"},[_vm._v("/")]):_vm._e(),(_vm.showMonth)?_c('input',{directives:[{name:"model",rawName:"v-model",value:(_vm.month),expression:"month"}],ref:"month",staticClass:"su-date__input su-date__input--month",attrs:{"type":"tel","placeholder":"mm"},domProps:{"value":(_vm.month)},on:{"input":[function($event){if($event.target.composing){ return; }_vm.month=$event.target.value},_vm.updateMonth],"blur":function($event){return _vm.eachBlur('month', 2)},"focus":function($event){return _vm.eachFocus('month')}}}):_vm._e(),(_vm.showYear && (_vm.showDay || _vm.showMonth))?_c('span',{staticClass:"su-date__divider"},[_vm._v("/")]):_vm._e(),(_vm.showYear)?_c('input',{directives:[{name:"model",rawName:"v-model",value:(_vm.year),expression:"year"}],ref:"year",staticClass:"su-date__input su-date__input--year",attrs:{"type":"tel","placeholder":"yyyy"},domProps:{"value":(_vm.year)},on:{"input":[function($event){if($event.target.composing){ return; }_vm.year=$event.target.value},_vm.updateYear],"blur":function($event){return _vm.eachBlur('year', 4)},"focus":function($event){return _vm.eachFocus('year')},"beforeinput":_vm.beforeInputYear}}):_vm._e()]),(_vm.error)?_c('span',{staticClass:"su-input_error message"},[_vm._v(_vm._s(_vm.errMsg))]):_c('span',{staticClass:"su-input_note message"},[_vm._v(_vm._s(_vm.note))])])}
+var BaseInputDatevue_type_template_id_5fd5aee3_staticRenderFns = []
 
 
-// CONCATENATED MODULE: ./src/atoms/BaseInputDate.vue?vue&type=template&id=15f4d3f6&
+// CONCATENATED MODULE: ./src/atoms/BaseInputDate.vue?vue&type=template&id=5fd5aee3&
 
 // EXTERNAL MODULE: ./node_modules/core-js/modules/es.array.concat.js
 var es_array_concat = __webpack_require__("99af");
@@ -3150,6 +3231,9 @@ var es_date_to_string = __webpack_require__("0d03");
 // EXTERNAL MODULE: ./node_modules/core-js/modules/es.number.is-nan.js
 var es_number_is_nan = __webpack_require__("9129");
 
+// EXTERNAL MODULE: ./node_modules/core-js/modules/es.object.to-string.js
+var es_object_to_string = __webpack_require__("d3b7");
+
 // EXTERNAL MODULE: ./node_modules/core-js/modules/es.parse-int.js
 var es_parse_int = __webpack_require__("e25e");
 
@@ -3157,6 +3241,8 @@ var es_parse_int = __webpack_require__("e25e");
 var es_string_pad_start = __webpack_require__("4d90");
 
 // CONCATENATED MODULE: ./node_modules/cache-loader/dist/cjs.js??ref--12-0!./node_modules/thread-loader/dist/cjs.js!./node_modules/babel-loader/lib!./node_modules/cache-loader/dist/cjs.js??ref--0-0!./node_modules/vue-loader/lib??vue-loader-options!./src/atoms/BaseInputDate.vue?vue&type=script&lang=js&
+
+
 
 
 
@@ -3263,8 +3349,8 @@ var es_string_pad_start = __webpack_require__("4d90");
   },
   data: function data() {
     return {
-      day: "".concat(this.value ? new Date(this.value).getDate() : ""),
-      month: "".concat(this.value ? new Date(this.value).getMonth() + 1 : ""),
+      day: "".concat(this.value ? new Date(this.value).getDate().toString().padStart(2, 0) : ""),
+      month: "".concat(this.value ? (new Date(this.value).getMonth() + 1).toString().padStart(2, 0) : ""),
       year: "".concat(this.value ? new Date(this.value).getFullYear() : ""),
       isFocused: false,
       dateFlag: {
@@ -3320,6 +3406,12 @@ var es_string_pad_start = __webpack_require__("4d90");
     updateValue: function updateValue() {
       var timestamp = Date.parse("".concat(this.year.padStart(4, 0), "-").concat(this.month, "-").concat(this.day));
       if (Number.isNaN(timestamp)) return;
+
+      if (timestamp <= 0 && this.dateFlag.year > 0) {
+        this.$emit("error-handler", true, "invalid", this.name);
+        return;
+      }
+
       this.$emit("input", timestamp, this.name);
     },
     checkValidDate: function checkValidDate() {
@@ -3398,6 +3490,9 @@ var es_string_pad_start = __webpack_require__("4d90");
   computed: {
     submittedDate: function submittedDate() {
       return Date.parse("".concat(this.year.padStart(4, 0), "-").concat(this.month, "-").concat(this.day));
+    },
+    dateString: function dateString() {
+      return new Date(this.submittedDate).toLocaleDateString();
     }
   }
 });
@@ -3417,8 +3512,8 @@ var BaseInputDatevue_type_style_index_0_lang_scss_ = __webpack_require__("daff")
 
 var BaseInputDate_component = normalizeComponent(
   atoms_BaseInputDatevue_type_script_lang_js_,
-  BaseInputDatevue_type_template_id_15f4d3f6_render,
-  BaseInputDatevue_type_template_id_15f4d3f6_staticRenderFns,
+  BaseInputDatevue_type_template_id_5fd5aee3_render,
+  BaseInputDatevue_type_template_id_5fd5aee3_staticRenderFns,
   false,
   null,
   null,
