@@ -44,7 +44,10 @@
         name="relations"
         label="Hubungan"
         v-on:error-handler="handleErrorSelect"
+        v-on:handle-change="handleInputChange"
+        :select="opt => opt.val !== 'mother'"
         :options="dataSelectOpt"
+        :value="relations"
         :error="errSelectValidate.status"
         :err-msg="errSelectValidate.message"
       ></base-select>
