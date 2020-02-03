@@ -91,7 +91,7 @@ export default {
       relations: null,
       gender: null,
       dob: {
-        val: "01/09/1994",
+        val: "",
         err: false,
         errMsg: "",
         min: 4,
@@ -189,6 +189,9 @@ export default {
       } else if (type === "ok") {
         this.dob.err = isError;
         this.dob.errMsg = "";
+      } else if (type === "required") {
+        this.dob.err = isError;
+        this.dob.errMsg = "Date of bird is required";
       }
     },
     handleErrorEmail(isError, type) {
