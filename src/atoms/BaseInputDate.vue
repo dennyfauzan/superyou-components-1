@@ -21,6 +21,7 @@
         placeholder="dd"
         @input="updateDay"
         @blur="eachBlur('day', 2)"
+        @focus="eachFocus('day')"
       />
       <span v-if="showDay && showMonth" class="su-date__divider">/</span>
       <input
@@ -108,17 +109,6 @@ export default {
       }
     };
   },
-  watch: {
-    year(current, prev) {
-      if (current > 9999) this.year = prev;
-    },
-    submittedDate() {
-      if (this.year.length === 4) this.dateFlag.year += 1;
-      if (this.dateFlag.day && this.dateFlag.month && this.dateFlag.year) {
-        this.errorChecker();
-      }
-    }
-  },
   methods: {
     updateDay() {
       if (this.day && this.day.length >= 2) {
@@ -152,10 +142,6 @@ export default {
         `${this.year.padStart(4, 0)}-${this.month}-${this.day}`
       );
       if (Number.isNaN(timestamp)) return;
-      if (timestamp <= 0 && this.dateFlag.year > 0) {
-        this.$emit("error-handler", true, "invalid", this.name);
-        return;
-      }
       this.$emit(`input`, timestamp, this.name);
     },
     checkValidDate() {
@@ -182,22 +168,20 @@ export default {
     },
     errorChecker() {
       if (!this.checkValidDate()) {
-        // this.isError = true;
-        // this.errorMessage = "Tanggal tidak valid";
         this.$emit("error-handler", true, "invalid", this.name);
+
+        if (this.isFocused && this.dateFlag.year === 1) {
+          this.$emit("error-handler", false, "ok", this.name);
+        }
         return false;
       }
 
       if (this.minAge && !this.validateMinMaxYear(this.minAge)) {
-        // this.isError = true;
-        // this.errorMessage = `Minimal ${this.minAge} tahun ke atas`;
         this.$emit("error-handler", true, "min-age", this.name);
         return false;
       }
 
       if (this.maxAge && this.validateMinMaxYear(this.maxAge)) {
-        // this.isError = true;
-        // this.errorMessage = `Maksimal ${this.maxAge} tahun ke atas`;
         this.$emit("error-handler", true, "max-age", this.name);
         return false;
       }
@@ -206,31 +190,68 @@ export default {
     eachBlur(type, howMany) {
       if (this[type].length) {
         this[type] = this[type].padStart(howMany, 0);
-        this.dateFlag[type] += 1;
+      }
+    },
+    onBlured() {
+      this.isFocused = false;
+      if (
+        isNaN(this.submittedDate) &&
+        !this.day.length &&
+        !this.month.length &&
+        !this.year.length
+      ) {
+        this.$emit("error-handler", true, "required", this.name);
+      } else if (isNaN(this.submittedDate)) {
+        this.$emit("error-handler", true, "invalid", this.name);
+      } else if (this.submittedDate <= 0) {
+        this.$emit("error-handler", true, "invalid", this.name);
+      } else if (!isNaN(this.submittedDate)) {
+        this.$emit("error-handler", false, "ok", this.name);
       }
     },
     eachFocus(type) {
       if (type === "year") {
         if (this.month.length === 0) {
           this.$refs.month.select();
+          this.dateFlag.year = 0;
+        } else {
+          this.$emit("error-handler", false, "ok", this.name);
+          this.dateFlag[type] += 1;
         }
       } else if (type === "month") {
         if (this.day.length === 0 && this.month.length === 0) {
           this.$refs.day.select();
           this.errorMessage = "";
           this.isError = false;
+          this.dateFlag.month = 0;
+        } else {
+          this.$emit("error-handler", false, "ok", this.name);
+          this.dateFlag[type] += 1;
         }
+      } else if (type === "day") {
+        if (!this.day.length) {
+          this.$emit("error-handler", false, "ok", this.name);
+        }
+        this.dateFlag[type] += 1;
       }
     },
     onFocused() {
       this.isFocused = true;
     },
-    onBlured() {
-      this.isFocused = false;
-    },
     beforeInputYear(e) {
       if (this.year.length >= 4 && e.inputType !== "deleteContentBackward") {
         e.preventDefault();
+      }
+    }
+  },
+  watch: {
+    year(current, prev) {
+      if (current > 9999) this.year = prev;
+    },
+    submittedDate() {
+      if (this.year.length === 4) this.dateFlag.year += 1;
+      if (this.dateFlag.day && this.dateFlag.month && this.dateFlag.year) {
+        this.errorChecker();
       }
     }
   },
