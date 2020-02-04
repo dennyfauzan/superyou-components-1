@@ -5,7 +5,7 @@
         <div class="bar" :style="{ width: `${barWidth}%` }"></div>
       </div>
       <div class="su-step" v-for="(step, index) in dataSteps" :key="step.info">
-        <div class="rounded" :class="{ passed: isStepPassed(index) }">
+        <div class="rounded" :class="{ passed: isStepPassed(index + 1) }">
           {{ step.title }}
         </div>
         <div class="info">{{ step.info }}</div>
@@ -48,7 +48,7 @@ export default {
   },
   methods: {
     isStepPassed(stepIndex) {
-      if (stepIndex < this.currentStep) {
+      if (stepIndex <= this.currentStep) {
         return true;
       }
       return false;
