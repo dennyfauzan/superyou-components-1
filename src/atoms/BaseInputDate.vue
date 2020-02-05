@@ -1,9 +1,7 @@
 <template>
   <div class="su-date-wrapper">
     <label :class="{ 'date-focused': isFocused, 'is-error': error }">
-      {{
-      label
-      }}
+      {{ label }}
     </label>
     <div
       class="su-date"
@@ -35,7 +33,9 @@
         @blur="eachBlur('month', 2)"
         @focus="eachFocus('month')"
       />
-      <span v-if="showYear && (showDay || showMonth)" class="su-date__divider">/</span>
+      <span v-if="showYear && (showDay || showMonth)" class="su-date__divider"
+        >/</span
+      >
       <input
         v-if="showYear"
         ref="year"
@@ -201,12 +201,10 @@ export default {
         !this.year.length
       ) {
         this.$emit("error-handler", true, "required", this.name);
-      } else if (isNaN(this.submittedDate)) {
-        this.$emit("error-handler", true, "invalid", this.name);
-      } else if (this.submittedDate <= 0) {
+      } else if (isNaN(this.submittedDate) || this.submittedDate <= 0) {
         this.$emit("error-handler", true, "invalid", this.name);
       } else if (!isNaN(this.submittedDate)) {
-        this.$emit("error-handler", false, "ok", this.name);
+        this.errorChecker();
       }
     },
     eachFocus(type) {
