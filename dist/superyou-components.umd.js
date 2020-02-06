@@ -324,13 +324,6 @@ module.exports = function (it) {
 
 /***/ }),
 
-/***/ "1db4":
-/***/ (function(module, exports, __webpack_require__) {
-
-// extracted by mini-css-extract-plugin
-
-/***/ }),
-
 /***/ "1dde":
 /***/ (function(module, exports, __webpack_require__) {
 
@@ -1191,17 +1184,6 @@ module.exports = [
 
 /***/ }),
 
-/***/ "7949":
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-/* harmony import */ var _node_modules_mini_css_extract_plugin_dist_loader_js_ref_8_oneOf_1_0_node_modules_css_loader_dist_cjs_js_ref_8_oneOf_1_1_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_postcss_loader_src_index_js_ref_8_oneOf_1_2_node_modules_sass_loader_dist_cjs_js_ref_8_oneOf_1_3_node_modules_cache_loader_dist_cjs_js_ref_0_0_node_modules_vue_loader_lib_index_js_vue_loader_options_CardInvoice_vue_vue_type_style_index_0_id_9f240658_lang_scss_scoped_true___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__("1db4");
-/* harmony import */ var _node_modules_mini_css_extract_plugin_dist_loader_js_ref_8_oneOf_1_0_node_modules_css_loader_dist_cjs_js_ref_8_oneOf_1_1_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_postcss_loader_src_index_js_ref_8_oneOf_1_2_node_modules_sass_loader_dist_cjs_js_ref_8_oneOf_1_3_node_modules_cache_loader_dist_cjs_js_ref_0_0_node_modules_vue_loader_lib_index_js_vue_loader_options_CardInvoice_vue_vue_type_style_index_0_id_9f240658_lang_scss_scoped_true___WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_node_modules_mini_css_extract_plugin_dist_loader_js_ref_8_oneOf_1_0_node_modules_css_loader_dist_cjs_js_ref_8_oneOf_1_1_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_postcss_loader_src_index_js_ref_8_oneOf_1_2_node_modules_sass_loader_dist_cjs_js_ref_8_oneOf_1_3_node_modules_cache_loader_dist_cjs_js_ref_0_0_node_modules_vue_loader_lib_index_js_vue_loader_options_CardInvoice_vue_vue_type_style_index_0_id_9f240658_lang_scss_scoped_true___WEBPACK_IMPORTED_MODULE_0__);
-/* unused harmony reexport * */
- /* unused harmony default export */ var _unused_webpack_default_export = (_node_modules_mini_css_extract_plugin_dist_loader_js_ref_8_oneOf_1_0_node_modules_css_loader_dist_cjs_js_ref_8_oneOf_1_1_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_postcss_loader_src_index_js_ref_8_oneOf_1_2_node_modules_sass_loader_dist_cjs_js_ref_8_oneOf_1_3_node_modules_cache_loader_dist_cjs_js_ref_0_0_node_modules_vue_loader_lib_index_js_vue_loader_options_CardInvoice_vue_vue_type_style_index_0_id_9f240658_lang_scss_scoped_true___WEBPACK_IMPORTED_MODULE_0___default.a); 
-
-/***/ }),
-
 /***/ "7b0b":
 /***/ (function(module, exports, __webpack_require__) {
 
@@ -1366,6 +1348,13 @@ module.exports = function (it) {
 /* harmony import */ var _node_modules_mini_css_extract_plugin_dist_loader_js_ref_8_oneOf_1_0_node_modules_css_loader_dist_cjs_js_ref_8_oneOf_1_1_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_postcss_loader_src_index_js_ref_8_oneOf_1_2_node_modules_sass_loader_dist_cjs_js_ref_8_oneOf_1_3_node_modules_cache_loader_dist_cjs_js_ref_0_0_node_modules_vue_loader_lib_index_js_vue_loader_options_BaseCheckboxAndRadio_vue_vue_type_style_index_0_id_1ef4731f_lang_scss_scoped_true___WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_node_modules_mini_css_extract_plugin_dist_loader_js_ref_8_oneOf_1_0_node_modules_css_loader_dist_cjs_js_ref_8_oneOf_1_1_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_postcss_loader_src_index_js_ref_8_oneOf_1_2_node_modules_sass_loader_dist_cjs_js_ref_8_oneOf_1_3_node_modules_cache_loader_dist_cjs_js_ref_0_0_node_modules_vue_loader_lib_index_js_vue_loader_options_BaseCheckboxAndRadio_vue_vue_type_style_index_0_id_1ef4731f_lang_scss_scoped_true___WEBPACK_IMPORTED_MODULE_0__);
 /* unused harmony reexport * */
  /* unused harmony default export */ var _unused_webpack_default_export = (_node_modules_mini_css_extract_plugin_dist_loader_js_ref_8_oneOf_1_0_node_modules_css_loader_dist_cjs_js_ref_8_oneOf_1_1_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_postcss_loader_src_index_js_ref_8_oneOf_1_2_node_modules_sass_loader_dist_cjs_js_ref_8_oneOf_1_3_node_modules_cache_loader_dist_cjs_js_ref_0_0_node_modules_vue_loader_lib_index_js_vue_loader_options_BaseCheckboxAndRadio_vue_vue_type_style_index_0_id_1ef4731f_lang_scss_scoped_true___WEBPACK_IMPORTED_MODULE_0___default.a); 
+
+/***/ }),
+
+/***/ "8c0f":
+/***/ (function(module, exports, __webpack_require__) {
+
+// extracted by mini-css-extract-plugin
 
 /***/ }),
 
@@ -1794,6 +1783,17 @@ module.exports = TO_STRING_TAG_SUPPORT ? {}.toString : function toString() {
   return '[object ' + classof(this) + ']';
 };
 
+
+/***/ }),
+
+/***/ "b06a":
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+/* harmony import */ var _node_modules_mini_css_extract_plugin_dist_loader_js_ref_8_oneOf_1_0_node_modules_css_loader_dist_cjs_js_ref_8_oneOf_1_1_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_postcss_loader_src_index_js_ref_8_oneOf_1_2_node_modules_sass_loader_dist_cjs_js_ref_8_oneOf_1_3_node_modules_cache_loader_dist_cjs_js_ref_0_0_node_modules_vue_loader_lib_index_js_vue_loader_options_CardInvoice_vue_vue_type_style_index_0_id_6fe68ac4_lang_scss_scoped_true___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__("8c0f");
+/* harmony import */ var _node_modules_mini_css_extract_plugin_dist_loader_js_ref_8_oneOf_1_0_node_modules_css_loader_dist_cjs_js_ref_8_oneOf_1_1_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_postcss_loader_src_index_js_ref_8_oneOf_1_2_node_modules_sass_loader_dist_cjs_js_ref_8_oneOf_1_3_node_modules_cache_loader_dist_cjs_js_ref_0_0_node_modules_vue_loader_lib_index_js_vue_loader_options_CardInvoice_vue_vue_type_style_index_0_id_6fe68ac4_lang_scss_scoped_true___WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_node_modules_mini_css_extract_plugin_dist_loader_js_ref_8_oneOf_1_0_node_modules_css_loader_dist_cjs_js_ref_8_oneOf_1_1_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_postcss_loader_src_index_js_ref_8_oneOf_1_2_node_modules_sass_loader_dist_cjs_js_ref_8_oneOf_1_3_node_modules_cache_loader_dist_cjs_js_ref_0_0_node_modules_vue_loader_lib_index_js_vue_loader_options_CardInvoice_vue_vue_type_style_index_0_id_6fe68ac4_lang_scss_scoped_true___WEBPACK_IMPORTED_MODULE_0__);
+/* unused harmony reexport * */
+ /* unused harmony default export */ var _unused_webpack_default_export = (_node_modules_mini_css_extract_plugin_dist_loader_js_ref_8_oneOf_1_0_node_modules_css_loader_dist_cjs_js_ref_8_oneOf_1_1_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_postcss_loader_src_index_js_ref_8_oneOf_1_2_node_modules_sass_loader_dist_cjs_js_ref_8_oneOf_1_3_node_modules_cache_loader_dist_cjs_js_ref_0_0_node_modules_vue_loader_lib_index_js_vue_loader_options_CardInvoice_vue_vue_type_style_index_0_id_6fe68ac4_lang_scss_scoped_true___WEBPACK_IMPORTED_MODULE_0___default.a); 
 
 /***/ }),
 
@@ -2523,12 +2523,12 @@ if (typeof window !== 'undefined') {
 // Indicate to webpack that this file can be concatenated
 /* harmony default export */ var setPublicPath = (null);
 
-// CONCATENATED MODULE: ./node_modules/cache-loader/dist/cjs.js?{"cacheDirectory":"node_modules/.cache/vue-loader","cacheIdentifier":"4c501bbd-vue-loader-template"}!./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/cache-loader/dist/cjs.js??ref--0-0!./node_modules/vue-loader/lib??vue-loader-options!./src/components/card-invoice/CardInvoice.vue?vue&type=template&id=9f240658&scoped=true&
-var render = function () {var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;return _c('base-card',{attrs:{"header-style":_vm.cardStyles.header}},[_c('div',{staticClass:"card-header-wrapper",attrs:{"slot":"card-header"},slot:"card-header"},[_c('h3',[_vm._v(_vm._s(_vm.title))]),_c('h5',{staticClass:"card-header-wrapper__see-products",on:{"click":_vm.onShowProductDetail}},[_vm._v(" Lihat Produk ")])]),_c('div',{attrs:{"slot":"card-body"},slot:"card-body"},[_c('InvoiceBody',{attrs:{"details":_vm.detailPayment},on:{"handleInvoiceDetail":_vm.onShowInvoiceDetail}},[_c('baseChip',{attrs:{"slot":"payment-status","type":_vm.detailPayment.status},slot:"payment-status"},[_c('span',{staticClass:"text"},[_vm._v(_vm._s(_vm.detailPayment.status_message))])]),_c('baseButton',{attrs:{"slot":"payment-button","btn-text":"BAYAR SEKARANG","isDisabled":_vm.isActionDisabled},on:{"onClick":_vm.handleClickCTA},slot:"payment-button"})],1)],1)])}
+// CONCATENATED MODULE: ./node_modules/cache-loader/dist/cjs.js?{"cacheDirectory":"node_modules/.cache/vue-loader","cacheIdentifier":"4c501bbd-vue-loader-template"}!./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/cache-loader/dist/cjs.js??ref--0-0!./node_modules/vue-loader/lib??vue-loader-options!./src/components/card-invoice/CardInvoice.vue?vue&type=template&id=6fe68ac4&scoped=true&
+var render = function () {var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;return _c('base-card',{attrs:{"header-style":_vm.cardStyles.header}},[_c('div',{staticClass:"card-header-wrapper",attrs:{"slot":"card-header"},slot:"card-header"},[_c('h3',[_vm._v(_vm._s(_vm.title))]),_c('h5',{staticClass:"card-header-wrapper__see-products",on:{"click":_vm.onShowProductDetail}},[_vm._v(" Lihat Produk ")])]),_c('div',{attrs:{"slot":"card-body"},slot:"card-body"},[_c('InvoiceBody',{attrs:{"details":_vm.detailPayment},on:{"handleInvoiceDetail":_vm.onShowInvoiceDetail}},[_c('baseChip',{attrs:{"slot":"payment-status","type":_vm.detailPayment.status},slot:"payment-status"},[_c('span',{staticClass:"text"},[_vm._v(_vm._s(_vm.detailPayment.status_message))])]),_c('baseButton',{attrs:{"slot":"payment-button","btn-text":_vm.actionText,"isDisabled":_vm.btnDisable},on:{"onClick":_vm.handleClickCTA},slot:"payment-button"})],1)],1)])}
 var staticRenderFns = []
 
 
-// CONCATENATED MODULE: ./src/components/card-invoice/CardInvoice.vue?vue&type=template&id=9f240658&scoped=true&
+// CONCATENATED MODULE: ./src/components/card-invoice/CardInvoice.vue?vue&type=template&id=6fe68ac4&scoped=true&
 
 // EXTERNAL MODULE: ./node_modules/core-js/modules/es.array.for-each.js
 var es_array_for_each = __webpack_require__("4160");
@@ -2990,6 +2990,14 @@ var InvoiceBody_component = normalizeComponent(
     title: {
       type: String,
       default: ""
+    },
+    actionText: {
+      type: String,
+      default: "BAYAR SEKARANG"
+    },
+    btnDisable: {
+      type: Boolean,
+      default: false
     }
   },
   components: {
@@ -3036,8 +3044,8 @@ var InvoiceBody_component = normalizeComponent(
 });
 // CONCATENATED MODULE: ./src/components/card-invoice/CardInvoice.vue?vue&type=script&lang=js&
  /* harmony default export */ var card_invoice_CardInvoicevue_type_script_lang_js_ = (CardInvoicevue_type_script_lang_js_); 
-// EXTERNAL MODULE: ./src/components/card-invoice/CardInvoice.vue?vue&type=style&index=0&id=9f240658&lang=scss&scoped=true&
-var CardInvoicevue_type_style_index_0_id_9f240658_lang_scss_scoped_true_ = __webpack_require__("7949");
+// EXTERNAL MODULE: ./src/components/card-invoice/CardInvoice.vue?vue&type=style&index=0&id=6fe68ac4&lang=scss&scoped=true&
+var CardInvoicevue_type_style_index_0_id_6fe68ac4_lang_scss_scoped_true_ = __webpack_require__("b06a");
 
 // CONCATENATED MODULE: ./src/components/card-invoice/CardInvoice.vue
 
@@ -3054,7 +3062,7 @@ var CardInvoice_component = normalizeComponent(
   staticRenderFns,
   false,
   null,
-  "9f240658",
+  "6fe68ac4",
   null
   
 )
