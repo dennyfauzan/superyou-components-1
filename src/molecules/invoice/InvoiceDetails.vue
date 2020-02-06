@@ -1,6 +1,10 @@
 <template>
   <div class="invoice-detail-wrapper">
-    <InvoiceDetail v-for="policy in productsDetails" :key="policy.id" :datas="policy" />
+    <InvoiceDetail
+      v-for="policy in productsDetails"
+      :key="policy.id"
+      :datas="policy"
+    />
     <div class="invoice-summary">
       <div class="invoice-summary__wrapper">
         <h2>Payment Fee</h2>
