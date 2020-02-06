@@ -19,9 +19,9 @@
         </baseChip>
         <baseButton
           slot="payment-button"
-          btn-text="BAYAR SEKARANG"
+          :btn-text="actionText"
           @onClick="handleClickCTA"
-          :isDisabled="isActionDisabled"
+          :isDisabled="btnDisable"
         />
       </InvoiceBody>
     </div>
@@ -47,6 +47,14 @@ export default {
     title: {
       type: String,
       default: ""
+    },
+    actionText: {
+      type: String,
+      default: "BAYAR SEKARANG"
+    },
+    btnDisable: {
+      type: Boolean,
+      default: false
     }
   },
   components: {
