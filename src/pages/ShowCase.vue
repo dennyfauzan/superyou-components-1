@@ -6,7 +6,7 @@
         :key="invoice.policy_group_number"
         :detailPayment="invoice"
         :payNowAction="payButton"
-        :title="invoice.policy_group_number"
+        :title="`No Transaksi ${invoice.policy_group_number}`"
         @on-show-invoice-product="showDetailSelectedProduct"
         @on-show-payment-history="showPaymentHistory"
       />
