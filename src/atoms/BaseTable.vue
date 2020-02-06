@@ -3,7 +3,9 @@
     <table class="table-auto">
       <thead>
         <tr>
-          <th class="px-4 py-4" v-for="title in thead" :key="title.field">{{ title.label }}</th>
+          <th class="px-4 py-4" v-for="title in thead" :key="title.field">
+            {{ title.label }}
+          </th>
         </tr>
       </thead>
       <tbody>
@@ -13,7 +15,9 @@
             v-for="key in tdataKey"
             :key="key"
             :class="key"
-          >{{ field[key] }}</td>
+          >
+            {{ field[key] }}
+          </td>
         </tr>
       </tbody>
     </table>
@@ -61,51 +65,11 @@ export default {
         return [
           {
             invoice_number: "1234-06",
-            due_date: "dd/mm/yy",
-            paid_date: "dd/mm/yy",
-            payment_method: "Visa Card",
-            total: "Rp 115.000",
-            status: "Berhasil"
-          },
-          {
-            invoice_number: "1234-05",
-            due_date: "dd/mm/yy",
-            paid_date: "dd/mm/yy",
-            payment_method: "Visa Card",
-            total: "Rp 80.000",
-            status: "Menunggu Pembayaran"
-          },
-          {
-            invoice_number: "1234-04",
-            due_date: "dd/mm/yy",
-            paid_date: "dd/mm/yy",
-            payment_method: "Visa Card",
-            total: "Rp 80.000",
-            status: "Menunggu Pembayaran"
-          },
-          {
-            invoice_number: "1234-03",
-            due_date: "dd/mm/yy",
-            paid_date: "dd/mm/yy",
-            payment_method: "Visa Card",
-            total: "Rp 80.000",
-            status: "Menunggu Pembayaran"
-          },
-          {
-            invoice_number: "1234-02",
-            due_date: "dd/mm/yy",
-            paid_date: "dd/mm/yy",
-            payment_method: "Visa Card",
-            total: "Rp 80.000",
-            status: "Menunggu Pembayaran"
-          },
-          {
-            invoice_number: "1234-01",
-            due_date: "dd/mm/yy",
-            paid_date: "dd/mm/yy",
-            payment_method: "Visa Card",
-            total: "Rp 80.000",
-            status: "Menunggu Pembayaran"
+            next_payment_at: "dd/mm/yy",
+            paid_at: "dd/mm/yy",
+            payment_method_name: "Visa Card",
+            total_payment: "Rp 115.000",
+            status_desc: "Berhasil"
           }
         ];
       }
