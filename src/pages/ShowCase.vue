@@ -6,22 +6,26 @@
         :key="invoice.policy_group_number"
         :detailPayment="invoice"
         :payNowAction="payButton"
-        title="XXXX XXXX"
-        @onShowInvoiceProduct="showDetailSelectedProduct"
-        @onShowPaymentHistory="showPaymentHistory"
+        :title="invoice.policy_group_number"
+        @on-show-invoice-product="showDetailSelectedProduct"
+        @on-show-payment-history="showPaymentHistory"
       />
 
-      <BaseModal :modalShow="showModal" @modalClose="hideModal">
-        <template v-if="showModalType === `DETAIL_PRODUCT` && productsDetails.list">
+      <BaseModal
+        :modalShow="showModal"
+        @modalClose="hideModal"
+        :max-width="'900px'"
+      >
+        <template
+          v-if="showModalType === `DETAIL_PRODUCT` && productsDetails.list"
+        >
           <InvoiceDetails
             :productsDetails="productsDetails.list"
             :paymentFee="productsDetails.paymentFee"
           />
         </template>
         <template v-else>
-          <p style="color:#708697; font-size:14px;">Timeline Pembayaran :</p>
-          <br />
-          <BaseTable />
+          <PaymentHistory :historyData="payment_history" />
         </template>
       </BaseModal>
 
@@ -43,7 +47,7 @@
 <script>
 import BaseIconProductAndPlan from "@/atoms/BaseIconProductAndPlan.vue";
 import CardInvoice from "@/components/card-invoice/CardInvoice.vue";
-import BaseTable from "@/atoms/BaseTable.vue";
+import PaymentHistory from "@/components/PaymentHistory/PaymentHistory.vue";
 import BaseModal from "@/atoms/BaseModal.vue";
 import InvoiceDetails from "@/molecules/invoice/InvoiceDetails.vue";
 import invoicesData from "@/data/payment-invoices.json";
@@ -63,22 +67,20 @@ export default {
       productsDetails: {
         list: null,
         paymentFee: null
-      }
+      },
+      payment_history: null
     };
   },
   components: {
     BaseIconProductAndPlan,
     CardInvoice,
-    BaseTable,
+    PaymentHistory,
     BaseModal,
     InvoiceDetails
   },
   methods: {
     handleModal() {
       this.showModal = !this.showModal;
-    },
-    abcdtest() {
-      console.log("asdasd");
     },
     showDetailSelectedProduct(invoiceProductsDetail, paymentFee) {
       this.productsDetails.list = invoiceProductsDetail;
@@ -87,9 +89,11 @@ export default {
       this.showModal = true;
     },
     showPaymentHistory(historyData) {
+      console.log("HISTORY_DATA", historyData);
       if (historyData) {
         this.showModalType = "PAYMENT_HISTORY";
         this.showModal = true;
+        this.payment_history = historyData;
       }
     },
     hideModal() {
