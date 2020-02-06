@@ -130,6 +130,7 @@ export default {
     .info {
       position: absolute;
       margin-top: 35px;
+      bottom: -28px;
       font-size: 12px;
       font-weight: bold;
       color: #00aaae;
