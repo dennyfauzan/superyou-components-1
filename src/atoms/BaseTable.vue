@@ -3,9 +3,7 @@
     <table class="table-auto">
       <thead>
         <tr>
-          <th class="px-4 py-4" v-for="title in thead" :key="title.field">
-            {{ title.label }}
-          </th>
+          <th class="px-4 py-4" v-for="title in thead" :key="title.field">{{ title.label }}</th>
         </tr>
       </thead>
       <tbody>
@@ -15,9 +13,7 @@
             v-for="key in tdataKey"
             :key="key"
             :class="key"
-          >
-            {{ field[key] }}
-          </td>
+          >{{ field[key] }}</td>
         </tr>
       </tbody>
     </table>
@@ -87,20 +83,20 @@ export default {
 </script>
 
 <style lang="scss">
-.px-4 {
-  padding-left: 1rem !important;
-  padding-right: 1rem !important;
+.px-1 {
+  padding-left: 16px !important;
+  padding-right: 16px !important;
   @media screen and (max-width: 640px) {
-    padding-left: 0.25rem !important;
-    padding-right: 0.25rem !important;
+    padding-left: 8px !important;
+    padding-right: 8px !important;
   }
 }
-.py-4 {
-  padding-top: 1rem !important;
-  padding-bottom: 1rem !important;
+.py-1 {
+  padding-top: 16px !important;
+  padding-bottom: 16px !important;
   @media screen and (max-width: 640px) {
-    padding-top: 0.65rem !important;
-    padding-bottom: 0.65rem !important;
+    padding-top: 8px !important;
+    padding-bottom: 8px !important;
   }
 }
 .su_table {
