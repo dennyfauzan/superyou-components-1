@@ -11,14 +11,8 @@
         @on-show-payment-history="showPaymentHistory"
       />
 
-      <BaseModal
-        :modalShow="showModal"
-        @modalClose="hideModal"
-        :max-width="'900px'"
-      >
-        <template
-          v-if="showModalType === `DETAIL_PRODUCT` && productsDetails.list"
-        >
+      <BaseModal :modalShow="showModal" v-on:modal-close="hideModal" :max-width="'900px'">
+        <template v-if="showModalType === `DETAIL_PRODUCT` && productsDetails.list">
           <InvoiceDetails
             :productsDetails="productsDetails.list"
             :paymentFee="productsDetails.paymentFee"
