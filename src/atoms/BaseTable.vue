@@ -3,13 +3,13 @@
     <table class="table-auto">
       <thead>
         <tr>
-          <th class="px-4 py-4" v-for="title in thead" :key="title.field">{{ title.label }}</th>
+          <th class="px-1 py-1" v-for="title in thead" :key="title.field">{{ title.label }}</th>
         </tr>
       </thead>
       <tbody>
         <tr v-for="(field, index) in tdata" :key="`${index}${field.due_date}`">
           <td
-            class="border px-4 py-4"
+            class="border px-1 py-1"
             v-for="key in tdataKey"
             :key="key"
             :class="key"
