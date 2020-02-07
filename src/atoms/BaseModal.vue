@@ -36,7 +36,7 @@ export default {
   },
   methods: {
     onCloseModal() {
-      this.$emit("modalClose");
+      this.$emit("modal-close");
     }
   },
   computed: {
