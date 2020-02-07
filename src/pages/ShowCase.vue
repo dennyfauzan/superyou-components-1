@@ -88,12 +88,27 @@ export default {
       this.showModalType = "DETAIL_PRODUCT";
       this.showModal = true;
     },
-    showPaymentHistory(historyData) {
-      console.log("HISTORY_DATA", historyData);
-      if (historyData) {
+    async showPaymentHistory(policyGroupNumber) {
+      console.log("HISTORY_DATA", policyGroupNumber);
+      if (policyGroupNumber) {
+        let stgApiUrl = `https://staging-api.superyou.co.id/api/v1/user-payment-history/2019/${policyGroupNumber}`;
+        const getHistory = await fetch(stgApiUrl, {
+          method: "GET",
+          headers: {
+            "Content-Type": "application/json",
+            Authorization:
+              "Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiIsImp0aSI6IjMyZWFmMDZlOWUwM2IwNGJlZjgwNjc4MGQ3M2UwZDhkMmY1ODBjNDllNTZlNmNhNjBjNjA2MmRjM2Q5MTM3MWQxYzhhNjQ0ODQ4MjkzOWMwIn0.eyJhdWQiOiIyIiwianRpIjoiMzJlYWYwNmU5ZTAzYjA0YmVmODA2NzgwZDczZTBkOGQyZjU4MGM0OWU1NmU2Y2E2MGM2MDYyZGMzZDkxMzcxZDFjOGE2NDQ4NDgyOTM5YzAiLCJpYXQiOjE1ODA5NzU3NjIsIm5iZiI6MTU4MDk3NTc2MiwiZXhwIjoxNjEyNTk4MTYyLCJzdWIiOiI1NzIiLCJzY29wZXMiOltdfQ.LTp0QqgrCdGNKoiKB6Nt6pvp_kEJY9KsbkoU_XO_1dF9OqJGLbJvsI5RElKt54cYrj9lFa4WigLExbxnqXrVWhr8V55RDKwRhiIU__zxcRnwgeMMSHZ94tW5SBja82eW9WbeVgwqRirimK7IhibOXjZ5z4l-vtHuw03HnfCQsFiOtuq41eQ1Bk3iW3XEb0CSyG4MmXpQn5NfmD9nk98awAp0QfgEMHDh0Vm9H8TTgoe7xcfu18_HXdkcsapXYtw12IGbjMkEX_KidF6axxJVSqjboD4AP--K6dYUfTbGXXvonpvTcXZWydgb-HARjCrhpmi2joEbz_QbY3czyJr1YCyzlO8Svj9lAiREWoUBDNFzsr2mfIyXTSJsjkZYQsn861VarBD7LUkxzLEjfeUEvyJ-6elo0GkD8yqMuuCBUq2je-ftwm8EPiMIt5aRc-WlGRd0PgGFuJFx62yBnv9RPsT22K75_SGyoHMd5vv4LXLxF0kMu1_X9dSFSdhNkNupiuGNkNeeXkmNd7LH_zWYDM5r4dllE3g0lHCkcZ2kVRNrgmsK03X9k4mhEmBQqV4vkZBQgP5Zf9BJeIRoUMnylkjaXCQ6nEzsP5nCGiKFieqL7Jlxo8xn7MbtHNQtPQ1Ug-5csHcfbemSQUf9JghCrMn5y68Jxhtx1m2CgyR-Dlk"
+          }
+        });
+
+        let res = await getHistory.json();
+        res.data.forEach(eachPayment => {
+          delete eachPayment.id;
+          delete eachPayment.status;
+        });
         this.showModalType = "PAYMENT_HISTORY";
         this.showModal = true;
-        this.payment_history = historyData;
+        this.payment_history = res.data;
       }
     },
     hideModal() {
