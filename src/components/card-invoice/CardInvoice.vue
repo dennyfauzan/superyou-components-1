@@ -85,16 +85,10 @@ export default {
     },
     onShowInvoiceDetail() {
       // delete unnecessary payment_history data
-      if (this.detailPayment.payment_history) {
-        this.detailPayment.payment_history.forEach(eachPayment => {
-          delete eachPayment.id;
-          delete eachPayment.status;
-        });
-        this.$emit(
-          "on-show-payment-history",
-          this.detailPayment.payment_history
-        );
-      }
+      this.$emit(
+        "on-show-payment-history",
+        this.detailPayment.policy_group_number
+      );
     },
     onShowProductDetail() {
       this.$emit(
