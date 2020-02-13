@@ -21,6 +21,9 @@ export default {
     width: {
       type: [String]
     },
+    maxWidth: {
+      type: String
+    },
     height: {
       type: [String]
     },
@@ -33,7 +36,7 @@ export default {
   },
   methods: {
     onCloseModal() {
-      this.$emit("modalClose");
+      this.$emit("modal-close");
     }
   },
   computed: {
@@ -42,7 +45,8 @@ export default {
         width: this.width ? this.width : "70%",
         height: this.height ? this.height : "auto",
         padding: this.padding ? this.padding : "15px",
-        maxHeight: this.maxHeight ? this.maxHeight : "100%"
+        maxHeight: this.maxHeight ? this.maxHeight : "100%",
+        maxWidth: this.maxWidth ? this.maxWidth : "100%"
       };
     }
   },

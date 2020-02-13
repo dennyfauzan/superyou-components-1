@@ -2,41 +2,27 @@
   <base-card :header-style="cardStyles.header">
     <div class="card-header-wrapper" slot="card-header">
       <h3>{{ title }}</h3>
-      <h5 class="card-header-wrapper__see-products" @click="onShowProductDetail">Lihat Produk</h5>
+      <h5
+        class="card-header-wrapper__see-products"
+        @click="onShowProductDetail"
+      >
+        Lihat Produk
+      </h5>
     </div>
     <div slot="card-body">
-      <InvoiceBody :details="detailPayment" @handleInvoiceDetail="onShowInvoiceDetail">
+      <InvoiceBody
+        :details="detailPayment"
+        @handleInvoiceDetail="onShowInvoiceDetail"
+      >
         <baseChip slot="payment-status" :type="detailPayment.status">
           <span class="text">{{ detailPayment.status_message }}</span>
         </baseChip>
         <baseButton
           slot="payment-button"
-          btn-text="BAYAR SEKARANG"
+          :btn-text="actionText"
           @onClick="handleClickCTA"
-          :isDisabled="isActionDisabled"
+          :isDisabled="btnDisable"
         />
-        <!-- <div class="payment-list" slot="payment-detail">
-          <BaseAccordion
-            v-if="showHistoryPayment"
-            id="base-accordion"
-            class="history-payment-detail"
-            :content="accordionContent"
-            multiple
-          />
-          <div class="invoice-detail" v-else>
-            <InvoiceDetail
-              v-for="invoice in detailPayment.invoices"
-              :key="invoice.id"
-              :datas="invoice"
-            />
-            <div class="invoice-summary">
-              <div class="invoice-summary__wrapper">
-                <h2>Payment Fee</h2>
-                <span>{{ detailPayment.fee }}</span>
-              </div>
-            </div>
-          </div>
-        </div>-->
       </InvoiceBody>
     </div>
   </base-card>
@@ -47,30 +33,6 @@ import BaseCard from "../../atoms/BaseCard";
 import BaseButton from "../../atoms/BaseButton.vue";
 import BaseChip from "../../atoms/BaseChip.vue";
 import InvoiceBody from "../../molecules/invoice/InvoiceBody.vue";
-// import InvoiceDetail from "../../molecules/invoice/InvoiceDetail.vue";
-// import BaseAccordion from "../../atoms/BaseAccordion/BaseAccordion";
-
-// inject data
-const exampleData1 = [
-  {
-    id: 1,
-    active: true,
-    title: "Pembayaran ke 3",
-    details: `<p>Pembayaran Terakhir</p>`
-  },
-  {
-    id: 2,
-    active: false,
-    title: "Pembayaran ke 2",
-    details: `<p>Pembayaran Ke Dua</p>`
-  },
-  {
-    id: 3,
-    active: false,
-    title: `Pembayaran ke 1`,
-    details: `<p>Pembayaran Ke Pertama</p>`
-  }
-];
 
 export default {
   name: "CardInvoice",
@@ -85,6 +47,14 @@ export default {
     title: {
       type: String,
       default: ""
+    },
+    actionText: {
+      type: String,
+      default: "BAYAR SEKARANG"
+    },
+    btnDisable: {
+      type: Boolean,
+      default: false
     }
   },
   components: {
@@ -92,8 +62,6 @@ export default {
     BaseButton,
     BaseChip,
     InvoiceBody
-    // InvoiceDetail,
-    // BaseAccordion
   },
   computed: {
     cardStyles() {
@@ -116,19 +84,19 @@ export default {
       this.payNowAction();
     },
     onShowInvoiceDetail() {
-      // this feature not ready yet, CardInvoice will not showing if the data payment history null;
-      this.$emit("onShowPaymentHistory", "hola");
+      // delete unnecessary payment_history data
+      this.$emit(
+        "on-show-payment-history",
+        this.detailPayment.policy_group_number
+      );
     },
     onShowProductDetail() {
       this.$emit(
-        "onShowInvoiceProduct",
+        "on-show-invoice-product",
         this.detailPayment.invoices,
         this.detailPayment.fee
       );
     }
-  },
-  mounted() {
-    this.accordionContent = exampleData1;
   }
 };
 </script>
@@ -143,7 +111,7 @@ export default {
   h3,
   h5 {
     @media screen and (max-width: 500px) {
-      font-size: 12px;
+      font-size: 14px;
     }
   }
   h5 {

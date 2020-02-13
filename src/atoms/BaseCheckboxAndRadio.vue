@@ -1,6 +1,6 @@
 <template>
   <div class="su-input_checkboxes" :class="axis">
-    <label class="main">Jenis Kelamin</label>
+    <label class="main">{{ label }}</label>
     <div class="checkbox-wrapper" v-for="option in options" :key="option.val">
       <input
         :type="inputType"
@@ -11,7 +11,9 @@
       />
       <label :for="option.name">{{ option.name }}</label>
     </div>
-    <span v-if="isError" class="su-input_error message">{{ errorMessage }}</span>
+    <span v-if="isError" class="su-input_error message">{{
+      errorMessage
+    }}</span>
   </div>
 </template>
 
@@ -52,11 +54,15 @@ export default {
     inputType: {
       type: String,
       default: "checkbox"
+    },
+    label: {
+      type: String,
+      default: "Gender"
     }
   },
   watch: {
     checkedData(newData) {
-      this.$emit("handleChange", newData, this.name);
+      this.$emit("handle-change", newData, this.name);
     }
   }
 };
@@ -66,7 +72,7 @@ export default {
 .su-input_checkboxes {
   label.main {
     color: #708697;
-    font-size: 14px;
+    font-size: 12px;
     margin-bottom: 20px;
     display: block;
   }

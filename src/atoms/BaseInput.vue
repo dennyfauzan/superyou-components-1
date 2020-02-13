@@ -1,5 +1,5 @@
 <template>
-  <div class="su-input" :class="{ 'with-note': note, 'input-error': isError }">
+  <div class="su-input" :class="{ 'with-note': note, 'input-error': error }">
     <div class="su-input_control" :class="{ 'is-focused': isFocused }">
       <label class="su-input_label">
         {{ label }}
@@ -19,9 +19,7 @@
         </span>
       </label>
 
-      <span v-if="isError" class="su-input_error message">{{
-        errorMessage
-      }}</span>
+      <span v-if="error" class="su-input_error message">{{ errMsg }}</span>
       <span v-else class="su-input_note message">{{ note }}</span>
     </div>
   </div>
@@ -33,9 +31,8 @@ export default {
   data() {
     return {
       isFocused: false,
-      isError: false,
       isReadOnly: false,
-      errorMessage: null
+      errorFlag: false
     };
   },
   props: {
@@ -74,33 +71,28 @@ export default {
     icon: {
       type: String,
       default: null
+    },
+    error: {
+      type: Boolean
+    },
+    errMsg: {
+      type: String
     }
   },
   methods: {
     onInputBlur() {
       this.isFocused = false;
-      if (this.required && (this.value === null || this.value.length === 0)) {
-        this.errorMessage = `${this.label} wajib di isi`;
-        this.isError = true;
-        return this.isError;
-      }
-      if (this.checkMinLength()) {
-        this.errorMessage = `Minimal ${this.minLength} karakter`;
-        this.isError = true;
-      } else {
-        this.errorMessage = "";
-        this.isError = false;
-      }
-
-      if (this.inputType === "email") {
-        this.validateEmail(this.value);
-      }
+      this.checkAllValidation();
     },
     onInputFocus() {
       this.isFocused = true;
     },
     onInputChange(e) {
-      this.$emit("handleChange", e.target.value, e.target.getAttribute("name"));
+      this.$emit(
+        "handle-change",
+        e.target.value,
+        e.target.getAttribute("name")
+      );
     },
     expectedCharacters(e) {
       this.checkMaxLength(e);
@@ -136,12 +128,42 @@ export default {
 
       console.log(mail_regex.test(mail));
       if (mail_regex.test(mail)) {
-        this.isError = false;
-        this.errorMessage = "";
         return true;
       }
-      this.isError = true;
-      this.errorMessage = "Format email tidak valid";
+      // this.isError = true;
+      // this.errorMessage = "Format email tidak valid";
+      this.$emit("error-handler", true, "email", this.name);
+    },
+    checkAllValidation() {
+      if (this.required && (this.value === null || this.value.length === 0)) {
+        // this.errorMessage = `${this.label} wajib di isi`;
+        // this.isError = true;
+        this.$emit("error-handler", true, "required", this.name);
+        return this.error;
+      }
+      if (this.checkMinLength()) {
+        // this.errorMessage = `Minimal ${this.minLength} karakter`;
+        // this.isError = true;
+        this.$emit("error-handler", true, "min-length", this.name);
+      } else {
+        // this.errorMessage = "";
+        // this.isError = false;
+        this.$emit("error-handler", false, "ok", this.name);
+      }
+
+      if (this.inputType === "email") {
+        this.validateEmail(this.value);
+      }
+    }
+  },
+  watch: {
+    error() {
+      this.errorFlag = true;
+    },
+    value() {
+      if (this.errorFlag) {
+        this.checkAllValidation();
+      }
     }
   }
 };
@@ -198,7 +220,7 @@ input[type="number"]::-webkit-outer-spin-button {
     .su-input_label {
       position: relative;
       color: #708697;
-      font-size: 14px;
+      font-size: 12px;
 
       .su-input_icon {
         position: absolute;

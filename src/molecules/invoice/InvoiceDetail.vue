@@ -2,12 +2,19 @@
   <div class="invoice-detail">
     <div class="detail-left">
       <div class="product-icon" style="width:70px;">
-        <BaseIconProductAndPlan :product="getIconProduct" :plan="getBadgeType" />
+        <BaseIconProductAndPlan
+          :product="getIconProduct"
+          :plan="getBadgeType"
+        />
       </div>
       <div class="product-basic-rider-name">
         <ProductCompletedName :details="allProductNameAndPolicyNumber" />
       </div>
-      <a class="see-product-detail" :href="`/dashboard/e-policy/${datas.productId}`">Detail Produk</a>
+      <a
+        class="see-product-detail"
+        :href="`/dashboard/e-policy/${datas.productId}`"
+        >Detail Produk</a
+      >
     </div>
 
     <div class="detail-right">
@@ -16,7 +23,11 @@
         <span>{{ datas.price }}</span>
       </span>
       <template v-if="datas.riders && datas.riders.length">
-        <span v-for="riderPrice in datas.riders" :key="riderPrice.price" class="price">
+        <span
+          v-for="riderPrice in datas.riders"
+          :key="riderPrice.price"
+          class="price"
+        >
           <!-- <span>Rp</span> -->
           <span>{{ riderPrice.price }}</span>
         </span>
@@ -89,6 +100,15 @@ export default {
   padding-top: 20px;
   padding-bottom: 20px;
   border-bottom: solid 0.5px rgba(112, 134, 151, 0.7);
+
+  @media screen and (max-width: 600px) {
+    padding-top: 0;
+    padding-bottom: 16px;
+
+    &:not(:first-child) {
+      padding-top: 10px;
+    }
+  }
 
   .see-product-detail {
     font-size: 14px;

@@ -1,19 +1,20 @@
 <template>
-  <div id="su-base-select" :class="{ 'input-error': isError }">
+  <div id="su-base-select" :class="{ 'input-error': error }">
     <label :class="{ active: isFocused }">{{ label }}</label>
     <v-select
+      :label="options.label"
       class="base-select"
+      :value="value"
       :options="options"
+      :reduce="opt => opt.val"
       :searchable="false"
-      :selectable="option => option.val !== 'INA'"
+      :selectable="select"
       @input="onSelectOption"
       @search:focus="onFocus"
       @search:blur="onBlur"
       :select-on-key-codes="[8]"
     ></v-select>
-    <span v-if="isError" class="su-input_error message">{{
-      errorMessage
-    }}</span>
+    <span v-if="error" class="su-input_error message">{{ errMsg }}</span>
   </div>
 </template>
 
@@ -24,10 +25,8 @@ export default {
   name: "BaseSelect",
   data() {
     return {
-      selectedData: null,
       isFocused: false,
-      isError: false,
-      errorMessage: ""
+      selectedVal: null
     };
   },
   components: {
@@ -44,40 +43,52 @@ export default {
         ];
       }
     },
+    value: {
+      type: [String, Number, Object, Array],
+      default: ""
+    },
     label: {
       type: String,
       default: "Label"
     },
     name: {
       type: String,
-      default: null
+      default: "Label Key"
+    },
+    select: {
+      type: Function
+    },
+    error: {
+      type: Boolean
+    },
+    errMsg: {
+      type: String
     }
   },
   methods: {
     onSelectOption(selectedData) {
-      if (selectedData) {
-        this.selectedData = selectedData;
-      }
+      this.selectedVal = selectedData;
+      this.$emit("handle-change", selectedData, this.name);
     },
     onFocus() {
       this.isFocused = true;
     },
     onBlur() {
       this.isFocused = false;
-      if (this.selectedData === null) {
-        this.isError = true;
-        this.errorMessage = "Wajib di isi";
-        return this.isError;
+      if (this.selectedVal === null || this.selectedVal === "") {
+        // this.isError = true;
+        // this.errorMessage = "Wajib di isi";
+        this.$emit("error-handler", true, "required", this.name);
+        return false;
       }
-      this.isError = false;
-      this.errorMessage = "";
-      return this.isError;
+      // this.isError = false;
+      // this.errorMessage = "";
+      this.$emit("error-handler", false, "ok", this.name);
+      return true;
     }
   },
-  watch: {
-    selectedData(newData) {
-      this.$emit("handleChange", newData, this.name);
-    }
+  created() {
+    this.selectedVal = this.value;
   }
 };
 </script>
@@ -87,7 +98,7 @@ export default {
   margin-bottom: 20px;
   label {
     color: #708697;
-    font-size: 14px;
+    font-size: 12px;
     &.active {
       color: #00aaae;
     }
