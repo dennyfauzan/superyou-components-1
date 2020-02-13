@@ -1,11 +1,11 @@
 <template>
   <div class="su-date-wrapper">
-    <label :class="{ 'date-focused': isFocused, 'is-error': isError }">{{
-      label
-    }}</label>
+    <label :class="{ 'date-focused': isFocused, 'is-error': error }">
+      {{ label }}
+    </label>
     <div
       class="su-date"
-      :class="{ 'date-focused': isFocused, 'is-error': isError }"
+      :class="{ 'date-focused': isFocused, 'is-error': error }"
       @keyup.capture="updateValue"
       @focus.capture="onFocused"
       @blur.capture="onBlured"
@@ -19,6 +19,7 @@
         placeholder="dd"
         @input="updateDay"
         @blur="eachBlur('day', 2)"
+        @focus="eachFocus('day')"
       />
       <span v-if="showDay && showMonth" class="su-date__divider">/</span>
       <input
@@ -48,16 +49,14 @@
         @beforeinput="beforeInputYear"
       />
     </div>
-    <span v-if="isError" class="su-input_error message">{{
-      errorMessage
-    }}</span>
+    <span v-if="error" class="su-input_error message">{{ errMsg }}</span>
     <span v-else class="su-input_note message">{{ note }}</span>
   </div>
 </template>
 
 <script>
 export default {
-  name: `su-date`,
+  name: `BaseInputDate`,
   props: {
     value: {
       type: [Number, String],
@@ -89,50 +88,26 @@ export default {
     },
     name: {
       type: String
+    },
+    error: {
+      type: Boolean
+    },
+    errMsg: {
+      type: String
     }
   },
   data() {
     return {
-      day: `${this.value ? new Date(this.value).getDate() : ``}`,
-      month: `${this.value ? new Date(this.value).getMonth() + 1 : ``}`,
-      year: `${this.value ? new Date(this.value).getFullYear() : ``}`,
+      day: "",
+      month: "",
+      year: "",
       isFocused: false,
-      isError: false,
-      errorMessage: "",
       dateFlag: {
         day: 0,
         month: 0,
         year: 0
       }
     };
-  },
-  watch: {
-    year(current, prev) {
-      if (current > 9999) this.year = prev;
-    },
-    submittedDate() {
-      console.log("data change");
-      this.isError = false;
-      this.errorMessage = "";
-
-      if (this.dateFlag.day && this.dateFlag.month && this.dateFlag.year) {
-        if (!this.checkValidDate()) {
-          this.isError = true;
-          this.errorMessage = "Tanggal lahir tidak valid";
-          return false;
-        }
-
-        if (this.minAge && !this.validateMinMaxYear(this.minAge)) {
-          this.isError = true;
-          this.errorMessage = `Umur harus ${17} tahun ke atas`;
-        }
-
-        if (this.maxAge && this.validateMinMaxYear(this.maxAge)) {
-          this.isError = true;
-          this.errorMessage = `Umur harus dibawah ${this.maxAge} tahun ke atas`;
-        }
-      }
-    }
   },
   methods: {
     updateDay() {
@@ -161,10 +136,6 @@ export default {
       if (!["1", "2"].includes(this.year[0]) && this.year.length < 2) {
         this.year = "";
       }
-      // if (this.year.length > 4) {
-      //   console.log(this.year, "more than 4");
-      //   this.year = this.year;
-      // }
     },
     updateValue() {
       const timestamp = Date.parse(
@@ -193,37 +164,92 @@ export default {
       const day = new Date().getDate();
       const completeDate = `${month}/${day}/${year}`;
       const dateToTime = new Date(completeDate).getTime();
-      console.log(dateToTime);
       return dateToTime > this.submittedDate;
+    },
+    errorChecker() {
+      if (!this.checkValidDate()) {
+        this.$emit("error-handler", true, "invalid", this.name);
+
+        if (this.isFocused && this.dateFlag.year === 1) {
+          this.$emit("error-handler", false, "ok", this.name);
+        }
+        return false;
+      }
+
+      if (this.minAge && !this.validateMinMaxYear(this.minAge)) {
+        this.$emit("error-handler", true, "min-age", this.name);
+        return false;
+      }
+
+      if (this.maxAge && this.validateMinMaxYear(this.maxAge)) {
+        this.$emit("error-handler", true, "max-age", this.name);
+        return false;
+      }
+      this.$emit("error-handler", false, "ok", this.name);
     },
     eachBlur(type, howMany) {
       if (this[type].length) {
         this[type] = this[type].padStart(howMany, 0);
-        this.dateFlag[type] += 1;
+      }
+    },
+    onBlured() {
+      this.isFocused = false;
+      if (
+        isNaN(this.submittedDate) &&
+        !this.day.length &&
+        !this.month.length &&
+        !this.year.length
+      ) {
+        this.$emit("error-handler", true, "required", this.name);
+      } else if (isNaN(this.submittedDate) || this.submittedDate <= 0) {
+        this.$emit("error-handler", true, "invalid", this.name);
+      } else if (!isNaN(this.submittedDate)) {
+        this.errorChecker();
       }
     },
     eachFocus(type) {
       if (type === "year") {
         if (this.month.length === 0) {
           this.$refs.month.select();
+          this.dateFlag.year = 0;
+        } else {
+          this.$emit("error-handler", false, "ok", this.name);
+          this.dateFlag[type] += 1;
         }
       } else if (type === "month") {
         if (this.day.length === 0 && this.month.length === 0) {
           this.$refs.day.select();
           this.errorMessage = "";
           this.isError = false;
+          this.dateFlag.month = 0;
+        } else {
+          this.$emit("error-handler", false, "ok", this.name);
+          this.dateFlag[type] += 1;
         }
+      } else if (type === "day") {
+        if (!this.day.length) {
+          this.$emit("error-handler", false, "ok", this.name);
+        }
+        this.dateFlag[type] += 1;
       }
     },
     onFocused() {
       this.isFocused = true;
     },
-    onBlured() {
-      this.isFocused = false;
-    },
     beforeInputYear(e) {
       if (this.year.length >= 4 && e.inputType !== "deleteContentBackward") {
         e.preventDefault();
+      }
+    }
+  },
+  watch: {
+    year(current, prev) {
+      if (current > 9999) this.year = prev;
+    },
+    submittedDate() {
+      if (this.year.length === 4) this.dateFlag.year += 1;
+      if (this.dateFlag.day && this.dateFlag.month && this.dateFlag.year) {
+        this.errorChecker();
       }
     }
   },
@@ -232,6 +258,29 @@ export default {
       return Date.parse(
         `${this.year.padStart(4, 0)}-${this.month}-${this.day}`
       );
+    },
+    dateString() {
+      return new Date(this.submittedDate).toLocaleDateString();
+    }
+  },
+  created() {
+    this.day = `${
+      this.value
+        ? new Date(this.value)
+            .getDate()
+            .toString()
+            .padStart(2, 0)
+        : ``
+    }`;
+    this.month = `${
+      this.value
+        ? (new Date(this.value).getMonth() + 1).toString().padStart(2, 0)
+        : ``
+    }`;
+    this.year = `${this.value ? new Date(this.value).getFullYear() : ``}`;
+
+    if (this.value.length === 10) {
+      this.updateValue();
     }
   }
 };
@@ -242,7 +291,7 @@ export default {
   label {
     display: block;
     color: #708697;
-    font-size: 14px;
+    font-size: 12px;
     margin-bottom: 2px;
     &.active {
       color: #00aaae;

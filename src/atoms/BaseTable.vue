@@ -3,13 +3,13 @@
     <table class="table-auto">
       <thead>
         <tr>
-          <th class="px-4 py-4" v-for="title in thead" :key="title.field">{{ title.label }}</th>
+          <th class="px-1 py-1" v-for="title in thead" :key="title.field">{{ title.label }}</th>
         </tr>
       </thead>
       <tbody>
         <tr v-for="(field, index) in tdata" :key="`${index}${field.due_date}`">
           <td
-            class="border px-4 py-4"
+            class="border px-1 py-1"
             v-for="key in tdataKey"
             :key="key"
             :class="key"
@@ -61,51 +61,11 @@ export default {
         return [
           {
             invoice_number: "1234-06",
-            due_date: "dd/mm/yy",
-            paid_date: "dd/mm/yy",
-            payment_method: "Visa Card",
-            total: "Rp 115.000",
-            status: "Berhasil"
-          },
-          {
-            invoice_number: "1234-05",
-            due_date: "dd/mm/yy",
-            paid_date: "dd/mm/yy",
-            payment_method: "Visa Card",
-            total: "Rp 80.000",
-            status: "Menunggu Pembayaran"
-          },
-          {
-            invoice_number: "1234-04",
-            due_date: "dd/mm/yy",
-            paid_date: "dd/mm/yy",
-            payment_method: "Visa Card",
-            total: "Rp 80.000",
-            status: "Menunggu Pembayaran"
-          },
-          {
-            invoice_number: "1234-03",
-            due_date: "dd/mm/yy",
-            paid_date: "dd/mm/yy",
-            payment_method: "Visa Card",
-            total: "Rp 80.000",
-            status: "Menunggu Pembayaran"
-          },
-          {
-            invoice_number: "1234-02",
-            due_date: "dd/mm/yy",
-            paid_date: "dd/mm/yy",
-            payment_method: "Visa Card",
-            total: "Rp 80.000",
-            status: "Menunggu Pembayaran"
-          },
-          {
-            invoice_number: "1234-01",
-            due_date: "dd/mm/yy",
-            paid_date: "dd/mm/yy",
-            payment_method: "Visa Card",
-            total: "Rp 80.000",
-            status: "Menunggu Pembayaran"
+            next_payment_at: "dd/mm/yy",
+            paid_at: "dd/mm/yy",
+            payment_method_name: "Visa Card",
+            total_payment: "Rp 115.000",
+            status_desc: "Berhasil"
           }
         ];
       }
@@ -123,20 +83,20 @@ export default {
 </script>
 
 <style lang="scss">
-.px-4 {
-  padding-left: 1rem !important;
-  padding-right: 1rem !important;
+.px-1 {
+  padding-left: 16px !important;
+  padding-right: 16px !important;
   @media screen and (max-width: 640px) {
-    padding-left: 0.25rem !important;
-    padding-right: 0.25rem !important;
+    padding-left: 8px !important;
+    padding-right: 8px !important;
   }
 }
-.py-4 {
-  padding-top: 1rem !important;
-  padding-bottom: 1rem !important;
+.py-1 {
+  padding-top: 16px !important;
+  padding-bottom: 16px !important;
   @media screen and (max-width: 640px) {
-    padding-top: 0.65rem !important;
-    padding-bottom: 0.65rem !important;
+    padding-top: 8px !important;
+    padding-bottom: 8px !important;
   }
 }
 .su_table {

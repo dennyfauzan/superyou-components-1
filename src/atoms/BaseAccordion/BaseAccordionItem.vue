@@ -1,8 +1,12 @@
 <template>
-  <div :id="groupId + '-' + item.id" class="accordion-item" :class="{'is-active': item.active}">
+  <div
+    :id="groupId + '-' + item.id"
+    class="accordion-item"
+    :class="{ 'is-active': item.active }"
+  >
     <dt class="accordion-item-title">
       <button @click="toggle" class="accordion-item-trigger">
-        <h3 class="accordion-item-title-text">{{item.title}}</h3>
+        <h3 class="accordion-item-title-text">{{ item.title }}</h3>
         <span class="accordion-item-trigger-icon"></span>
       </button>
     </dt>
@@ -58,14 +62,20 @@ export default {
 
 .accordion-item-details {
   overflow: hidden;
-  background-color: whitesmoke;
   margin: 0;
-  &:last-child {
+  /* &:last-child {
     border-bottom-left-radius: 8px;
     border-bottom-right-radius: 8px;
-  }
-  .accordion-item-details-inner {
-    padding: 10px 10px 10px 1.25rem;
+  } */
+  /* .accordion-item-details-inner {
+    padding: 10px 1.25rem 10px 1.25rem;
+  } */
+}
+
+.accordion-item:last-child {
+  .accordion-item-details {
+    border-bottom-left-radius: 8px;
+    border-bottom-right-radius: 8px;
   }
 }
 
