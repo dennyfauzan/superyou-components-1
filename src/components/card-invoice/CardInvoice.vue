@@ -1,30 +1,28 @@
 <template>
   <base-card :header-style="cardStyles.header">
-    <h3 slot="card-header">{{ title }}</h3>
+    <div class="card-header-wrapper" slot="card-header">
+      <h3>{{ title }}</h3>
+      <h5
+        class="card-header-wrapper__see-products"
+        @click="onShowProductDetail"
+      >
+        Lihat Produk
+      </h5>
+    </div>
     <div slot="card-body">
-      <InvoiceBody :details="detailPayment">
+      <InvoiceBody
+        :details="detailPayment"
+        @handleInvoiceDetail="onShowInvoiceDetail"
+      >
         <baseChip slot="payment-status" :type="detailPayment.status">
           <span class="text">{{ detailPayment.status_message }}</span>
         </baseChip>
         <baseButton
           slot="payment-button"
-          btn-text="BAYAR SEKARANG"
+          :btn-text="actionText"
           @onClick="handleClickCTA"
-          :isDisabled="isActionDisabled"
+          :isDisabled="btnDisable"
         />
-        <div class="payment-list" slot="payment-detail">
-          <InvoiceDetail
-            v-for="invoice in detailPayment.invoices"
-            :key="invoice.id"
-            :datas="invoice"
-          />
-          <div class="invoice-summary">
-            <div class="invoice-summary__wrapper">
-              <h2>Payment Fee</h2>
-              <span>{{ detailPayment.fee }}</span>
-            </div>
-          </div>
-        </div>
       </InvoiceBody>
     </div>
   </base-card>
@@ -35,7 +33,6 @@ import BaseCard from "../../atoms/BaseCard";
 import BaseButton from "../../atoms/BaseButton.vue";
 import BaseChip from "../../atoms/BaseChip.vue";
 import InvoiceBody from "../../molecules/invoice/InvoiceBody.vue";
-import InvoiceDetail from "../../molecules/invoice/InvoiceDetail.vue";
 
 export default {
   name: "CardInvoice",
@@ -50,14 +47,21 @@ export default {
     title: {
       type: String,
       default: ""
+    },
+    actionText: {
+      type: String,
+      default: "BAYAR SEKARANG"
+    },
+    btnDisable: {
+      type: Boolean,
+      default: false
     }
   },
   components: {
     BaseCard,
     BaseButton,
     BaseChip,
-    InvoiceBody,
-    InvoiceDetail
+    InvoiceBody
   },
   computed: {
     cardStyles() {
@@ -78,18 +82,51 @@ export default {
   methods: {
     handleClickCTA() {
       this.payNowAction();
+    },
+    onShowInvoiceDetail() {
+      // delete unnecessary payment_history data
+      this.$emit(
+        "on-show-payment-history",
+        this.detailPayment.policy_group_number
+      );
+    },
+    onShowProductDetail() {
+      this.$emit(
+        "on-show-invoice-product",
+        this.detailPayment.invoices,
+        this.detailPayment.fee
+      );
     }
   }
 };
 </script>
 
 <style lang="scss" scoped>
+.card-header-wrapper {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  height: 30px;
+
+  h3,
+  h5 {
+    @media screen and (max-width: 500px) {
+      font-size: 14px;
+    }
+  }
+  h5 {
+    font-weight: normal;
+  }
+
+  &__see-products {
+    cursor: pointer;
+  }
+}
 .invoice-summary {
   width: 100%;
   margin: 0 auto;
   padding-top: 20px;
   padding-bottom: 20px;
-  border-top: solid 0.5px #708697;
 
   &__wrapper {
     margin-left: auto;

@@ -27,7 +27,7 @@
     </div>
     <div class="payment-detail">
       <p class="body dropdown-detail" @click="onClickInvoiceDetail">
-        Lihat Detail
+        History Pembayaran
         <img
           class="dropdown-detail-arrow"
           :class="{ active: showInvoiceDetail }"
@@ -40,26 +40,31 @@
         <button>Bayar Sekarang</button>
       </slot>
     </div>
-    <div class="payment-detail-invoice">
-      <transition-expand>
-        <slot name="payment-detail" v-if="showInvoiceDetail"></slot>
-      </transition-expand>
-    </div>
+    <!-- <div class="payment-detail-invoice">
+      <BaseModal
+        @modalClose="onCloseModalDetail"
+        :modalShow="showModal"
+        width="70%"
+        max-height="80%"
+        :padding="paddingModal"
+      >
+        <slot name="payment-detail"></slot>
+      </BaseModal>
+    </div>-->
   </div>
 </template>
 
 <script>
-import TransitionExpand from "../../atoms/TransitionExpand.vue";
-
 export default {
   name: "invoiceBody",
-  components: {
-    TransitionExpand
-  },
   props: {
     details: {
       type: Object,
       required: true
+    },
+    showModal: {
+      type: Boolean,
+      default: false
     }
   },
   data() {
@@ -69,7 +74,14 @@ export default {
   },
   methods: {
     onClickInvoiceDetail() {
-      this.showInvoiceDetail = !this.showInvoiceDetail;
+      this.showInvoiceDetail = true;
+      this.$emit("handleInvoiceDetail", "history_payment");
+    }
+  },
+  computed: {
+    paddingModal() {
+      const paddingModal = this.showInvoiceDetail ? "5px 10px" : "15px";
+      return paddingModal;
     }
   }
 };
