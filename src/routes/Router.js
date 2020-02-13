@@ -5,6 +5,8 @@ import ShowCase from "@/pages/ShowCase.vue";
 import Form from "@/pages/Form.vue";
 import PaymentHistory from "@/components/PaymentHistory/PaymentHistory.vue";
 
+import ProductCard from "@/pages/ProductCard.vue";
+
 Vue.use(Router);
 
 const router = new Router({
@@ -24,6 +26,11 @@ const router = new Router({
       path: "/payment-history",
       name: "PaymentHistoryContainer",
       component: PaymentHistory
+    },
+    {
+      path: "/form-product-card",
+      name: "Card",
+      component: ProductCard
     }
   ]
 });
