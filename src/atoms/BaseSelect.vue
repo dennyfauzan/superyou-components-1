@@ -1,5 +1,5 @@
 <template>
-  <div id="su-base-select" :class="{ 'input-error': error }">
+  <div id="su-base-select" :class="{ 'input-error': error }" :data-theme="theme">
     <label :class="{ active: isFocused }">{{ label }}</label>
     <v-select
       :label="options.label"
@@ -63,6 +63,10 @@ export default {
     },
     errMsg: {
       type: String
+    },
+    theme: {
+      type: String,
+      default: "normal"
     }
   },
   methods: {
@@ -97,10 +101,10 @@ export default {
 #su-base-select {
   margin-bottom: 20px;
   label {
-    color: #708697;
+    color: var(--label-text-color);
     font-size: 12px;
     &.active {
-      color: #00aaae;
+      color: var(--color-focused);
     }
   }
   .base-select {
@@ -119,7 +123,7 @@ export default {
 
         border-style: solid;
         border-width: thin 0 0 0;
-        border-color: rgba(0, 0, 0, 0.3);
+        border-color: var(--border-bottom-color);
       }
 
       &::after {
@@ -131,21 +135,21 @@ export default {
         width: 100%;
         border-style: solid;
         border-width: thin 0 thin 0;
-        border-color: #00aaae;
+        border-color: var(--color-focused);
         transform: scaleX(0);
       }
 
       .vs__selected-options {
         padding-left: 0;
         .vs__selected {
-          color: #0d294a;
+          color: var(--text-color);
           padding-left: 0;
           margin: 8px 2px 4px 0;
           font-size: 16px;
         }
         .vs__search {
           font-size: 16px;
-          color: #0d294a;
+          color: var(--text-color);
           padding-bottom: 4px;
         }
       }
@@ -155,7 +159,8 @@ export default {
           display: none;
         }
         .vs__open-indicator {
-          fill: #0d294a;
+          color: #0d294a;
+          fill: var(--text-color);
           transform: scale(0.85) rotate(0deg);
         }
       }
@@ -171,12 +176,13 @@ export default {
         font-size: 16px;
         padding: 6px 20px;
         &--highlight {
-          background-color: #00aaae;
+          background-color: #f2f3f5;
+          color: #0d294a;
         }
       }
       .vs__no-options {
         font-size: 16px;
-        color: #708697;
+        color: var(--label-text-color);
       }
     }
 
@@ -213,6 +219,7 @@ export default {
   }
   &.su-input_note {
     color: #0d294a;
+    color: var(--text-color);
   }
 }
 </style>

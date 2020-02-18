@@ -1,19 +1,19 @@
 <template>
-  <div class="su-input_checkboxes" :class="axis">
-    <label class="main">{{ label }}</label>
-    <div class="checkbox-wrapper" v-for="option in options" :key="option.val">
-      <input
-        :type="inputType"
-        v-model="checkedData"
-        :value="option.val"
-        :id="option.name"
-        :name="name"
-      />
-      <label :for="option.name">{{ option.name }}</label>
+  <div class="su-input_checkboxes" :class="axis" :data-theme="theme">
+    <label class="main" :class="{'is-error': error }">{{ label }}</label>
+    <div class="inline-flex">
+      <div class="checkbox-wrapper" v-for="option in options" :key="option.val">
+        <input
+          :type="inputType"
+          v-model="checkedData"
+          :value="option.val"
+          :id="option.name"
+          :name="name"
+        />
+        <label :for="option.name">{{ option.name }}</label>
+      </div>
     </div>
-    <span v-if="isError" class="su-input_error message">{{
-      errorMessage
-    }}</span>
+    <span v-if="error" class="su-input_error message">{{ errMsg }}</span>
   </div>
 </template>
 
@@ -58,6 +58,16 @@ export default {
     label: {
       type: String,
       default: "Gender"
+    },
+    error: {
+      type: Boolean
+    },
+    errMsg: {
+      type: String
+    },
+    theme: {
+      type: String,
+      default: "normal"
     }
   },
   watch: {
@@ -70,60 +80,67 @@ export default {
 
 <style lang="scss" scoped>
 .su-input_checkboxes {
+  margin-bottom: 20px;
   label.main {
-    color: #708697;
+    color: var(--label-text-color);
     font-size: 12px;
-    margin-bottom: 20px;
+    margin-bottom: 16px;
     display: block;
   }
-  .checkbox-wrapper {
-    margin-bottom: 16px;
-    & > input {
-      color: #0d294a;
-      font-size: 16px;
-      margin-right: 10px;
-      opacity: 0;
-      width: 0;
-      height: 0;
-      display: none;
-    }
-    & > label {
-      color: #0d294a;
-      font-size: 16px;
-      position: relative;
-      padding-left: 32px;
-      display: block;
+  .inline-flex {
+    display: flex;
+    flex-wrap: nowrap;
 
-      &::before {
-        content: "";
-        display: -webkit-box;
-        display: -ms-flexbox;
-        display: flex;
-        -webkit-box-align: center;
-        -ms-flex-align: center;
-        align-items: center;
-        -webkit-box-pack: center;
-        -ms-flex-pack: center;
-        justify-content: center;
-        width: 24px;
-        height: 24px;
-        -webkit-box-shadow: inset 0 0 6px 0 rgba(0, 0, 0, 0.3);
-        box-shadow: inset 0 0 6px 0 rgba(0, 0, 0, 0.3);
-        border-radius: 50%;
-        position: absolute;
-        left: 0;
-        top: 50%;
-        -webkit-transform: translateY(-50%);
-        transform: translateY(-50%);
-        text-align: center;
-        line-height: 24px;
-        background-color: #fff;
+    .checkbox-wrapper {
+      margin-bottom: 6px;
+
+      & > input {
+        color: var(--text-color);
+        font-size: 16px;
+        margin-right: 10px;
+        opacity: 0;
+        width: 0;
+        height: 0;
+        display: none;
       }
-    }
+      & > label {
+        color: var(--text-color);
+        font-size: 16px;
+        position: relative;
+        padding-left: 32px;
+        display: block;
 
-    input[type="checkbox"]:checked + label:before,
-    input[type="radio"]:checked + label:before {
-      content: url(https://superyou.co.id/img/icons/check-darkblue.svg);
+        &::before {
+          content: "";
+          display: -webkit-box;
+          display: -ms-flexbox;
+          display: flex;
+          -webkit-box-align: center;
+          -ms-flex-align: center;
+          align-items: center;
+          -webkit-box-pack: center;
+          -ms-flex-pack: center;
+          justify-content: center;
+          width: 24px;
+          height: 24px;
+          -webkit-box-shadow: inset 0 0 6px 0 rgba(0, 0, 0, 0.3);
+          box-shadow: inset 0 0 6px 0 rgba(0, 0, 0, 0.3);
+          border-radius: 50%;
+          position: absolute;
+          left: 0;
+          top: 50%;
+          -webkit-transform: translateY(-50%);
+          transform: translateY(-50%);
+          text-align: center;
+          line-height: 24px;
+          background-color: #fff;
+        }
+      }
+
+      input[type="checkbox"]:checked + label:before,
+      input[type="radio"]:checked + label:before {
+        content: url(https://superyou.co.id/img/icons/check-darkblue.svg);
+      }
     }
   }
 
