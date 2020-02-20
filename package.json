@@ -8,7 +8,8 @@
     "lint": "vue-cli-service lint",
     "storybook": "start-storybook -p 2020",
     "build-storybook": "build-storybook",
-    "build-components": "vue-cli-service build --target lib --name superyou-components ./src/_build.js"
+    "build-components": "vue-cli-service build --target lib --name superyou-components ./src/_build.js",
+    "ichsan-components": "vue-cli-service build --target lib --name superyou-components ./src/_build.js"
   },
   "repository": {
     "type": "git",
