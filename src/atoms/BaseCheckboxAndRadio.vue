@@ -5,10 +5,10 @@
       <input
         :type="inputType"
         v-model="checkedData"
+        :value="option.val"
         :id="option.name"
         :name="name"
-        :checked="value"
-        @change="handleOnChange(option.val)"
+        @change="handleOnChange"
       />
       <label :for="option.name">{{ option.name }}</label>
     </div>
@@ -60,23 +60,22 @@ export default {
       type: String,
       default: "Gender"
     },
-    value: {
+    selected: {
       type: String,
       default: ""
     }
   },
   methods: {
-    handleOnChange(selected) {
-      this.checkedData = selected;
-      this.$emit("handle-change", selected, this.name);
+    handleOnChange(e) {
+      this.$emit("handle-change", e.target.value, this.name);
     }
   },
   created() {
-    this.checkedData = this.value;
+    this.checkedData = this.selected;
   },
   watch: {
-    value(val) {
-      this.checkedData = (val) ? this.handleOnChange(val) : "";
+    checkedData(val) {
+      this.checkedData = val;
     }
   }
 };
