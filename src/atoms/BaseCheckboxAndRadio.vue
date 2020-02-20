@@ -74,7 +74,7 @@ export default {
     this.checkedData = this.selected;
   },
   watch: {
-    checkedData(val) {
+    selected(val) {
       this.checkedData = val;
     }
   }
