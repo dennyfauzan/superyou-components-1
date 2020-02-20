@@ -60,7 +60,7 @@ export default {
       type: String,
       default: "Gender"
     },
-    selected: {
+    value: {
       type: String,
       default: ""
     }
@@ -71,10 +71,10 @@ export default {
     }
   },
   created() {
-    this.checkedData = this.selected;
+    this.checkedData = this.value;
   },
   watch: {
-    selected(val) {
+    value(val) {
       this.checkedData = val;
     }
   }

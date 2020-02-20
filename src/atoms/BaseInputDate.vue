@@ -251,6 +251,11 @@ export default {
       if (this.dateFlag.day && this.dateFlag.month && this.dateFlag.year) {
         this.errorChecker();
       }
+    },
+    value(val) {
+      this.year = (new Date(val).getFullYear()).toString();
+      this.month = (new Date(val).getMonth() + 1).toString().padStart(2, 0);
+      this.day = (new Date(val).getDate()).toString().padStart(2, 0);
     }
   },
   computed: {
