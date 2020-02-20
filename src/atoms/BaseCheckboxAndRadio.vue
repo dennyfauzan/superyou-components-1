@@ -8,6 +8,7 @@
         :value="option.val"
         :id="option.name"
         :name="name"
+        :checked="value"
       />
       <label :for="option.name">{{ option.name }}</label>
     </div>
@@ -58,7 +59,14 @@ export default {
     label: {
       type: String,
       default: "Gender"
+    },
+    value: {
+      type: String,
+      default: ""
     }
+  },
+  created() {
+    this.checkedData = this.value;
   },
   watch: {
     checkedData(newData) {
