@@ -154,7 +154,7 @@ export default {
         // this.isError = false;
         this.$emit("error-handler", false, "ok", this.name);
       }
-      if (this.equalValue) {
+      if (Object.keys(this.equalValue).length != 0) {
         this.$emit("error-handler", true, "equal-value", this.name, this.equalValue);
       }
 
