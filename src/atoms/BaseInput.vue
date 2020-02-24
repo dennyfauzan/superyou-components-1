@@ -77,6 +77,10 @@ export default {
     },
     errMsg: {
       type: String
+    },
+    equalValue: {
+      type: Object,
+      default: () => ({})
     }
   },
   methods: {
@@ -149,6 +153,9 @@ export default {
         // this.errorMessage = "";
         // this.isError = false;
         this.$emit("error-handler", false, "ok", this.name);
+      }
+      if (this.equalValue) {
+        this.$emit("error-handler", true, "equal-value", this.name, this.equalValue);
       }
 
       if (this.inputType === "email") {
