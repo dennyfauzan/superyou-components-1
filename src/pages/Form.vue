@@ -1,74 +1,84 @@
 <template>
-  <div id="form-container">
+  <div id="form-container" :style="{'background-color': bgContainer}">
     <BaseStepper :dataSteps="dataSteps" />
     <h1>Form</h1>
     <form>
       <base-input
-        :value="userName"
-        label="Nama Lengkap"
-        v-on:handle-change="handleInputChange"
-        v-on:error-handler="handleErrorInput"
-        name="userName"
+        :value="form.ph_name.val"
+        :label="form.ph_name.label_name"
+        v-on:handle-change="(...args) => handleDataChange(...args, 'form')"
+        v-on:error-handler="(...args) => errorHandlerInput(...args, 'form')"
+        name="ph_name"
         note="Note: Nama Lengkap"
         char="^[A-Za-z ]+$"
-        :min-length="6"
-        :error="errValidation.status"
+        :min-length="form.ph_name.min"
+        :error="form.ph_name.err"
+        :err-msg="form.ph_name.msg"
         required
-        :err-msg="errValidation.message"
+        :theme="currentTheme"
       ></base-input>
       <br />
       <base-input
-        :value="citizenId"
-        label="Nomor Kartu Indentitas"
-        v-on:handle-change="handleInputChange"
-        name="citizenId"
+        :value="form.citizen_id.val"
+        :label="form.citizen_id.label_name"
+        v-on:handle-change="(...args) => handleDataChange(...args, 'form')"
+        v-on:error-handler="(...args) => errorHandlerInput(...args, 'form')"
+        :error="form.citizen_id.err"
+        :err-msg="form.citizen_id.msg"
+        name="citizen_id"
         inputType="tel"
         char="^[0-9]*$"
-        :max-length="16"
+        :max-length="form.citizen_id.max"
+        :min-length="form.citizen_id.min"
         required
+        :theme="currentTheme"
       ></base-input>
       <br />
       <base-input
-        :value="email.val"
-        label="Email"
-        v-on:handle-change="handleInputChange"
-        v-on:error-handler="handleErrorEmail"
-        :error="email.err"
-        :err-msg="email.errMsg"
+        :value="form.email.val"
+        :label="form.email.label_name"
+        v-on:handle-change="(...args) => handleDataChange(...args, 'form')"
+        v-on:error-handler="(...args) => errorHandlerInput(...args, 'form')"
+        :error="form.email.err"
+        :err-msg="form.email.msg"
         name="email"
         inputType="email"
         required
+        :theme="currentTheme"
       ></base-input>
       <br />
       <base-select
-        name="relations"
+        :value="form.relation.val"
+        name="relation"
         label="Hubungan"
-        v-on:error-handler="handleErrorSelect"
-        v-on:handle-change="handleInputChange"
+        v-on:handle-change="(...args) => handleDataChange(...args, 'form')"
+        v-on:error-handler="(...args) => errorHandlerInput(...args, 'form')"
+        :error="form.relation.err"
+        :err-msg="form.relation.msg"
         :select="opt => opt.val !== 'mother'"
         :options="dataSelectOpt"
-        :value="relations"
-        :error="errSelectValidate.status"
-        :err-msg="errSelectValidate.message"
+        :theme="currentTheme"
       ></base-select>
       <br />
       <base-checkbox-and-radio
         name="gender"
-        v-on:handle-change="handleInputChange"
+        v-on:handle-change="(...args) => handleDataChange(...args, 'form')"
         axis="row"
-        inputType="checkbox"
+        inputType="radio"
+        :theme="currentTheme"
       ></base-checkbox-and-radio>
       <br />
       <base-input-date
-        label="Tanggal Lahir"
+        :label="form.dob.label_name"
         name="dob"
-        :value="dob.val"
-        :min-age="17"
-        :max-age="40"
-        v-on:error-handler="handleErrorDob"
-        :error="dob.err"
-        :err-msg="dob.errMsg"
-        @input="handleInputChange"
+        v-on:input="(...args) => handleDataChange(...args, 'form')"
+        v-on:error-handler="(...args) => errorHandlerInput(...args, 'form')"
+        :value="form.dob.val"
+        :min-age="form.dob.min_age"
+        :max-age="form.dob.max_age"
+        :error="form.dob.err"
+        :err-msg="form.dob.msg"
+        :theme="currentTheme"
       ></base-input-date>
     </form>
   </div>
@@ -85,25 +95,49 @@ export default {
   name: "FormComponets",
   data() {
     return {
-      userName: null,
-      citizenId: null,
-      insuredName: null,
-      relations: null,
-      gender: null,
-      dob: {
-        val: "",
-        err: false,
-        errMsg: "",
-        min: 4,
-        minAge: 17,
-        maxAge: 40
+      form: {
+        ph_name: {
+          val: "",
+          err: false,
+          msg: "",
+          min: 5,
+          label_name: "Nama Lengkap"
+        },
+        citizen_id: {
+          val: "",
+          err: false,
+          msg: "",
+          min: 16,
+          max: 16,
+          label_name: "No Kartu Identitas"
+        },
+        email: {
+          val: "",
+          err: false,
+          msg: "",
+          label_name: "Email"
+        },
+        relation: {
+          val: "",
+          err: false,
+          msg: "",
+          label_name: "Hubungan"
+        },
+        gender: {
+          val: "",
+          err: false,
+          msg: ""
+        },
+        dob: {
+          val: "",
+          err: false,
+          msg: "",
+          min_age: 17,
+          max_age: 40,
+          label_name: "Tanggal Lahir"
+        }
       },
-      email: {
-        val: null,
-        err: false,
-        errMsg: "",
-        min: 4
-      },
+
       dataSteps: [
         {
           title: "1",
@@ -128,14 +162,7 @@ export default {
         { label: "Ibu Kandung", val: "mother" },
         { label: "Saudara Kandung", val: "brother" }
       ],
-      errValidation: {
-        status: false,
-        message: "test error"
-      },
-      errSelectValidate: {
-        status: false,
-        message: "test error"
-      }
+      currentTheme: "normal"
     };
   },
   components: {
@@ -146,66 +173,66 @@ export default {
     BaseInputDate
   },
   methods: {
-    handleInputChange(val, name) {
-      if (name === "dob" || name === "email") {
-        this[name].val = val;
-      } else {
-        this[name] = val;
-      }
+    handleDataChange(...args) {
+      const [val, name, instance] = [...args];
+      this[instance][`${name}`].val = val;
     },
-    handleErrorInput(isError, type) {
-      if (type === "required") {
-        this.errValidation.status = isError;
-        this.errValidation.message = "This field required";
-      } else if (type === "ok") {
-        this.errValidation.status = isError;
-        this.errValidation.message = "";
-      } else if (type === "min-length") {
-        this.errValidation.status = isError;
-        this.errValidation.message = "min length";
+    errorHandlerInput(...args) {
+      const [error, type, name, instance] = [...args];
+      console.log(error, type, name, instance, "error handler");
+
+      switch (type) {
+        case "required": {
+          this[instance][name].err = error;
+          this[instance][
+            name
+          ].msg = `${this[instance][name].label_name} harus diisi`;
+          return;
+        }
+        case "min-length": {
+          this[instance][name].err = error;
+          this[instance][
+            name
+          ].msg = `Minimal karakter ${this[instance][name].min}`;
+          return;
+        }
+        case "max-age": {
+          this[instance][name].err = error;
+          this[instance][
+            name
+          ].msg = `Usia harus ${this[instance][name].max_age} tahun ke bawah`;
+          return;
+        }
+        case "min-age": {
+          this[instance][name].err = error;
+          this[instance][
+            name
+          ].msg = `Usia harus ${this[instance][name].min_age} tahun ke atas`;
+          return;
+        }
+        case "email": {
+          this[instance][name].err = error;
+          this[instance][name].msg = "Format email tidak valid";
+          return;
+        }
+        case "invalid": {
+          this[instance][name].err = error;
+          this[instance][name].msg = "Invalid data";
+          return;
+        }
+        case "ok": {
+          this[instance][name].err = error;
+          this[instance][name].msg = "";
+        }
       }
-    },
-    handleErrorSelect(isError, type) {
-      console.log(isError, type);
-      if (type === "required") {
-        this.errSelectValidate.status = isError;
-        this.errSelectValidate.message = "Relations is required";
-      } else if (type === "ok") {
-        this.errSelectValidate.status = isError;
-        this.errSelectValidate.message = "";
+    }
+  },
+  computed: {
+    bgContainer() {
+      if (this.currentTheme === "dark") {
+        return "#00aaae";
       }
-    },
-    handleErrorDob(isError, type, name) {
-      console.log(isError, type, name);
-      if (type === "invalid") {
-        this.dob.err = isError;
-        this.dob.errMsg = "Invalid Date";
-      } else if (type === "min-age") {
-        this.dob.err = isError;
-        this.dob.errMsg = "min age";
-      } else if (type === "max-age") {
-        this.dob.err = isError;
-        this.dob.errMsg = "max age";
-      } else if (type === "ok") {
-        this.dob.err = isError;
-        this.dob.errMsg = "";
-      } else if (type === "required") {
-        this.dob.err = isError;
-        this.dob.errMsg = "Date of bird is required";
-      }
-    },
-    handleErrorEmail(isError, type) {
-      console.log(isError, type);
-      if (type === "required") {
-        this.email.err = isError;
-        this.email.errMsg = "Relations is required";
-      } else if (type === "ok") {
-        this.email.err = isError;
-        this.email.errMsg = "";
-      } else if (type === "email") {
-        this.email.err = isError;
-        this.email.errMsg = "Invalid Email";
-      }
+      return "#fff";
     }
   }
 };
@@ -221,7 +248,8 @@ export default {
   margin: 0 auto;
   display: flex;
   flex-direction: column;
-  background: #fff;
+  /* background: #fff; */
+  /* background: #00aaae; */
   min-height: 100vh;
 
   box-shadow: 0 4px 5px 0 rgba(0, 0, 0, 0.14), 0 1px 10px 0 rgba(0, 0, 0, 0.12),
