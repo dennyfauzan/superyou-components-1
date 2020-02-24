@@ -89,6 +89,11 @@ export default {
   },
   created() {
     this.selectedVal = this.value;
+  },
+  watch: {
+    value(val) {
+      this.selectedVal = val;
+    }
   }
 };
 </script>
