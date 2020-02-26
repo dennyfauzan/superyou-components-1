@@ -81,6 +81,10 @@ export default {
     equalValue: {
       type: Object,
       default: () => ({})
+    },
+    apiService: {
+      type: Boolean,
+      default: false
     }
   },
   methods: {
@@ -157,7 +161,9 @@ export default {
       if (Object.keys(this.equalValue).length != 0) {
         this.$emit("error-handler", true, "equal-value", this.name, this.equalValue);
       }
-
+      if (this.apiService) {
+        this.$emit("error-handler", true, "api-service", this.name);
+      }
       if (this.inputType === "email") {
         this.validateEmail(this.value);
       }
