@@ -10,7 +10,7 @@
           autocomplete="off"
           class="su-input_text"
           @focus="onInputFocus"
-          @blur="onInputBlur($event)"
+          @blur="onInputBlur"
           @beforeinput="expectedCharacters($event)"
           @input="onInputChange($event)"
         />
@@ -84,14 +84,9 @@ export default {
     }
   },
   methods: {
-    onInputBlur(e) {
+    onInputBlur() {
       this.isFocused = false;
       this.checkAllValidation();
-      this.$emit(
-        "blur-change",
-        e.target.value,
-        e.target.getAttribute("name")
-      );
     },
     onInputFocus() {
       this.isFocused = true;
