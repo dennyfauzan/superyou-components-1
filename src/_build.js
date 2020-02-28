@@ -10,7 +10,7 @@ import _InvoiceDetails from "@/molecules/invoice/InvoiceDetails.vue";
 import _PaymentHistory from "@/components/PaymentHistory/PaymentHistory.vue";
 
 // Style
-import "vue-select/src/scss/vue-select.scss";
+import "@/styles/index.scss";
 
 export const CardInvoice = _CardInvoice;
 export const BaseInput = _BaseInput;
