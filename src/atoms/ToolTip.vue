@@ -52,6 +52,7 @@ export default {
   text-align: center;
   color: white !important;
   position: relative;
+  margin-left: 3px;
 
   .on-popup {
     min-width: 170px;

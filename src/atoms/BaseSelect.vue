@@ -1,6 +1,7 @@
 <template>
   <div id="su-base-select" :class="{ 'input-error': error }">
     <label :class="{ active: isFocused }">{{ label }}</label>
+    <slot name="tool-tip"></slot>
     <v-select
       :label="options.label"
       class="base-select"
