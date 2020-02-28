@@ -43,7 +43,7 @@ export default {
   opacity: 0
 }
 #tool-tip {
-  background: rgba(112,134,151, .3);
+  background: rgba(112,134,151, .5);
   border-radius:50%;
   height: 15px;
   width: 15px;

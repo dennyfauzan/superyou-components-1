@@ -314,7 +314,7 @@ input[type="number"]::-webkit-outer-spin-button {
           width: 100%;
           height: 100%;
           border-width: 1px;
-          border-color: rgba(112,134,151, .4) rgba(112,134,151, .4) rgba(112,134,151, .4) transparent;
+          border-color: rgba(112,134,151, .8) rgba(112,134,151, .8) rgba(112,134,151, .8) transparent;
           border-style: solid;
           border-radius: 50%;
           box-sizing: border-box;
