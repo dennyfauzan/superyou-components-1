@@ -4,7 +4,7 @@
     @mouseover="hover = true"
     @mouseleave="hover = false"
   >
-    i
+    ?
     <transition name="fade" mode="out-in">
       <span v-if="hover" class="on-popup" :style="{ color: color + '!important' }" v-html="info"></span>
     </transition>

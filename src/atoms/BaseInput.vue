@@ -15,6 +15,9 @@
           @beforeinput="expectedCharacters($event)"
           @input="onInputChange($event)"
         />
+        <span class="loader-container" v-if="loader">
+          <i class="loader"></i>
+        </span>
         <span class="su-input_icon" v-if="icon">
           <img :src="icon" alt="input icon" />
         </span>
@@ -82,6 +85,10 @@ export default {
     equalValue: {
       type: Object,
       default: () => ({})
+    },
+    loader: {
+      type: Boolean,
+      default: false
     }
   },
   methods: {
@@ -191,6 +198,14 @@ input[type="number"]::-webkit-outer-spin-button {
   -webkit-appearance: none;
   margin: 0;
 }
+@keyframes around {
+  0% {
+    transform: rotate(0deg)
+  }
+  100% {
+    transform: rotate(360deg)
+  }
+}
 .su-input {
   position: relative;
   margin-bottom: 20px;
@@ -274,6 +289,39 @@ input[type="number"]::-webkit-outer-spin-button {
       }
       &.su-input_note {
         color: #0d294a;
+      }
+    }
+
+    .loader-container {
+      position: absolute;
+      right: 7px;
+      top: calc(70% - 0px);
+      .loader {
+        position: relative;
+        display: inline-block; 
+        animation: around 7s infinite;
+        height: 15px;
+        width: 15px;
+        &::after {
+          animation: around 0.7s ease-in-out 0.4s infinite;
+          background: transparent;
+        }
+        &::after, &::before {
+          content: "";
+          background: white;
+          position: absolute;
+          display: inline-block;
+          width: 100%;
+          height: 100%;
+          border-width: 1px;
+          border-color: rgba(112,134,151, .4) rgba(112,134,151, .4) rgba(112,134,151, .4) transparent;
+          border-style: solid;
+          border-radius: 50%;
+          box-sizing: border-box;
+          top: 0;
+          left: 0;
+          animation: around 0.7s ease-in-out infinite;
+        }
       }
     }
   }
