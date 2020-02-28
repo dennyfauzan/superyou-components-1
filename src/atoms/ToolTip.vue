@@ -61,6 +61,7 @@ export default {
     border-radius: 10px;
     padding: 5px;
     position: absolute;
+    font-size: 11px;
 
     z-index: 1;
     top: -5px;
