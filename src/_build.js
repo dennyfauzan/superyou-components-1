@@ -8,6 +8,7 @@ import _BaseStepper from "@/atoms/BaseStepper.vue";
 import _BaseModal from "@/atoms/BaseModal.vue";
 import _InvoiceDetails from "@/molecules/invoice/InvoiceDetails.vue";
 import _PaymentHistory from "@/components/PaymentHistory/PaymentHistory.vue";
+import _ToolTip from "@/atoms/ToolTip.vue";
 
 // Style
 import "vue-select/src/scss/vue-select.scss";
@@ -21,3 +22,4 @@ export const BaseStepper = _BaseStepper;
 export const InvoiceDetails = _InvoiceDetails;
 export const BaseModal = _BaseModal;
 export const PaymentHistory = _PaymentHistory;
+export const ToolTip = _ToolTip;
