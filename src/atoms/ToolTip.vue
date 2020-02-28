@@ -53,6 +53,7 @@ export default {
   color: white !important;
   position: relative;
   margin-left: 3px;
+  font-size: 12px;
 
   .on-popup {
     min-width: 170px;
