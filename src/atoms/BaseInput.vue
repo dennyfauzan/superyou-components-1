@@ -3,6 +3,7 @@
     <div class="su-input_control" :class="{ 'is-focused': isFocused }">
       <label class="su-input_label">
         {{ label }}
+        <slot name="tool-tip"></slot>
         <input
           :type="inputType"
           :name="name"
