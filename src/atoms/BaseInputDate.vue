@@ -201,7 +201,7 @@ export default {
         !this.year.length
       ) {
         this.$emit("error-handler", true, "required", this.name);
-      } else if (isNaN(this.submittedDate) || this.submittedDate <= 0) {
+      } else if (isNaN(this.submittedDate)) {
         this.$emit("error-handler", true, "invalid", this.name);
       } else if (!isNaN(this.submittedDate)) {
         this.errorChecker();
