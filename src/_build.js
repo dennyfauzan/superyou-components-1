@@ -9,6 +9,7 @@ import _BaseModal from "@/atoms/BaseModal.vue";
 import _InvoiceDetails from "@/molecules/invoice/InvoiceDetails.vue";
 import _PaymentHistory from "@/components/PaymentHistory/PaymentHistory.vue";
 import _ToolTip from "@/atoms/ToolTip.vue";
+import _BaseInputVerification from "@/atoms/BaseInputVerification.vue";
 
 // Style
 import "vue-select/src/scss/vue-select.scss";
@@ -23,3 +24,4 @@ export const InvoiceDetails = _InvoiceDetails;
 export const BaseModal = _BaseModal;
 export const PaymentHistory = _PaymentHistory;
 export const ToolTip = _ToolTip;
+export const BaseInputVerification = _BaseInputVerification;
