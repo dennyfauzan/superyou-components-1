@@ -4,7 +4,7 @@
       <div class="verification__security-code-field" v-for="n in securityCodeLength" :key="n">
         <input maxlength="1" autocorrect="off" autocomplete="off" autocapitalize="off" spellcheck="false" type="tel"
           class="form-control" v-model="securityCode[n - 1]" @focus="setSelected" @input.stop="inputEvent"
-          @keydown.stop="downEvent" @keypress.stop="pressEvent" @paste="pasteEvent(n - 1, $event)" />
+          @keydown.stop="downEvent" @keypress.stop="pressEvent" @paste="pasteEvent(n - 1, $event)" :style="{ fontSize: (widthHeight - 5) + 'px', width: widthHeight + 'px', height: widthHeight + 'px' }" />
       </div>
     </div>
   </div>
@@ -28,6 +28,10 @@
       isArray: {
         type: Boolean,
         default: false
+      },
+      widthHeight: {
+        type: Number,
+        default: 22
       }
     },
     data() {
@@ -171,7 +175,7 @@
 
 <style scoped lang="scss">
   .verification__security-code {
-    display: flex;
+    display: -webkit-box;
     flex-direction: column;
     align-items: center;
     margin-left: auto;
@@ -180,13 +184,12 @@
 
   .verification__security-code-wrapper {
     display: inline-block;
-    margin: auto;
+    margin: 0 auto;
     width: 100%;
     text-align: center;
   }
 
   .verification__security-code-wrapper .verification__security-code-field {
-    width: 22px;
     display: inline-block;
     margin-right: 10px;
     float: left;
@@ -200,8 +203,6 @@
   }
 
   .verification__security-code-wrapper .verification__security-code-field .form-control {
-    width: 22px;
-    height: 22px;
     font-size: 15px;
     text-align: center;
     padding: 0;
@@ -215,8 +216,6 @@
 
   @media only screen and (max-device-width: 736px) {
     .verification__security-code-wrapper .verification__security-code-field .form-control {
-      width: 22px;
-      height: 22px;
       margin: 0;
     }
   }
