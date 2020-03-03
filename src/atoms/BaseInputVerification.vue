@@ -181,14 +181,8 @@
   .verification__security-code-wrapper {
     display: inline-block;
     margin: auto;
-    min-width: 240px;
+    width: 100%;
     text-align: center;
-  }
-
-  @media only screen and (max-device-width: 736px) {
-    .verification__security-code-wrapper {
-      max-width: 320px;
-    }
   }
 
   .verification__security-code-wrapper .verification__security-code-field {
