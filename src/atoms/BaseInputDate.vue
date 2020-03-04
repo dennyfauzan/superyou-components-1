@@ -206,6 +206,7 @@ export default {
       } else if (!isNaN(this.submittedDate)) {
         this.errorChecker();
       }
+      this.$emit("handle-datestring", this.dateString);
     },
     eachFocus(type) {
       if (type === "year") {
