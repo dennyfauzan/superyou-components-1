@@ -4,7 +4,8 @@
       <div class="verification__security-code-field" v-for="n in securityCodeLength" :key="n">
         <input maxlength="1" autocorrect="off" autocomplete="off" autocapitalize="off" spellcheck="false" type="tel"
           class="form-control" v-model="securityCode[n - 1]" @focus="setSelected" @input.stop="inputEvent"
-          @keydown.stop="downEvent" @keypress.stop="pressEvent" @paste="pasteEvent(n - 1, $event)" :style="{ fontSize: (widthHeight - 5) + 'px', width: widthHeight + 'px', height: widthHeight + 'px' }" />
+          @keydown.stop="downEvent" @keypress.stop="pressEvent" @paste="pasteEvent(n - 1, $event)"
+          :style="{ fontSize: (widthHeight - 5) + 'px', width: widthHeight + 'px', height: widthHeight + 'px' }" />
       </div>
     </div>
   </div>
@@ -187,6 +188,7 @@
     margin: 0 auto;
     width: 100%;
     text-align: center;
+    padding-left: 10px;
   }
 
   .verification__security-code-wrapper .verification__security-code-field {
