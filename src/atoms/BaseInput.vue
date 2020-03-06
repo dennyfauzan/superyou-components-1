@@ -15,6 +15,7 @@
           @beforeinput="expectedCharacters($event)"
           @input="onInputChange($event)"
           :ref="inputType"
+          :readonly="readOnly"
         />
         <span class="span-container" v-if="loader">
           <i class="loader"></i>
@@ -91,6 +92,10 @@ export default {
       default: () => ({})
     },
     loader: {
+      type: Boolean,
+      default: false
+    },
+    readOnly: {
       type: Boolean,
       default: false
     }
