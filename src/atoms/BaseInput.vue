@@ -14,9 +14,13 @@
           @blur="onInputBlur($event)"
           @beforeinput="expectedCharacters($event)"
           @input="onInputChange($event)"
+          :ref="inputType"
         />
-        <span class="loader-container" v-if="loader">
+        <span class="span-container" v-if="loader">
           <i class="loader"></i>
+        </span>
+        <span class="span-container" v-if="inputType == 'password'">
+          <i class="password_visibility su_eye" @click.prevent="switchVisibility($event.target.classList)"></i>
         </span>
         <span class="su-input_icon" v-if="icon">
           <img :src="icon" alt="input icon" />
@@ -174,6 +178,18 @@ export default {
       if (this.inputType === "email") {
         this.validateEmail(this.value);
       }
+    },
+    switchVisibility(e) {
+      const refs = this.$refs.password;
+      if (refs.type == 'password') {
+        this.$refs.password.type = 'text';
+        e.add("su_edit");
+        e.remove('su_eye');
+      } else {
+        this.$refs.password.type = 'password';
+        e.add("su_eye");
+        e.remove('su_edit');
+      }
     }
   },
   watch: {
@@ -292,7 +308,7 @@ input[type="number"]::-webkit-outer-spin-button {
       }
     }
 
-    .loader-container {
+    .span-container {
       position: absolute;
       right: 7px;
       top: calc(70% - 0px);
@@ -321,6 +337,14 @@ input[type="number"]::-webkit-outer-spin-button {
           top: 0;
           left: 0;
           animation: around 0.7s ease-in-out infinite;
+        }
+      }
+      .password_visibility {
+        &.su_edit {
+          content: url(https://superyou.app/img/icons/edit-gray.svg)
+        }
+        &.su_eye {
+          content: url(https://superyou.app/img/icons/eye.svg)
         }
       }
     }
