@@ -341,10 +341,10 @@ input[type="number"]::-webkit-outer-spin-button {
       }
       .password_visibility {
         &.su_edit {
-          content: url(https://superyou.app/img/icons/edit-gray.svg)
+          content: url(https://superyou.co.id/img/icons/edit-gray.svg)
         }
         &.su_eye {
-          content: url(https://superyou.app/img/icons/eye.svg)
+          content: url(https://superyou.co.id/img/icons/eye.svg)
         }
       }
     }
