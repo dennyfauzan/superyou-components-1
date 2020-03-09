@@ -1,8 +1,6 @@
 <template>
-  <div class="su-date-wrapper">
-    <label :class="{ 'date-focused': isFocused, 'is-error': error }">
-      {{ label }}
-    </label>
+  <div class="su-date-wrapper" :data-theme="theme">
+    <label :class="{ 'date-focused': isFocused, 'is-error': error }">{{ label }}</label>
     <div
       class="su-date"
       :class="{ 'date-focused': isFocused, 'is-error': error }"
@@ -33,9 +31,7 @@
         @blur="eachBlur('month', 2)"
         @focus="eachFocus('month')"
       />
-      <span v-if="showYear && (showDay || showMonth)" class="su-date__divider"
-        >/</span
-      >
+      <span v-if="showYear && (showDay || showMonth)" class="su-date__divider">/</span>
       <input
         v-if="showYear"
         ref="year"
@@ -94,6 +90,10 @@ export default {
     },
     errMsg: {
       type: String
+    },
+    theme: {
+      type: String,
+      default: "normal"
     }
   },
   data() {
@@ -201,7 +201,7 @@ export default {
         !this.year.length
       ) {
         this.$emit("error-handler", true, "required", this.name);
-      } else if (isNaN(this.submittedDate) || this.submittedDate <= 0) {
+      } else if (isNaN(this.submittedDate)) {
         this.$emit("error-handler", true, "invalid", this.name);
       } else if (!isNaN(this.submittedDate)) {
         this.errorChecker();
@@ -292,21 +292,21 @@ export default {
 };
 </script>
 
-<style lang="scss">
+<style lang="scss" scoped>
 .su-date-wrapper {
   label {
     display: block;
-    color: #708697;
+    color: var(--label-text-color);
     font-size: 12px;
     margin-bottom: 2px;
     &.active {
-      color: #00aaae;
+      color: var(--color-focused);
     }
     &.date-focused {
-      color: #00aaae;
+      color: var(--color-focused);
     }
     &.is-error {
-      color: red;
+      color: #e02020;
     }
   }
 }
@@ -328,10 +328,10 @@ export default {
     border-width: thin 0 0 0;
   }
   &::before {
-    border-color: rgba(0, 0, 0, 0.3);
+    border-color: var(--border-bottom-color);
   }
   &::after {
-    border-color: #00aaae;
+    border-color: var(--color-focused);
     transform: scaleX(0);
   }
   &.date-focused {
@@ -342,19 +342,27 @@ export default {
   }
   &.is-error {
     &::after {
-      border-color: red;
+      border-color: #e02020;
       transform: scaleX(1);
       border-width: thin 0 0 0;
     }
   }
   // 1. Hide the spinner button in Chrome, Safari and Firefox.
   &__input {
+    min-height: 36px;
+    font-size: 16px;
+    color: var(--text-color);
     padding: $spacing;
     padding-right: $spacing / 2;
     padding-left: $spacing / 4;
     padding: $spacing 0;
+    background: transparent;
     border: none;
     text-align: left;
+
+    &::placeholder {
+      color: var(--placeholder-color);
+    }
     /* stylelint-disable-next-line property-no-vendor-prefix */
     -moz-appearance: textfield; // 1
     &::-webkit-inner-spin-button {
@@ -379,11 +387,12 @@ export default {
     }
   }
   &__divider {
+    font-size: 16px;
     padding-top: $spacing;
     padding-bottom: $spacing;
     /* padding: 0.75em 5px; */
     pointer-events: none;
-    color: darkgray;
+    color: var(--label-text-color);
   }
   .message {
     position: absolute;
@@ -395,7 +404,7 @@ export default {
       color: #e02020;
     }
     &.su-input_note {
-      color: #0d294a;
+      color: var(--text-color);
     }
   }
 }

@@ -1,5 +1,5 @@
 <template>
-  <div class="su-input" :class="{ 'with-note': note, 'input-error': error }">
+  <div class="su-input" :class="{ 'with-note': note, 'input-error': error } " :data-theme="theme">
     <div class="su-input_control" :class="{ 'is-focused': isFocused }">
       <label class="su-input_label">
         {{ label }}
@@ -98,6 +98,10 @@ export default {
     readOnly: {
       type: Boolean,
       default: false
+    },
+    theme: {
+      type: String,
+      default: "normal"
     }
   },
   methods: {
@@ -240,7 +244,8 @@ input[type="number"]::-webkit-outer-spin-button {
       width: 100%;
       border-style: solid;
       border-width: thin 0 0 0;
-      border-color: rgba(0, 0, 0, 0.3);
+      /* border-color: rgba(0, 0, 0, 0.3); // need variable */
+      border-color: var(--border-bottom-color);
     }
 
     &::after {
@@ -253,7 +258,7 @@ input[type="number"]::-webkit-outer-spin-button {
 
       border-style: solid;
       border-width: thin 0 thin 0;
-      border-color: #00aaae;
+      border-color: var(--color-focused); // need variable
       transform: scaleX(0);
     }
 
@@ -262,13 +267,13 @@ input[type="number"]::-webkit-outer-spin-button {
         transform: scaleX(1);
       }
       .su-input_label {
-        color: #00aaae;
+        color: var(--color-focused);
       }
     }
 
     .su-input_label {
       position: relative;
-      color: #708697;
+      color: var(--label-text-color);
       font-size: 12px;
 
       .su-input_icon {
@@ -291,7 +296,7 @@ input[type="number"]::-webkit-outer-spin-button {
       background-color: transparent;
       border-style: none;
 
-      color: #0d294a;
+      color: var(--text-color);
       font-size: 16px;
 
       &:focus {
@@ -306,10 +311,10 @@ input[type="number"]::-webkit-outer-spin-button {
       bottom: -20px;
       font-size: 10px;
       &.su-input_error {
-        color: #e02020;
+        color: #f33131;
       }
       &.su-input_note {
-        color: #0d294a;
+        color: var(--text-color);
       }
     }
 
@@ -357,10 +362,10 @@ input[type="number"]::-webkit-outer-spin-button {
   &.input-error {
     .su-input_control {
       .su-input_label {
-        color: #e02020;
+        color: #f33131;
       }
       &::before {
-        border-color: #e02020;
+        border-color: #f33131;
       }
     }
   }

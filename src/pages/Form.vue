@@ -1,5 +1,5 @@
 <template>
-  <div id="form-container">
+  <div id="form-container" :style="{'background-color': bgContainer}">
     <BaseStepper :dataSteps="dataSteps" />
     <h1>Form</h1>
     <form>
@@ -15,6 +15,7 @@
         :error="form.ph_name.err"
         :err-msg="form.ph_name.msg"
         required
+        :theme="currentTheme"
       ></base-input>
       <br />
       <base-input
@@ -30,6 +31,7 @@
         :max-length="form.citizen_id.max"
         :min-length="form.citizen_id.min"
         required
+        :theme="currentTheme"
       ></base-input>
       <br />
       <base-input
@@ -42,6 +44,7 @@
         name="email"
         inputType="email"
         required
+        :theme="currentTheme"
       ></base-input>
       <br />
       <base-select
@@ -54,6 +57,7 @@
         :err-msg="form.relation.msg"
         :select="opt => opt.val !== 'mother'"
         :options="dataSelectOpt"
+        :theme="currentTheme"
       ></base-select>
       <br />
       <base-checkbox-and-radio
@@ -61,6 +65,7 @@
         v-on:handle-change="(...args) => handleDataChange(...args, 'form')"
         axis="row"
         inputType="radio"
+        :theme="currentTheme"
       ></base-checkbox-and-radio>
       <br />
       <base-input-date
@@ -73,6 +78,7 @@
         :max-age="form.dob.max_age"
         :error="form.dob.err"
         :err-msg="form.dob.msg"
+        :theme="currentTheme"
       ></base-input-date>
     </form>
   </div>
@@ -155,7 +161,8 @@ export default {
         { label: "Ayah Kandung", val: "father" },
         { label: "Ibu Kandung", val: "mother" },
         { label: "Saudara Kandung", val: "brother" }
-      ]
+      ],
+      currentTheme: "normal"
     };
   },
   components: {
@@ -219,6 +226,14 @@ export default {
         }
       }
     }
+  },
+  computed: {
+    bgContainer() {
+      if (this.currentTheme === "dark") {
+        return "#00aaae";
+      }
+      return "#fff";
+    }
   }
 };
 </script>
@@ -233,7 +248,8 @@ export default {
   margin: 0 auto;
   display: flex;
   flex-direction: column;
-  background: #fff;
+  /* background: #fff; */
+  /* background: #00aaae; */
   min-height: 100vh;
 
   box-shadow: 0 4px 5px 0 rgba(0, 0, 0, 0.14), 0 1px 10px 0 rgba(0, 0, 0, 0.12),

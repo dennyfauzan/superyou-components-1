@@ -12,7 +12,7 @@ import _ToolTip from "@/atoms/ToolTip.vue";
 import _BaseInputVerification from "@/atoms/BaseInputVerification.vue";
 
 // Style
-import "vue-select/src/scss/vue-select.scss";
+import "@/styles/index.scss";
 
 export const CardInvoice = _CardInvoice;
 export const BaseInput = _BaseInput;
