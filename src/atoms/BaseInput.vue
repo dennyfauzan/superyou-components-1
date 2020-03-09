@@ -3,6 +3,7 @@
     <div class="su-input_control" :class="{ 'is-focused': isFocused }">
       <label class="su-input_label">
         {{ label }}
+        <slot name="tool-tip"></slot>
         <input
           :type="inputType"
           :name="name"
@@ -10,10 +11,18 @@
           autocomplete="off"
           class="su-input_text"
           @focus="onInputFocus"
-          @blur="onInputBlur"
+          @blur="onInputBlur($event)"
           @beforeinput="expectedCharacters($event)"
           @input="onInputChange($event)"
+          :ref="inputType"
+          :readonly="readOnly"
         />
+        <span class="span-container" v-if="loader">
+          <i class="loader"></i>
+        </span>
+        <span class="span-container" v-if="inputType == 'password'">
+          <i class="password_visibility su_eye" @click.prevent="switchVisibility($event.target.classList)"></i>
+        </span>
         <span class="su-input_icon" v-if="icon">
           <img :src="icon" alt="input icon" />
         </span>
@@ -78,15 +87,32 @@ export default {
     errMsg: {
       type: String
     },
+    equalValue: {
+      type: Object,
+      default: () => ({})
+    },
+    loader: {
+      type: Boolean,
+      default: false
+    },
+    readOnly: {
+      type: Boolean,
+      default: false
+    },
     theme: {
       type: String,
       default: "normal"
     }
   },
   methods: {
-    onInputBlur() {
+    onInputBlur(e) {
       this.isFocused = false;
       this.checkAllValidation();
+      this.$emit(
+        "blur-change",
+        e.target.value,
+        e.target.getAttribute("name")
+      );
     },
     onInputFocus() {
       this.isFocused = true;
@@ -154,9 +180,24 @@ export default {
         // this.isError = false;
         this.$emit("error-handler", false, "ok", this.name);
       }
+      if (Object.keys(this.equalValue).length != 0) {
+        this.$emit("error-handler", true, "equal-value", this.name, this.equalValue);
+      }
 
       if (this.inputType === "email") {
         this.validateEmail(this.value);
+      }
+    },
+    switchVisibility(e) {
+      const refs = this.$refs.password;
+      if (refs.type == 'password') {
+        this.$refs.password.type = 'text';
+        e.add("su_edit");
+        e.remove('su_eye');
+      } else {
+        this.$refs.password.type = 'password';
+        e.add("su_eye");
+        e.remove('su_edit');
       }
     }
   },
@@ -174,6 +215,22 @@ export default {
 </script>
 
 <style lang="scss" scoped>
+input[type="number"] {
+  -moz-appearance: textfield;
+}
+input[type="number"]::-webkit-inner-spin-button,
+input[type="number"]::-webkit-outer-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+@keyframes around {
+  0% {
+    transform: rotate(0deg)
+  }
+  100% {
+    transform: rotate(360deg)
+  }
+}
 .su-input {
   position: relative;
   margin-bottom: 20px;
@@ -258,6 +315,47 @@ export default {
       }
       &.su-input_note {
         color: var(--text-color);
+      }
+    }
+
+    .span-container {
+      position: absolute;
+      right: 7px;
+      top: calc(70% - 0px);
+      .loader {
+        position: relative;
+        display: inline-block; 
+        animation: around 7s infinite;
+        height: 15px;
+        width: 15px;
+        &::after {
+          animation: around 0.7s ease-in-out 0.4s infinite;
+          background: transparent;
+        }
+        &::after, &::before {
+          content: "";
+          background: white;
+          position: absolute;
+          display: inline-block;
+          width: 100%;
+          height: 100%;
+          border-width: 1px;
+          border-color: rgba(112,134,151, .8) rgba(112,134,151, .8) rgba(112,134,151, .8) transparent;
+          border-style: solid;
+          border-radius: 50%;
+          box-sizing: border-box;
+          top: 0;
+          left: 0;
+          animation: around 0.7s ease-in-out infinite;
+        }
+      }
+      .password_visibility {
+        &.su_edit {
+          content: url(https://superyou.co.id/img/icons/edit-gray.svg)
+        }
+        &.su_eye {
+          content: url(https://superyou.co.id/img/icons/eye.svg)
+        }
       }
     }
   }

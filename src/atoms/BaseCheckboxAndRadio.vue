@@ -9,6 +9,7 @@
           :value="option.val"
           :id="option.name"
           :name="name"
+          @change="handleOnChange"
         />
         <label :for="option.name">{{ option.name }}</label>
       </div>
@@ -59,6 +60,10 @@ export default {
       type: String,
       default: "Gender"
     },
+    value: {
+      type: String,
+      default: ""
+    },
     error: {
       type: Boolean
     },
@@ -70,9 +75,17 @@ export default {
       default: "normal"
     }
   },
+  methods: {
+    handleOnChange(e) {
+      this.$emit("handle-change", e.target.value, this.name);
+    }
+  },
+  created() {
+    this.checkedData = this.value;
+  },
   watch: {
-    checkedData(newData) {
-      this.$emit("handle-change", newData, this.name);
+    value(val) {
+      this.checkedData = val;
     }
   }
 };
