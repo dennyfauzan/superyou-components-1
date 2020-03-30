@@ -102,7 +102,6 @@ export default {
   },
   watch: {
     value(val) {
-      console.log("how many ?");
       this.checkedData = val;
     }
   }
