@@ -17,6 +17,7 @@
           @focus="onInputFocus"
           @blur="onInputBlur($event)"
           @beforeinput="expectedCharacters($event)"
+          @keypress="handleKeypress($event)"
           @input="onInputChange($event)"
           :ref="inputType"
           :readonly="readOnly"
@@ -42,6 +43,8 @@
 </template>
 
 <script>
+import browserDetection from "../helper/browserDetection";
+
 export default {
   name: "BaseInput",
   data() {
@@ -133,6 +136,11 @@ export default {
       this.checkCharRegexMatch(e);
       return true;
     },
+    handleKeypress(e) {
+      if (browserDetection() === "firefox") {
+        this.expectedCharacters(e);
+      }
+    },
     checkMaxLength(e) {
       if (
         this.maxLength &&
@@ -151,7 +159,8 @@ export default {
       if (!this.char) return;
 
       const rgx = new RegExp(this.char);
-      if (rgx.test(e.data) || e.inputType === "deleteContentBackward") {
+      let inputVal = e.data || e.key;
+      if (rgx.test(inputVal) || e.inputType === "deleteContentBackward") {
         return true;
       }
       e.preventDefault();
