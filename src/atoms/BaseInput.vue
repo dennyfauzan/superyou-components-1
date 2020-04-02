@@ -292,7 +292,7 @@ input[type="number"]::-webkit-outer-spin-button {
     }
 
     .su-input_label {
-      position: relative;
+      /* position: relative; */
       color: var(--label-text-color);
       font-size: 12px;
 
@@ -341,7 +341,7 @@ input[type="number"]::-webkit-outer-spin-button {
     .span-container {
       position: absolute;
       right: 7px;
-      top: calc(70% - 0px);
+      top: 55%;
       .loader {
         position: relative;
         display: inline-block;
