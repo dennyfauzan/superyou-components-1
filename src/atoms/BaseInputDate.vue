@@ -22,6 +22,8 @@
         @input="updateDay"
         @blur="eachBlur('day', 2)"
         @focus="eachFocus('day')"
+        @beforeinput="numberOnly($event)"
+        @keypress="handleKeypress($event)"
         :readonly="readOnly"
         :disabled="disabled"
       />
@@ -36,6 +38,8 @@
         @input="updateMonth"
         @blur="eachBlur('month', 2)"
         @focus="eachFocus('month')"
+        @beforeinput="numberOnly($event)"
+        @keypress="handleKeypress($event)"
         :readonly="readOnly"
         :disabled="disabled"
       />
@@ -51,6 +55,7 @@
         @blur="eachBlur('year', 4)"
         @focus="eachFocus('year')"
         @beforeinput="beforeInputYear"
+        @keypress="handleKeypress($event, 'inputYear')"
         :readonly="readOnly"
         :disabled="disabled"
       />
@@ -61,6 +66,8 @@
 </template>
 
 <script>
+import browserDetection from "../helper/browserDetection";
+
 export default {
   name: `BaseInputDate`,
   props: {
@@ -257,14 +264,42 @@ export default {
       this.isFocused = true;
     },
     beforeInputYear(e) {
+      this.numberOnly(e);
       if (this.year.length >= 4 && e.inputType !== "deleteContentBackward") {
         e.preventDefault();
+      }
+    },
+    numberOnly(e) {
+      const rgx = new RegExp("^[0-9]*$");
+      let inputVal = e.data || e.key;
+      if (rgx.test(inputVal) || e.inputType === "deleteContentBackward") {
+        return true;
+      }
+      e.preventDefault();
+      return false;
+    },
+    handleKeypress(e, type = "general") {
+      // due to browser support firefox
+      // below code only run in firefox
+      if (browserDetection() === "firefox") {
+        this.numberOnly(e);
+
+        if (
+          type === "inputYear" &&
+          this.year.length >= 4 &&
+          e.inputType !== "deleteContentBackward"
+        ) {
+          e.preventDefault();
+        }
       }
     }
   },
   watch: {
     year(current, prev) {
       if (current > 9999) this.year = prev;
+      if (this.isFocused && this.year === "0") {
+        this.year = "";
+      }
     },
     submittedDate() {
       if (this.year.length === 4) this.dateFlag.year += 1;
