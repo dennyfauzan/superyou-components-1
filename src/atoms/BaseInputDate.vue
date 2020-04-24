@@ -245,7 +245,6 @@ export default {
       const day = new Date().getDate();
       const completeDate = `${month}/${day}/${year}`;
       const dateToTime = new Date(completeDate).getTime();
-      console.log(dateToTime, this.submittedDate);
       return dateToTime >= this.submittedDate;
     },
     getDateToTime(setMonth = 0, setYear = 0, setDate = 0) {
@@ -421,7 +420,6 @@ export default {
       }
     },
     value(val) {
-      console.log(val, "get update");
       this.year = new Date(val).getFullYear().toString();
       this.month = (new Date(val).getMonth() + 1).toString().padStart(2, 0);
 
