@@ -210,7 +210,9 @@ export default {
     async updateValue(e, calendarVal = null) {
       if (calendarVal) {
         this.$emit(`input`, calendarVal, this.name);
-        this.errorChecker();
+        setTimeout(() => {
+          this.errorChecker();
+        }, 200);
       } else {
         const dateConcat = `${this.month}${this.day}${this.year}`;
         if (Number.isNaN(this.submittedDate)) return;
