@@ -25,7 +25,7 @@
         @blur="eachBlur('day', 2)"
         @focus="eachFocus('day')"
         @beforeinput="handleBeforeInput($event, 'day')"
-        @keypress="handleKeypress($event, 'day')"
+        @keydown="handleKeypress($event, 'day')"
         :readonly="readOnly"
         :disabled="disabled"
       />
@@ -41,7 +41,7 @@
         @blur="eachBlur('month', 2)"
         @focus="eachFocus('month')"
         @beforeinput="handleBeforeInput($event, 'month')"
-        @keypress="handleKeypress($event, 'month')"
+        @keydown="handleKeypress($event, 'month')"
         :readonly="readOnly"
         :disabled="disabled"
       />
@@ -59,7 +59,7 @@
         @blur="eachBlur('year', 4)"
         @focus="eachFocus('year')"
         @beforeinput="beforeInputYear"
-        @keypress="handleKeypress($event, 'inputYear')"
+        @keydown="handleKeypress($event, 'inputYear')"
         :readonly="readOnly"
         :disabled="disabled"
       />
@@ -193,21 +193,14 @@ export default {
       if (this.showMonth) this.$refs.month.focus();
       else if (this.showYear) this.$refs.year.focus();
     },
-    updateMonth(e) {
-      if (e.inputType === "deleteContentBackward" && this.month.length === 0) {
-        this.$refs.day.focus();
-      }
+    updateMonth() {
       if (this.month > 12) {
         this.month = "12";
       }
       if (this.month.length < 2 || parseInt(this.month, 10) < 2) return;
       if (this.showYear) this.$refs.year.focus();
     },
-    updateYear(e) {
-      if (e.inputType === "deleteContentBackward" && this.year.length === 0) {
-        this.$refs.month.focus();
-        return false;
-      }
+    updateYear() {
       // check first digit in year must be start with "1" or "2"
       if (this.year.length < 2 && !["1", "2"].includes(this.year[0])) {
         this.year = "";
@@ -331,14 +324,33 @@ export default {
       this.isFocused = true;
     },
     beforeInputYear(e) {
+      if (
+        e.inputType === "deleteContentBackward" &&
+        e.target.selectionStart === 0
+      ) {
+        this.$refs.month.focus();
+        return false;
+      }
       this.numberOnly(e);
       if (this.year.length >= 4 && e.inputType !== "deleteContentBackward") {
         e.preventDefault();
       }
     },
     handleBeforeInput(e, type = null) {
+      if (
+        type === "month" &&
+        e.inputType === "deleteContentBackward" &&
+        e.target.selectionStart === 0
+      ) {
+        this.$refs.day.focus();
+        return;
+      }
+
+      if (!this.numberOnly(e)) {
+        e.preventDefault();
+        return;
+      }
       this.currying(e, type);
-      this.numberOnly(e);
     },
     numberOnly(e) {
       const rgx = new RegExp("^[0-9]*$");
@@ -362,14 +374,14 @@ export default {
           val[0] = inputVal;
           this.month = val.join("");
           this.$refs.month.focus();
-          this.$refs.month.setSelectionRange(1, 1);
+          this.$refs.month.setSelectionRange(0, 1);
         } else if (type === "month") {
           const val = this.year.split("");
           let inputVal = e.data || e.key;
           val[0] = inputVal;
           this.year = val.join("");
           this.$refs.year.focus();
-          this.$refs.year.setSelectionRange(1, 1);
+          this.$refs.year.setSelectionRange(0, 1);
         }
         return false;
       }
@@ -378,7 +390,7 @@ export default {
       // due to browser support firefox
       // below code only run in firefox
       if (browserDetection() === "firefox") {
-        // this.numberOnly(e);
+        e.key === "Backspace" ? (e.inputType = "deleteContentBackward") : null;
         this.handleBeforeInput(e, type);
 
         if (
@@ -387,6 +399,15 @@ export default {
           e.inputType !== "deleteContentBackward"
         ) {
           e.preventDefault();
+        }
+
+        if (
+          type === "inputYear" &&
+          e.inputType === "deleteContentBackward" &&
+          e.target.selectionStart === 0
+        ) {
+          this.$refs.month.focus();
+          return false;
         }
       }
     },
