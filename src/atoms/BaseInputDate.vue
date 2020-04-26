@@ -64,6 +64,7 @@
         :disabled="disabled"
       />
 
+      <span class="ic-close" @click="resetValue"></span>
       <div
         class="su-datepicker"
         @click="handleClickedCalendar"
@@ -213,20 +214,20 @@ export default {
         const dateConcat = `${this.month}${this.day}${this.year}`;
         if (Number.isNaN(this.submittedDate)) return;
 
-        if (dateConcat.length === 8) {
+        if (dateConcat.length === 8 || dateConcat.length === "") {
           this.$emit(`input`, this.submittedDate, this.name);
         }
       }
     },
     checkValidDate() {
-      const timestamp = Date.parse(
-        `${this.year.padStart(4, 0)}-${this.month}-${this.day}`
-      );
+      // const timestamp = Date.parse(
+      //   `${this.year.padStart(4, 0)}-${this.month}-${this.day}`
+      // );
       if (
         this.day.length === 2 &&
         this.month.length === 2 &&
         this.year.length === 4 &&
-        timestamp
+        this.submittedDate
       ) {
         return true;
       }
@@ -426,6 +427,12 @@ export default {
       this.isCalendarShow ? (this.isFocused = true) : (this.isFocused = false);
       await this.$refs.calendar.move(new Date(this.submittedDate));
     },
+    resetValue() {
+      this.day = "";
+      this.month = "";
+      this.year = "";
+      this.$refs.day.focus();
+    },
   },
   watch: {
     year(current, prev) {
@@ -452,9 +459,7 @@ export default {
   },
   computed: {
     submittedDate() {
-      return Date.parse(
-        `${this.month}/${this.day}/${this.year.padStart(4, 0)}`
-      );
+      return Date.parse(`${this.month}/${this.day}/${this.year}`);
     },
     dateString() {
       return new Date(this.submittedDate).toLocaleDateString();
@@ -463,7 +468,7 @@ export default {
       if (this.minAge > this.maxAge) {
         return null;
       }
-      return this.getDateToTime(0, -this.maxAge, 0);
+      return this.getDateToTime(0, -this.maxAge, new Date().getDate() + 1);
     },
     maxDateAge() {
       return this.getDateToTime(0, -this.minAge, 0);
@@ -614,7 +619,7 @@ export default {
     .su-datepicker {
       position: absolute;
       right: 4px;
-      top: 11px;
+      top: 10px;
 
       & > img {
         width: 20px;
@@ -639,6 +644,39 @@ export default {
   .vc-container {
     position: absolute;
     z-index: 10;
+  }
+
+  .ic-close {
+    position: absolute;
+    right: 42px;
+    top: 10px;
+    width: 22px;
+    height: 22px;
+    opacity: 0.5;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: lightgray;
+    border-radius: 50%;
+    cursor: pointer;
+  }
+  .ic-close:hover {
+    opacity: 0.8;
+  }
+  .ic-close:before,
+  .ic-close:after {
+    position: absolute;
+    left: 10px;
+    content: " ";
+    height: 12px;
+    width: 2px;
+    background-color: #333;
+  }
+  .ic-close:before {
+    transform: rotate(45deg);
+  }
+  .ic-close:after {
+    transform: rotate(-45deg);
   }
 }
 </style>
