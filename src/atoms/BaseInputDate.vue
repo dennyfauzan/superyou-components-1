@@ -2,9 +2,11 @@
   <div
     class="su-date-wrapper"
     :data-theme="theme"
-    :class="{'disabled': disabled, 'readonly': readOnly}"
+    :class="{ disabled: disabled, readonly: readOnly }"
   >
-    <label :class="{ 'date-focused': isFocused, 'is-error': error }">{{ label }}</label>
+    <label :class="{ 'date-focused': isFocused, 'is-error': error }">{{
+      label
+    }}</label>
     <div
       class="su-date"
       :class="{ 'date-focused': isFocused, 'is-error': error }"
@@ -22,6 +24,8 @@
         @input="updateDay"
         @blur="eachBlur('day', 2)"
         @focus="eachFocus('day')"
+        @beforeinput="handleBeforeInput($event, 'day')"
+        @keydown="handleKeypress($event, 'day')"
         :readonly="readOnly"
         :disabled="disabled"
       />
@@ -36,10 +40,14 @@
         @input="updateMonth"
         @blur="eachBlur('month', 2)"
         @focus="eachFocus('month')"
+        @beforeinput="handleBeforeInput($event, 'month')"
+        @keydown="handleKeypress($event, 'month')"
         :readonly="readOnly"
         :disabled="disabled"
       />
-      <span v-if="showYear && (showDay || showMonth)" class="su-date__divider">/</span>
+      <span v-if="showYear && (showDay || showMonth)" class="su-date__divider"
+        >/</span
+      >
       <input
         v-if="showYear"
         ref="year"
@@ -51,68 +59,110 @@
         @blur="eachBlur('year', 4)"
         @focus="eachFocus('year')"
         @beforeinput="beforeInputYear"
+        @keydown="handleKeypress($event, 'inputYear')"
         :readonly="readOnly"
         :disabled="disabled"
       />
+
+      <span class="ic-close" @click="resetValue"></span>
+      <div
+        class="su-datepicker"
+        @click="handleClickedCalendar"
+        ref="datepickericon"
+      >
+        <img src="https://superyou.co.id/img/icons/calendar.svg" />
+      </div>
     </div>
     <span v-if="error" class="su-input_error message">{{ errMsg }}</span>
     <span v-else class="su-input_note message">{{ note }}</span>
+
+    <v-calendar
+      v-show="isCalendarShow"
+      v-click-outside="{
+        exclude: ['datepickericon'],
+        handler: 'onCloseCalendar',
+      }"
+      mode="single"
+      ref="calendar"
+      :min-date="minDateAge"
+      :max-date="maxDateAge"
+      :attributes="[
+        {
+          key: 'today',
+          highlight: true,
+          dates: new Date(submittedDate),
+        },
+      ]"
+      @dayclick="dayClicked"
+    ></v-calendar>
   </div>
 </template>
 
 <script>
+import browserDetection from "../helper/browserDetection";
+import VCalendar from "v-calendar/lib/components/calendar.umd";
+import { clickOutside } from "../directives/clickOutside";
+
 export default {
   name: `BaseInputDate`,
+  components: {
+    VCalendar,
+  },
+  directives: {
+    clickOutside,
+  },
   props: {
     value: {
       type: [Number, String],
-      required: true
+      required: true,
     },
     showDay: {
       type: Boolean,
-      default: true
+      default: true,
     },
     showMonth: {
       type: Boolean,
-      default: true
+      default: true,
     },
     showYear: {
       type: Boolean,
-      default: true
+      default: true,
     },
     note: {
-      type: String
+      type: String,
     },
     minAge: {
-      type: Number
+      type: Number,
+      default: 0,
     },
     maxAge: {
-      type: Number
+      type: Number,
+      default: 0,
     },
     label: {
-      type: String
+      type: String,
     },
     name: {
-      type: String
+      type: String,
     },
     error: {
-      type: Boolean
+      type: Boolean,
     },
     errMsg: {
-      type: String
+      type: String,
     },
     theme: {
       type: String,
-      default: "normal"
+      default: "normal",
     },
     readOnly: {
       type: Boolean,
-      default: false
+      default: false,
     },
     disabled: {
       type: Boolean,
-      default: false
-    }
+      default: false,
+    },
   },
   data() {
     return {
@@ -123,54 +173,61 @@ export default {
       dateFlag: {
         day: 0,
         month: 0,
-        year: 0
-      }
+        year: 0,
+      },
+      isCalendarShow: false,
     };
   },
   methods: {
-    updateDay() {
-      if (this.day && this.day.length >= 2) {
-        this.$refs.month.select();
+    onCloseCalendar() {
+      this.isCalendarShow = false;
+    },
+    updateDay(e) {
+      if (e.inputType === "deleteContentBackward" && this.day.length === 0) {
+        this.$refs.day.focus();
+        return;
       }
       if (this.day > 31) {
         this.day = "31";
       }
-      if (!this.day.length || parseInt(this.day, 10) < 4) return;
-      if (this.showMonth) this.$refs.month.select();
-      else if (this.showYear) this.$refs.year.select();
+      if (this.day.length < 2 && parseInt(this.day, 10) < 4) return;
+      if (this.showMonth) this.$refs.month.focus();
+      else if (this.showYear) this.$refs.year.focus();
     },
     updateMonth() {
-      if (this.month && this.month.length >= 2) {
-        this.$refs.year.select();
-      }
       if (this.month > 12) {
         this.month = "12";
       }
-      if (!this.month.length || parseInt(this.month, 10) < 2) return;
-      if (this.showYear) this.$refs.year.select();
+      if (this.month.length < 2 || parseInt(this.month, 10) < 2) return;
+      if (this.showYear) this.$refs.year.focus();
     },
     updateYear() {
       // check first digit in year must be start with "1" or "2"
-      if (!["1", "2"].includes(this.year[0]) && this.year.length < 2) {
+      if (this.year.length < 2 && !["1", "2"].includes(this.year[0])) {
         this.year = "";
       }
     },
-    updateValue() {
-      const timestamp = Date.parse(
-        `${this.year.padStart(4, 0)}-${this.month}-${this.day}`
-      );
-      if (Number.isNaN(timestamp)) return;
-      this.$emit(`input`, timestamp, this.name);
+    async updateValue(e, calendarVal = null) {
+      if (calendarVal) {
+        this.$emit(`input`, calendarVal, this.name);
+      } else {
+        const dateConcat = `${this.month}${this.day}${this.year}`;
+        if (Number.isNaN(this.submittedDate)) return;
+
+        if (dateConcat.length === 8 || dateConcat.length === "") {
+          this.$emit(`input`, this.submittedDate, this.name);
+        }
+      }
     },
     checkValidDate() {
-      const timestamp = Date.parse(
-        `${this.year.padStart(4, 0)}-${this.month}-${this.day}`
-      );
+      // const timestamp = Date.parse(
+      //   `${this.year.padStart(4, 0)}-${this.month}-${this.day}`
+      // );
       if (
         this.day.length === 2 &&
         this.month.length === 2 &&
         this.year.length === 4 &&
-        timestamp
+        this.submittedDate
       ) {
         return true;
       }
@@ -182,7 +239,16 @@ export default {
       const day = new Date().getDate();
       const completeDate = `${month}/${day}/${year}`;
       const dateToTime = new Date(completeDate).getTime();
-      return dateToTime > this.submittedDate;
+      return dateToTime >= this.submittedDate;
+    },
+    getDateToTime(setMonth = 0, setYear = 0, setDate = 0) {
+      const month = new Date().getMonth() + 1 + setMonth;
+      const year = new Date().getFullYear() + setYear;
+      const day = setDate === 0 ? new Date().getDate() : setDate;
+
+      const completeDate = `${month}/${day}/${year}`;
+      const dateToTime = new Date(completeDate);
+      return dateToTime;
     },
     errorChecker() {
       if (!this.checkValidDate()) {
@@ -227,9 +293,10 @@ export default {
       this.$emit("handle-datestring", this.dateString);
     },
     eachFocus(type) {
+      this.isCalendarShow = false;
       if (type === "year") {
         if (this.month.length === 0) {
-          this.$refs.month.select();
+          this.$refs.month.focus();
           this.dateFlag.year = 0;
         } else {
           this.$emit("error-handler", false, "ok", this.name);
@@ -237,7 +304,7 @@ export default {
         }
       } else if (type === "month") {
         if (this.day.length === 0 && this.month.length === 0) {
-          this.$refs.day.select();
+          this.$refs.day.focus();
           this.errorMessage = "";
           this.isError = false;
           this.dateFlag.month = 0;
@@ -246,9 +313,10 @@ export default {
           this.dateFlag[type] += 1;
         }
       } else if (type === "day") {
-        if (!this.day.length) {
-          this.$emit("error-handler", false, "ok", this.name);
-        }
+        // if (!this.day.length) {
+        //   this.$emit("error-handler", false, "ok", this.name);
+        // }
+        this.$emit("error-handler", false, "ok", this.name);
         this.dateFlag[type] += 1;
       }
     },
@@ -257,14 +325,121 @@ export default {
       this.isFocused = true;
     },
     beforeInputYear(e) {
+      if (
+        e.inputType === "deleteContentBackward" &&
+        e.target.selectionStart === 0
+      ) {
+        this.$refs.month.focus();
+        return false;
+      }
+      this.numberOnly(e);
       if (this.year.length >= 4 && e.inputType !== "deleteContentBackward") {
         e.preventDefault();
       }
-    }
+    },
+    handleBeforeInput(e, type = null) {
+      if (
+        type === "month" &&
+        e.inputType === "deleteContentBackward" &&
+        e.target.selectionStart === 0
+      ) {
+        this.$refs.day.focus();
+        return;
+      }
+
+      if (!this.numberOnly(e)) {
+        e.preventDefault();
+        return;
+      }
+      this.currying(e, type);
+    },
+    numberOnly(e) {
+      const rgx = new RegExp("^[0-9]*$");
+      let inputVal = e.data || e.key;
+      if (rgx.test(inputVal) || e.inputType === "deleteContentBackward") {
+        return true;
+      }
+      e.preventDefault();
+      return false;
+    },
+    currying(e, type) {
+      if (
+        (type === "day" || type === "month") &&
+        e.target.value.length >= 2 &&
+        e.inputType !== "deleteContentBackward"
+      ) {
+        e.preventDefault();
+        if (type === "day") {
+          const val = this.month.split("");
+          let inputVal = e.data || e.key;
+          val[0] = inputVal;
+          this.month = val.join("");
+          this.$refs.month.focus();
+          this.$refs.month.setSelectionRange(0, 1);
+        } else if (type === "month") {
+          const val = this.year.split("");
+          let inputVal = e.data || e.key;
+          val[0] = inputVal;
+          this.year = val.join("");
+          this.$refs.year.focus();
+          this.$refs.year.setSelectionRange(0, 1);
+        }
+        return false;
+      }
+    },
+    handleKeypress(e, type = "general") {
+      // due to browser support firefox
+      // below code only run in firefox
+      if (browserDetection() === "firefox") {
+        e.key === "Backspace" ? (e.inputType = "deleteContentBackward") : null;
+        this.handleBeforeInput(e, type);
+
+        if (
+          type === "inputYear" &&
+          this.year.length >= 4 &&
+          e.inputType !== "deleteContentBackward"
+        ) {
+          e.preventDefault();
+        }
+
+        if (
+          type === "inputYear" &&
+          e.inputType === "deleteContentBackward" &&
+          e.target.selectionStart === 0
+        ) {
+          this.$refs.month.focus();
+          return false;
+        }
+      }
+    },
+    dayClicked(data) {
+      const min = new Date(this.minDateAge).getTime();
+      const max = new Date(this.maxDateAge).getTime();
+
+      if (data.dateTime >= min && data.dateTime <= max) {
+        this.updateValue(null, data.dateTime);
+        this.isCalendarShow = false;
+        this.isFocused = false;
+      }
+    },
+    async handleClickedCalendar() {
+      this.isCalendarShow = !this.isCalendarShow;
+      this.isCalendarShow ? (this.isFocused = true) : (this.isFocused = false);
+      await this.$refs.calendar.move(new Date(this.submittedDate));
+    },
+    resetValue() {
+      this.day = "";
+      this.month = "";
+      this.year = "";
+      this.$refs.day.focus();
+    },
   },
   watch: {
     year(current, prev) {
       if (current > 9999) this.year = prev;
+      if (this.isFocused && this.year === "0") {
+        this.year = "";
+      }
     },
     submittedDate() {
       if (this.year.length === 4) this.dateFlag.year += 1;
@@ -275,21 +450,29 @@ export default {
     value(val) {
       this.year = new Date(val).getFullYear().toString();
       this.month = (new Date(val).getMonth() + 1).toString().padStart(2, 0);
+
       this.day = new Date(val)
         .getDate()
         .toString()
         .padStart(2, 0);
-    }
+    },
   },
   computed: {
     submittedDate() {
-      return Date.parse(
-        `${this.year.padStart(4, 0)}-${this.month}-${this.day}`
-      );
+      return Date.parse(`${this.month}/${this.day}/${this.year}`);
     },
     dateString() {
       return new Date(this.submittedDate).toLocaleDateString();
-    }
+    },
+    minDateAge() {
+      if (this.minAge > this.maxAge) {
+        return null;
+      }
+      return this.getDateToTime(0, -this.maxAge, new Date().getDate() + 1);
+    },
+    maxDateAge() {
+      return this.getDateToTime(0, -this.minAge, 0);
+    },
   },
   created() {
     this.day = `${
@@ -310,7 +493,12 @@ export default {
     if (this.value.length === 10) {
       this.updateValue();
     }
-  }
+  },
+  async mounted() {
+    if (!isNaN(this.submittedDate)) {
+      await this.$refs.calendar.move(new Date(this.submittedDate));
+    }
+  },
 };
 </script>
 
@@ -373,10 +561,10 @@ export default {
       min-height: 36px;
       font-size: 16px;
       color: var(--text-color);
-      padding: $spacing;
+      padding-top: $spacing;
       padding-right: $spacing / 2;
       padding-left: $spacing / 4;
-      padding: $spacing 0;
+      padding-bottom: 0.55em;
       background: transparent;
       border: none;
       text-align: left;
@@ -408,9 +596,9 @@ export default {
       }
     }
     &__divider {
-      font-size: 16px;
+      font-size: 17px;
       padding-top: $spacing;
-      padding-bottom: $spacing;
+      padding-bottom: 0.45em;
       /* padding: 0.75em 5px; */
       pointer-events: none;
       color: var(--label-text-color);
@@ -428,6 +616,16 @@ export default {
         color: var(--text-color);
       }
     }
+    .su-datepicker {
+      position: absolute;
+      right: 4px;
+      top: 10px;
+
+      & > img {
+        width: 20px;
+        height: 20px;
+      }
+    }
   }
 
   &.readonly {
@@ -441,6 +639,44 @@ export default {
         cursor: default;
       }
     }
+  }
+
+  .vc-container {
+    position: absolute;
+    z-index: 10;
+  }
+
+  .ic-close {
+    position: absolute;
+    right: 42px;
+    top: 10px;
+    width: 22px;
+    height: 22px;
+    opacity: 0.5;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: lightgray;
+    border-radius: 50%;
+    cursor: pointer;
+  }
+  .ic-close:hover {
+    opacity: 0.8;
+  }
+  .ic-close:before,
+  .ic-close:after {
+    position: absolute;
+    left: 10px;
+    content: " ";
+    height: 12px;
+    width: 2px;
+    background-color: #333;
+  }
+  .ic-close:before {
+    transform: rotate(45deg);
+  }
+  .ic-close:after {
+    transform: rotate(-45deg);
   }
 }
 </style>
