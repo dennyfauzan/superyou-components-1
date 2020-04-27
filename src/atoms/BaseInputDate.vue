@@ -4,9 +4,11 @@
     :data-theme="theme"
     :class="{ disabled: disabled, readonly: readOnly }"
   >
-    <label :class="{ 'date-focused': isFocused, 'is-error': error }">{{
+    <label :class="{ 'date-focused': isFocused, 'is-error': error }">
+      {{
       label
-    }}</label>
+      }}
+    </label>
     <div
       class="su-date"
       :class="{ 'date-focused': isFocused, 'is-error': error }"
@@ -45,9 +47,7 @@
         :readonly="readOnly"
         :disabled="disabled"
       />
-      <span v-if="showYear && (showDay || showMonth)" class="su-date__divider"
-        >/</span
-      >
+      <span v-if="showYear && (showDay || showMonth)" class="su-date__divider">/</span>
       <input
         v-if="showYear"
         ref="year"
@@ -65,11 +65,7 @@
       />
 
       <span class="ic-close" @click="resetValue"></span>
-      <div
-        class="su-datepicker"
-        @click="handleClickedCalendar"
-        ref="datepickericon"
-      >
+      <div class="su-calendar" @click="handleClickedCalendar" ref="datepickericon">
         <img src="https://superyou.co.id/img/icons/calendar.svg" />
       </div>
     </div>
@@ -106,63 +102,63 @@ import { clickOutside } from "../directives/clickOutside";
 export default {
   name: `BaseInputDate`,
   components: {
-    VCalendar,
+    VCalendar
   },
   directives: {
-    clickOutside,
+    clickOutside
   },
   props: {
     value: {
       type: [Number, String],
-      required: true,
+      required: true
     },
     showDay: {
       type: Boolean,
-      default: true,
+      default: true
     },
     showMonth: {
       type: Boolean,
-      default: true,
+      default: true
     },
     showYear: {
       type: Boolean,
-      default: true,
+      default: true
     },
     note: {
-      type: String,
+      type: String
     },
     minAge: {
       type: Number,
-      default: 0,
+      default: 0
     },
     maxAge: {
       type: Number,
-      default: 0,
+      default: 65
     },
     label: {
-      type: String,
+      type: String
     },
     name: {
-      type: String,
+      type: String
     },
     error: {
-      type: Boolean,
+      type: Boolean
     },
     errMsg: {
-      type: String,
+      type: String
     },
     theme: {
       type: String,
-      default: "normal",
+      default: "normal"
     },
     readOnly: {
       type: Boolean,
-      default: false,
+      default: false
     },
     disabled: {
       type: Boolean,
-      default: false,
-    },
+      default: false
+    }
   },
   data() {
     return {
@@ -173,9 +169,9 @@ export default {
       dateFlag: {
         day: 0,
         month: 0,
-        year: 0,
+        year: 0
       },
-      isCalendarShow: false,
+      isCalendarShow: false
     };
   },
   methods: {
@@ -435,7 +431,7 @@ export default {
       this.month = "";
       this.year = "";
       this.$refs.day.focus();
-    },
+    }
   },
   watch: {
     year(current, prev) {
@@ -458,7 +454,7 @@ export default {
         .getDate()
         .toString()
         .padStart(2, 0);
-    },
+    }
   },
   computed: {
     submittedDate() {
@@ -475,7 +471,7 @@ export default {
     },
     maxDateAge() {
       return this.getDateToTime(0, -this.minAge, 0);
-    },
+    }
   },
   created() {
     this.day = `${
@@ -501,7 +497,7 @@ export default {
     if (!isNaN(this.submittedDate)) {
       await this.$refs.calendar.move(new Date(this.submittedDate));
     }
-  },
+  }
 };
 </script>
 
@@ -619,7 +615,7 @@ export default {
         color: var(--text-color);
       }
     }
-    .su-datepicker {
+    .su-calendar {
       position: absolute;
       right: 4px;
       top: 10px;

@@ -104,7 +104,7 @@ export default {
           err: false,
           msg: "",
           min: 5,
-          label_name: "Nama Lengkap",
+          label_name: "Nama Lengkap"
         },
         citizen_id: {
           val: "",
@@ -112,60 +112,60 @@ export default {
           msg: "",
           min: 16,
           max: 16,
-          label_name: "No Kartu Identitas",
+          label_name: "No Kartu Identitas"
         },
         email: {
           val: "",
           err: false,
           msg: "",
-          label_name: "Email",
+          label_name: "Email"
         },
         relation: {
           val: { label: "Saya Sendiri", val: "self" },
           err: false,
           msg: "",
-          label_name: "Hubungan",
+          label_name: "Hubungan"
         },
         gender: {
           val: "",
           err: false,
-          msg: "",
+          msg: ""
         },
         dob: {
           val: "",
           err: false,
           msg: "",
-          min_age: 3,
+          min_age: 0,
           max_age: 40,
-          label_name: "Tanggal Lahir",
-        },
+          label_name: "Tanggal Lahir"
+        }
       },
 
       dataSteps: [
         {
           title: "1",
-          info: "Pilih Produk",
+          info: "Pilih Produk"
         },
         {
           title: "2",
-          info: "Isi Data",
+          info: "Isi Data"
         },
         {
           title: "3",
-          info: "Review",
+          info: "Review"
         },
         {
           title: "4",
-          info: "Pembayaran",
-        },
+          info: "Pembayaran"
+        }
       ],
       dataSelectOpt: [
         { label: "Saya Sendiri", val: "self" },
         { label: "Ayah Kandung", val: "father" },
         { label: "Ibu Kandung", val: "mother" },
-        { label: "Saudara Kandung", val: "brother" },
+        { label: "Saudara Kandung", val: "brother" }
       ],
-      currentTheme: "normal",
+      currentTheme: "normal"
     };
   },
   components: {
@@ -173,7 +173,7 @@ export default {
     BaseStepper,
     BaseSelect,
     BaseCheckboxAndRadio,
-    BaseInputDate,
+    BaseInputDate
   },
   methods: {
     handleDataChange(...args) {
@@ -227,7 +227,7 @@ export default {
           this[instance][name].msg = "";
         }
       }
-    },
+    }
   },
   computed: {
     bgContainer() {
@@ -235,8 +235,8 @@ export default {
         return "#00aaae";
       }
       return "#fff";
-    },
-  },
+    }
+  }
 };
 </script>
 
