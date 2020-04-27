@@ -206,6 +206,7 @@ export default {
     async updateValue(e, calendarVal = null) {
       if (calendarVal) {
         this.$emit(`input`, calendarVal, this.name);
+        this.$emit("handle-datestring", this.dateString);
         setTimeout(() => {
           this.errorChecker();
         }, 200);
@@ -325,18 +326,40 @@ export default {
     },
     beforeInputYear(e) {
       if (
+        e.target.selectionStart === 0 &&
+        e.target.selectionEnd === 4 &&
+        e.inputType === "deleteContentBackward"
+      ) {
+        this.year = "";
+        this.$refs.year.focus();
+        e.preventDefault();
+        return;
+      }
+      if (
         e.inputType === "deleteContentBackward" &&
         e.target.selectionStart === 0
       ) {
         this.$refs.month.focus();
         return false;
       }
+
       this.numberOnly(e);
       if (this.year.length >= 4 && e.inputType !== "deleteContentBackward") {
         e.preventDefault();
       }
     },
     handleBeforeInput(e, type = null) {
+      if (
+        type === "month" &&
+        e.target.selectionStart === 0 &&
+        e.target.selectionEnd === 2 &&
+        e.inputType === "deleteContentBackward"
+      ) {
+        this.month = "";
+        this.$refs.month.focus();
+        e.preventDefault();
+        return;
+      }
       if (
         type === "month" &&
         e.inputType === "deleteContentBackward" &&
