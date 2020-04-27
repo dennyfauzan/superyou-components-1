@@ -206,6 +206,7 @@ export default {
     async updateValue(e, calendarVal = null) {
       if (calendarVal) {
         this.$emit(`input`, calendarVal, this.name);
+        this.$emit("handle-datestring", this.dateString);
         setTimeout(() => {
           this.errorChecker();
         }, 200);
