@@ -263,7 +263,7 @@ export default {
         return false;
       }
 
-      if (this.minAge && !this.validateMinMaxYear("minage")) {
+      if (!this.validateMinMaxYear("minage")) {
         this.$emit("error-handler", true, "min-age", this.name);
         return false;
       }
