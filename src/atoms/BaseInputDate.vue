@@ -238,7 +238,6 @@ export default {
       return false;
     },
     validateMinMaxYear(type) {
-      console.log("validate min max", type);
       if (type === "minage") {
         return this.submittedDate <= this.maxDateAge.getTime();
       } else if (type === "maxage") {
