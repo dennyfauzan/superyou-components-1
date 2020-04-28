@@ -5,9 +5,7 @@
     :class="{ disabled: disabled, readonly: readOnly }"
   >
     <label :class="{ 'date-focused': isFocused, 'is-error': error }">
-      {{
-      label
-      }}
+      {{ label }}
     </label>
     <div
       class="su-date"
@@ -47,7 +45,9 @@
         :readonly="readOnly"
         :disabled="disabled"
       />
-      <span v-if="showYear && (showDay || showMonth)" class="su-date__divider">/</span>
+      <span v-if="showYear && (showDay || showMonth)" class="su-date__divider"
+        >/</span
+      >
       <input
         v-if="showYear"
         ref="year"
@@ -65,7 +65,11 @@
       />
 
       <span class="ic-close" @click="resetValue"></span>
-      <div class="su-calendar" @click="handleClickedCalendar" ref="datepickericon">
+      <div
+        class="su-calendar"
+        @click="handleClickedCalendar"
+        ref="datepickericon"
+      >
         <img src="https://superyou.co.id/img/icons/calendar.svg" />
       </div>
     </div>
@@ -102,63 +106,66 @@ import { clickOutside } from "../directives/clickOutside";
 export default {
   name: `BaseInputDate`,
   components: {
-    VCalendar
+    VCalendar,
   },
   directives: {
-    clickOutside
+    clickOutside,
   },
   props: {
     value: {
       type: [Number, String],
-      required: true
+      required: true,
     },
     showDay: {
       type: Boolean,
-      default: true
+      default: true,
     },
     showMonth: {
       type: Boolean,
-      default: true
+      default: true,
     },
     showYear: {
       type: Boolean,
-      default: true
+      default: true,
     },
     note: {
-      type: String
+      type: String,
     },
     minAge: {
       type: Number,
-      default: 0
+      default: 0,
     },
     maxAge: {
       type: Number,
-      default: 65
+      default: 65,
+    },
+    minMonthAge: {
+      default: 0,
     },
     label: {
-      type: String
+      type: String,
     },
     name: {
-      type: String
+      type: String,
     },
     error: {
-      type: Boolean
+      type: Boolean,
     },
     errMsg: {
-      type: String
+      type: String,
     },
     theme: {
       type: String,
-      default: "normal"
+      default: "normal",
     },
     readOnly: {
       type: Boolean,
-      default: false
+      default: false,
     },
     disabled: {
       type: Boolean,
-      default: false
-    }
+      default: false,
+    },
   },
   data() {
     return {
@@ -169,9 +176,9 @@ export default {
       dateFlag: {
         day: 0,
         month: 0,
-        year: 0
+        year: 0,
       },
-      isCalendarShow: false
+      isCalendarShow: false,
     };
   },
   methods: {
@@ -220,9 +227,6 @@ export default {
       }
     },
     checkValidDate() {
-      // const timestamp = Date.parse(
-      //   `${this.year.padStart(4, 0)}-${this.month}-${this.day}`
-      // );
       if (
         this.day.length === 2 &&
         this.month.length === 2 &&
@@ -233,13 +237,12 @@ export default {
       }
       return false;
     },
-    validateMinMaxYear(years = 0) {
-      const month = new Date().getMonth() + 1;
-      const year = new Date().getFullYear() - years;
-      const day = new Date().getDate();
-      const completeDate = `${month}/${day}/${year}`;
-      const dateToTime = new Date(completeDate).getTime();
-      return dateToTime >= this.submittedDate;
+    validateMinMaxYear(type) {
+      if (type === "minage") {
+        return this.submittedDate <= this.maxDateAge.getTime();
+      } else if (type === "maxage") {
+        return this.submittedDate >= this.minDateAge.getTime();
+      }
     },
     getDateToTime(setMonth = 0, setYear = 0, setDate = 0) {
       const month = new Date().getMonth() + 1 + setMonth;
@@ -260,15 +263,16 @@ export default {
         return false;
       }
 
-      if (this.minAge && !this.validateMinMaxYear(this.minAge)) {
+      if (this.minAge && !this.validateMinMaxYear("minage")) {
         this.$emit("error-handler", true, "min-age", this.name);
         return false;
       }
 
-      if (this.maxAge && this.validateMinMaxYear(this.maxAge)) {
+      if (this.maxAge && !this.validateMinMaxYear("maxage")) {
         this.$emit("error-handler", true, "max-age", this.name);
         return false;
       }
+
       this.$emit("error-handler", false, "ok", this.name);
     },
     eachBlur(type, howMany) {
@@ -454,7 +458,11 @@ export default {
       this.month = "";
       this.year = "";
       this.$refs.day.focus();
-    }
+    },
+    addMonths(date, months) {
+      date.setMonth(date.getMonth() + months);
+      return date;
+    },
   },
   watch: {
     year(current, prev) {
@@ -477,7 +485,7 @@ export default {
         .getDate()
         .toString()
         .padStart(2, 0);
-    }
+    },
   },
   computed: {
     submittedDate() {
@@ -493,8 +501,12 @@ export default {
       return this.getDateToTime(0, -this.maxAge, new Date().getDate() + 1);
     },
     maxDateAge() {
-      return this.getDateToTime(0, -this.minAge, 0);
-    }
+      const currentMaxDate = this.getDateToTime(0, -this.minAge, 0);
+      if (this.minMonthAge) {
+        return this.addMonths(currentMaxDate, -this.minMonthAge);
+      }
+      return currentMaxDate;
+    },
   },
   created() {
     this.day = `${
@@ -520,7 +532,7 @@ export default {
     if (!isNaN(this.submittedDate)) {
       await this.$refs.calendar.move(new Date(this.submittedDate));
     }
-  }
+  },
 };
 </script>
 
