@@ -64,11 +64,17 @@
         :disabled="disabled"
       />
 
-      <span class="ic-close" @click="resetValue"></span>
+			<span 
+				v-if="!disabled" 
+				class="ic-close" 
+				@click="resetValue"
+			>
+			</span>
       <div
         class="su-calendar"
         @click="handleClickedCalendar"
         ref="datepickericon"
+        v-if="!disabled"
       >
         <img src="https://superyou.co.id/img/icons/calendar.svg" />
       </div>
