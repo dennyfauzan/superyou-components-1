@@ -464,6 +464,7 @@ export default {
       this.month = "";
       this.year = "";
       this.$refs.day.focus();
+			this.$emit("reset-value", true);
     },
     addMonths(date, months) {
       date.setMonth(date.getMonth() + months);
