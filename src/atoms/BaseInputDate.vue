@@ -76,7 +76,7 @@
         ref="datepickericon"
         v-if="!disabled"
       >
-        <img src="https://superyou.co.id/img/icons/calendar.svg" />
+        <img :src="calendarTheme()" />
       </div>
     </div>
     <span v-if="error" class="su-input_error message">{{ errMsg }}</span>
@@ -172,6 +172,10 @@ export default {
       type: Boolean,
       default: false,
     },
+    calendarColor: {
+      type: String,
+      default: "dark"
+    }
   },
   data() {
     return {
@@ -470,6 +474,10 @@ export default {
       date.setMonth(date.getMonth() + months);
       return date;
     },
+    calendarTheme() {
+      var color = this.calendarColor == "dark" ? "calendar" : "calendar-white";
+      return `https://superyou.co.id/img/icons/${color}.svg`;
+    }
   },
   watch: {
     year(current, prev) {
