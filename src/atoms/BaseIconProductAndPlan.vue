@@ -42,6 +42,9 @@ export default {
       return this.productIcon[this.product];
     },
     getPlanImg() {
+      if (this.plan.toLowerCase() === "gold plus") {
+        return "/img/icons/badge-gold-plus.svg";
+      }
       return this.planIcon[this.plan];
     },
     iconSizeClasses() {
