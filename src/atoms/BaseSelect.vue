@@ -127,7 +127,12 @@ export default {
     }
   }
   .base-select {
-    height: 38px;
+    min-height: 32px;
+    &.vs--open {
+      .vs__selected {
+        position: relative;
+      }
+    }
     .vs__dropdown-toggle {
       border: none;
       border-radius: 0;
@@ -170,6 +175,11 @@ export default {
           font-size: 16px;
           color: var(--text-color);
           padding-bottom: 4px;
+          position: absolute;
+          left: 0;
+          top: 100%;
+          opacity: 0;
+          width: 100%;
         }
       }
 
