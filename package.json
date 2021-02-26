@@ -13,7 +13,7 @@
   },
   "repository": {
     "type": "git",
-    "url": "https://github.com/dennyfauzan/superyou-components.git"
+    "url": "https://github.com/Sequis-Digital-Channel/superyou-components.git"
   },
   "dependencies": {
     "axios": "^0.19.2",
