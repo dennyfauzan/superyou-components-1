@@ -34,11 +34,21 @@
     "method": "Visa Master",
     "invoices": [
       {
+        "product": "Super Life Protection",
+        "productId": 1943,
+        "plan": "Silver Plan",
+        "icon": "https://staging.superyou.co.id/products/plans/super-life-protection-silver-plan.svg",
+        "policyNumber": null,
+        "price": "Rp 288.000",
+        "riders": []
+      },
+      {
         "product": "Super Strong Protection",
-        "productId": 579,
-        "plan": "Gold",
-        "policyNumber": "3006007485",
-        "price": "Rp 181.500",
+        "productId": 1944,
+        "plan": "Gold Plan",
+        "icon": "https://staging.superyou.co.id/products/plans/super-strong-protection-gold-plan.svg",
+        "policyNumber": null,
+        "price": "Rp 498.200",
         "riders": []
       }
     ],
@@ -78,5 +88,31 @@
     "summary_token": "b43c729fe5463be5dad9a04532224f25de203734",
     "payment_method_id": 1,
     "invoice_no": "319133720200225-16"
+  },
+  {
+    "lastPayment": "19 February 2021",
+    "nextPayment": "20 March 2021",
+    "status": "waiting",
+    "status_message": "Menunggu Pembayaran",
+    "total": "Rp 243.000",
+    "fee": "Rp 0",
+    "mode": "Bulanan",
+    "method": "Visa Master",
+    "invoices": [
+      {
+        "product": "Super Care Protection",
+        "productId": 2121,
+        "plan": "Silver Plan dengan Santunan Tunai Harian COVID 19",
+        "icon": "https://staging.superyou.co.id/products/plans/super-care-protection-silver-plan.svg",
+        "policyNumber": "3006694907",
+        "price": "Rp 243.000",
+        "riders": []
+      }
+    ],
+    "policy_group_number": "3192602",
+    "summary_token": "21212e704579ed02025d147fbadf32c2e818211b",
+    "payment_method_id": 1,
+    "invoice_no": "3192602/21/03/21-02",
+    "payment_type": "recurring"
   }
 ]

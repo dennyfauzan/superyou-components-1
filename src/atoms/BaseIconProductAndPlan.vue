@@ -1,36 +1,20 @@
 <template>
   <div class="icon-container" :class="[product, ...iconSizeClasses]">
-    <img :src="getProductImg" class="icon-product" />
-    <img :src="getPlanImg" class="icon-plan" />
+    <img :src="icon" class="icon-product" />
   </div>
 </template>
 
 <script>
 export default {
   name: "BaseIconProductAndPlan",
-  data() {
-    return {
-      productIcon: {
-        safe: "https://superyou.co.id/img/icons/prod-umbrella.svg",
-        life: "https://superyou.co.id/img/icons/prod-heart.svg",
-        strong: "https://superyou.co.id/img/icons/prod-dumbell.svg",
-        hospital: "/img/products/hospital/icon-hospital.svg"
-      },
-      planIcon: {
-        gold: "https://superyou.co.id/img/icons/badge-gold.svg",
-        silver: "https://superyou.co.id/img/icons/badge-silver.svg",
-        bronze: "https://superyou.co.id/img/icons/badge-bronze.svg"
-      }
-    };
-  },
   props: {
+    icon: {
+      type: String,
+      default: "https://staging.superyou.co.id/products/plans/super-life-protection-silver-plan.svg"
+    },
     product: {
       type: String,
       default: "safe"
-    },
-    plan: {
-      type: String,
-      default: "gold"
     },
     size: {
       type: String,
@@ -38,15 +22,6 @@ export default {
     }
   },
   computed: {
-    getProductImg() {
-      return this.productIcon[this.product];
-    },
-    getPlanImg() {
-      if (this.plan.toLowerCase() === "gold plus") {
-        return "/img/icons/badge-gold-plus.svg";
-      }
-      return this.planIcon[this.plan];
-    },
     iconSizeClasses() {
       return {
         small: this.size === "small",

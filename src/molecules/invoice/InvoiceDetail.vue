@@ -3,8 +3,7 @@
     <div class="detail-left">
       <div class="product-icon" style="width:70px;">
         <BaseIconProductAndPlan
-          :product="getIconProduct"
-          :plan="getBadgeType"
+          :icon="datas.icon"
         />
       </div>
       <div class="product-basic-rider-name">
